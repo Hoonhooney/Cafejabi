@@ -56,11 +56,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         naverMap.setCameraPosition(new CameraPosition(new LatLng(lat, lon), 17, 0, 0));
 
-        // 카메라 움직일 때마다 최근 위치 정보 갱신
+        // 카메라 움직일 때마다 작동
         lastLocation = new Location("Provider");
         naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(int i, boolean b) {
+                // 최근 위치 정보 갱신
                 lastLocation.setLatitude(naverMap.getCameraPosition().target.latitude);
                 lastLocation.setLongitude(naverMap.getCameraPosition().target.longitude);
             }
@@ -85,9 +86,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onPause();
 
         // 현위치 좌표 저장하기
-
-//        Location lastLocation = locationSource.getLastLocation();
-
         preferences = getSharedPreferences("LatestLocation", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         if(lastLocation != null){

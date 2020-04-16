@@ -20,6 +20,7 @@ import com.naver.maps.map.util.FusedLocationSource;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int ACCESS_LOCATION_PERMISSION_REQUEST_CODE = 100;
     private FusedLocationSource locationSource;
+    private Location lastLocation;
 
     private SharedPreferences preferences;
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //    지도가 로딩된 후 작동
     @Override
-    public void onMapReady(@NonNull NaverMap naverMap) {
+    public void onMapReady(@NonNull final NaverMap naverMap) {
 
         //최소, 최대 줌 설정
         naverMap.setMinZoom(12.0);
@@ -48,12 +49,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
 
-        // 최신 위치로 이동
+        // 최근 위치로 이동
         preferences = getSharedPreferences("LatestLocation", MODE_PRIVATE);
         double lat = (double)preferences.getFloat("Latitude", 37.2788f);
         double lon = (double)preferences.getFloat("Longitude", 127.0437f);
 
-        naverMap.setCameraPosition(new CameraPosition(new LatLng(lat, lon), 17, 20, 0));
+        naverMap.setCameraPosition(new CameraPosition(new LatLng(lat, lon), 17, 0, 0));
+
+        // 카메라 움직일 때마다 최근 위치 정보 갱신
+        lastLocation = new Location("Provider");
+        naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(int i, boolean b) {
+                lastLocation.setLatitude(naverMap.getCameraPosition().target.latitude);
+                lastLocation.setLongitude(naverMap.getCameraPosition().target.longitude);
+            }
+        });
     }
 
 //    위치 서비스 권한
@@ -75,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // 현위치 좌표 저장하기
 
-        Location lastLocation = locationSource.getLastLocation();
+//        Location lastLocation = locationSource.getLastLocation();
 
         preferences = getSharedPreferences("LatestLocation", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

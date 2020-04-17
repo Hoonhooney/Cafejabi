@@ -11,7 +11,7 @@
         android:name="com.naver.maps.map.MapFragment" />
 
     <LinearLayout
-        android:background="#ffffff"
+        android:background="@drawable/border_layout"
         android:layout_alignParentTop="true"
         android:orientation="horizontal"
         android:elevation="3dp"
@@ -22,7 +22,30 @@
         android:layout_marginEnd="5dp">
 
 <!--        메뉴 버튼-->
+        <ImageView
+            android:id="@+id/button_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_menu"
+            android:layout_gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"/>
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="#808080"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"/>
+
 <!--        검색창-->
+        <EditText
+            android:id="@+id/editText_search_cafe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="카페 검색"/>
 
     </LinearLayout>
 

@@ -27,6 +27,7 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.util.FusedLocationSource;
+import com.naver.maps.map.widget.CompassView;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback , View.OnClickListener {
 
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ViewGroup sideLayout;   //사이드바만 감싸는 영역
 
     private EditText editText_search;
-    private ImageView button_search;
 
     private Boolean isMenuShow = false;
     private Boolean isExitFlag = false;
@@ -69,13 +69,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void init(){
         findViewById(R.id.button_menu).setOnClickListener(this);
+        findViewById(R.id.button_search_cafe).setOnClickListener(this);
 
         searchLayout = findViewById(R.id.linearLayout_search);
         viewLayout = findViewById(R.id.fl_silde);
         sideLayout = findViewById(R.id.view_sildemenu);
 
         editText_search = findViewById(R.id.editText_search_cafe);
-        button_search = findViewById(R.id.button_search_cafe);
     }
 
 //    사이드메뉴 추가
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void closeMenu(){
-        Log.d(TAG, "closeMenu()");
+        Log.e(TAG, "closeMenu()");
 
         isMenuShow = false;
         Animation slide = AnimationUtils.loadAnimation(mContext, R.anim.sidemenu_hidden);
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void showMenu(){
-        Log.d(TAG, "showMenu()");
+        Log.e(TAG, "showMenu()");
 
         isMenuShow = true;
         Animation slide = AnimationUtils.loadAnimation(this, R.anim.sidemenu_show);
@@ -124,12 +124,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         viewLayout.setVisibility(View.VISIBLE);
         viewLayout.setEnabled(true);
         searchLayout.setVisibility(View.GONE);
-        Log.e(TAG, "메뉴버튼 클릭");
     }
 
 //    카페 검색
     public void searchCafe(){
-        Log.d(TAG, "searchCafe()");
+        Log.e(TAG, "searchCafe()");
     }
 
 //    onClick 이벤트
@@ -151,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //    지도가 로딩된 후 작동
     @Override
     public void onMapReady(@NonNull final NaverMap naverMap) {
-        Log.d(TAG, "onMapReady()");
+        Log.e(TAG, "onMapReady()");
 
         //최소, 최대 줌 설정
         naverMap.setMinZoom(12.0);
@@ -162,6 +161,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         naverMap.setLocationSource(locationSource);
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
+
+        //나침반 활성화
+        CompassView compassView = findViewById(R.id.compassView);
+        compassView.setMap(naverMap);
 
         // 최근 위치로 이동
         preferences = getSharedPreferences("LatestLocation", MODE_PRIVATE);
@@ -186,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.d(TAG, "onRequestPermissionsResult()");
+        Log.e(TAG, "onRequestPermissionsResult()");
 
         switch(requestCode){
             case ACCESS_LOCATION_PERMISSION_REQUEST_CODE:

@@ -3,9 +3,18 @@ package com.example.cafejabi;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraAnimation;
@@ -17,22 +26,107 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.util.FusedLocationSource;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback , View.OnClickListener {
+
+    private final String TAG = "MainActivity";
+
     private static final int ACCESS_LOCATION_PERMISSION_REQUEST_CODE = 100;
+
+    private Context mContext = MainActivity.this;
+
     private FusedLocationSource locationSource;
     private Location lastLocation;
 
     private SharedPreferences preferences;
+
+    private ViewGroup searchLayout;   //사이드 나왔을때 클릭방지할 영역
+    private ViewGroup viewLayout;   //전체 감싸는 영역
+    private ViewGroup sideLayout;   //사이드바만 감싸는 영역
+
+    private Boolean isMenuShow = false;
+    private Boolean isExitFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        지도 보이기
+        init();
+
+        //지도 보이기
         MapFragment mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
+
+        //사이드메뉴 활성화
+        addSideMenu();
+    }
+
+    private void init(){
+        findViewById(R.id.button_menu).setOnClickListener(this);
+
+        searchLayout = findViewById(R.id.linearLayout_search);
+        viewLayout = findViewById(R.id.fl_silde);
+        sideLayout = findViewById(R.id.view_sildemenu);
+    }
+
+//    사이드메뉴 추가
+    private void addSideMenu(){
+
+        SideMenuView sideMenu = new SideMenuView(mContext);
+        sideLayout.addView(sideMenu);
+
+        viewLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        sideMenu.setEventListener(new SideMenuView.EventListener() {
+            @Override
+            public void btnCancel() {
+                Log.e(TAG, "btnCancel");
+                closeMenu();
+            }
+        });
+    }
+
+    public void closeMenu(){
+
+        isMenuShow = false;
+        Animation slide = AnimationUtils.loadAnimation(mContext, R.anim.sidemenu_hidden);
+        sideLayout.startAnimation(slide);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                viewLayout.setVisibility(View.GONE);
+                viewLayout.setEnabled(false);
+                searchLayout.setVisibility(View.VISIBLE);
+            }
+        }, 450);
+    }
+
+    public void showMenu(){
+
+        isMenuShow = true;
+        Animation slide = AnimationUtils.loadAnimation(this, R.anim.sidemenu_show);
+        sideLayout.startAnimation(slide);
+        viewLayout.setVisibility(View.VISIBLE);
+        viewLayout.setEnabled(true);
+        searchLayout.setVisibility(View.GONE);
+        Log.e(TAG, "메뉴버튼 클릭");
+    }
+
+    //    onClick 이벤트
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()){
+
+            case R.id.button_menu :
+                showMenu();
+                break;
+        }
     }
 
 //    지도가 로딩된 후 작동
@@ -93,5 +187,39 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             editor.putFloat("Longitude", (float)lastLocation.getLongitude());
         }
         editor.apply();
+    }
+
+//    back 버튼 두 번 누르면 종료
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(isMenuShow){
+            closeMenu();
+        }else{
+
+            if(isExitFlag){
+                finish();
+            } else {
+
+                isExitFlag = true;
+                Toast.makeText(this, "뒤로가기를 한번더 누르시면 앱이 종료됩니다.",  Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isExitFlag = false;
+                    }
+                }, 2000);
+            }
+        }
     }
 }

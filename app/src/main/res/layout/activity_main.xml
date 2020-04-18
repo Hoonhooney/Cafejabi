@@ -11,6 +11,7 @@
         android:name="com.naver.maps.map.MapFragment" />
 
     <LinearLayout
+        android:id="@+id/linearLayout_search"
         android:background="@drawable/border_layout"
         android:layout_alignParentTop="true"
         android:orientation="horizontal"
@@ -49,4 +50,22 @@
 
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/fl_silde"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.75"
+            android:background="#202735"/>
+
+        <FrameLayout
+            android:id="@+id/view_sildemenu"
+            android:layout_width="280dp"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 </RelativeLayout>

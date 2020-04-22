@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
@@ -56,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Boolean isMenuShow = false;
     private Boolean isExitFlag = false;
+    private Boolean isLoggedIn = false;
+
+    private FirebaseAuth mAuth;     //Firebase 인증 여부 확인용
+    private FirebaseUser currentUser;   //로그인 사용자
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +88,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         sideLayout = findViewById(R.id.view_sildemenu);
 
         editText_search = findViewById(R.id.editText_search_cafe);
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        currentUser = mAuth.getCurrentUser();
+        isLoggedIn = currentUser != null;
     }
 
 //    사이드메뉴 추가
     private void addSideMenu(){
 
         SideMenuView sideMenu = new SideMenuView(mContext);
+        //로그인 여부에 따라 메뉴 모습 달라짐
+        sideMenu.isloggedin = isLoggedIn;
+
         sideLayout.addView(sideMenu);
 
         viewLayout.setOnClickListener(new View.OnClickListener() {

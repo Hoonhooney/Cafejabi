@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.view.View;
@@ -18,7 +19,11 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
 
     public EventListener listener;
 
+    private LinearLayout linearLayout_login, linearLayout_logout;
+
     private ListView listView_menu;
+
+    public boolean isloggedin;
 
     public void setEventListener(EventListener l){
         listener = l;
@@ -26,6 +31,8 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
 
     public interface EventListener{
         void btnCancel();
+        void btnGoLogin();
+        void btnGoEdit();
     }
 
     public SideMenuView(Context context){
@@ -39,6 +46,22 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
 
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.menu_side, this, true);
+
+        linearLayout_login = findViewById(R.id.linearLayout_menu_login);
+        linearLayout_logout = findViewById(R.id.linearLayout_menu_logout);
+
+        //로그아웃 상태, 로그인 상태 메뉴 다르게 보이기
+        if(!isloggedin){
+            linearLayout_login.setVisibility(GONE);
+            linearLayout_logout.setVisibility(VISIBLE);
+
+            findViewById(R.id.button_go_login).setOnClickListener(this);
+        }else{
+            linearLayout_login.setVisibility(VISIBLE);
+            linearLayout_logout.setVisibility(GONE);
+
+            findViewById(R.id.button_go_edit).setOnClickListener(this);
+        }
 
         //메뉴 ListView
         findViewById(R.id.button_menu_back).setOnClickListener(this);
@@ -71,6 +94,14 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         switch(view.getId()){
             case R.id.button_menu_back:
                 listener.btnCancel();
+                break;
+
+            case R.id.button_go_login:
+                listener.btnGoLogin();
+                break;
+
+            case R.id.button_go_edit:
+                listener.btnGoEdit();
                 break;
 
             default:

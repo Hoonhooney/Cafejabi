@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -28,6 +32,8 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.CompassView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback , View.OnClickListener {
 
@@ -90,11 +96,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        //사이드메뉴 버튼 클릭 리스너
         sideMenu.setEventListener(new SideMenuView.EventListener() {
             @Override
             public void btnCancel() {
                 Log.e(TAG, "btnCancel");
                 closeMenu();
+            }
+
+            @Override
+            public void btnGoLogin() {
+                Log.e(TAG, "btnGoLogin");
+
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void btnGoEdit() {
+                Log.e(TAG, "btnGoEdit");
             }
         });
     }
@@ -129,6 +150,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //    카페 검색
     public void searchCafe(){
         Log.e(TAG, "searchCafe()");
+
+        String url = "nmap://search?query="+editText_search.getText()+"&appname=com.example.cafejabi";
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+
+        List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        if (list == null || list.isEmpty()) {
+            this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.nhn.android.nmap")));
+        } else {
+            this.startActivity(intent);
+        }
     }
 
 //    onClick 이벤트

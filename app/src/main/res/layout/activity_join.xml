@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="핸드폰 번호 확인"
-        android:textSize="20"
+        android:textSize="20sp"
         android:layout_gravity="center"
         android:gravity="center"
         ></Button>
@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="닉네임 중복 확인"
-        android:textSize="20"
+        android:textSize="20sp"
         android:layout_gravity="center"
         android:gravity="center"
         ></Button>
@@ -114,21 +114,21 @@
                 android:layout_height="match_parent"
                 android:checked="true"
                 android:text="학생"
-                android:textSize="20"
+                android:textSize="20sp"
                 ></RadioButton>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:checked="true"
                 android:text="직장인"
-                android:textSize="20"
+                android:textSize="20sp"
                 ></RadioButton>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:checked="true"
                 android:text="무직"
-                android:textSize="20"
+                android:textSize="20sp"
                 ></RadioButton>
 
         </RadioGroup>
@@ -137,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="선택완료"
-            android:textSize="20"
+            android:textSize="20sp"
             ></Button>
 
     </LinearLayout>
@@ -191,7 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="선택완료"
-            android:textSize="20"
+            android:textSize="20sp"
             ></Button>
 
     </LinearLayout>

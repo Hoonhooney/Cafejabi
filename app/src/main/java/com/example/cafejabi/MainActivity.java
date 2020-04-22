@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         //사이드메뉴 활성화
+        isLoggedIn = currentUser != null;
         addSideMenu();
     }
 
@@ -93,15 +94,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mAuth = FirebaseAuth.getInstance();
         // Check if user is signed in (non-null) and update UI accordingly.
         currentUser = mAuth.getCurrentUser();
-        isLoggedIn = currentUser != null;
     }
 
 //    사이드메뉴 추가
     private void addSideMenu(){
 
-        SideMenuView sideMenu = new SideMenuView(mContext);
-        //로그인 여부에 따라 메뉴 모습 달라짐
-        sideMenu.isloggedin = isLoggedIn;
+        SideMenuView sideMenu = new SideMenuView(mContext, isLoggedIn);
 
         sideLayout.addView(sideMenu);
 
@@ -113,12 +111,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //사이드메뉴 버튼 클릭 리스너
         sideMenu.setEventListener(new SideMenuView.EventListener() {
+            //메뉴 닫기
             @Override
             public void btnCancel() {
                 Log.e(TAG, "btnCancel");
                 closeMenu();
             }
 
+            //로그인
             @Override
             public void btnGoLogin() {
                 Log.e(TAG, "btnGoLogin");
@@ -128,9 +128,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 finish();
             }
 
+            //회원 정보 수정
             @Override
             public void btnGoEdit() {
                 Log.e(TAG, "btnGoEdit");
+            }
+
+            //로그아웃
+            @Override
+            public void btnLogout() {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(mContext, LoginActivity.class));
+                finish();
             }
         });
     }

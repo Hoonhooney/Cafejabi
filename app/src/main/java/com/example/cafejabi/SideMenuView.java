@@ -1,6 +1,7 @@
 package com.example.cafejabi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.AdapterView;
@@ -9,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.view.View;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.EventListener;
@@ -33,10 +36,12 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         void btnCancel();
         void btnGoLogin();
         void btnGoEdit();
+        void btnLogout();
     }
 
-    public SideMenuView(Context context){
+    public SideMenuView(Context context, boolean isloggedin){
         this(context, null);
+        this.isloggedin = isloggedin;
         init();
     }
 
@@ -51,6 +56,11 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         linearLayout_logout = findViewById(R.id.linearLayout_menu_logout);
 
         //로그아웃 상태, 로그인 상태 메뉴 다르게 보이기
+        final List<String> list_menu = new ArrayList<>();
+        list_menu.add("자주 가는 카페");
+        list_menu.add("찜 카페");
+        list_menu.add("설정");
+
         if(!isloggedin){
             linearLayout_login.setVisibility(GONE);
             linearLayout_logout.setVisibility(VISIBLE);
@@ -59,6 +69,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         }else{
             linearLayout_login.setVisibility(VISIBLE);
             linearLayout_logout.setVisibility(GONE);
+            list_menu.add("로그아웃");
 
             findViewById(R.id.button_go_edit).setOnClickListener(this);
         }
@@ -67,11 +78,6 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         findViewById(R.id.button_menu_back).setOnClickListener(this);
 
         listView_menu = findViewById(R.id.listView_menu);
-
-        final List<String> list_menu = new ArrayList<>();
-        list_menu.add("자주 가는 카페");
-        list_menu.add("찜 카페");
-        list_menu.add("설정");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 R.layout.item_menu, list_menu);
@@ -83,7 +89,9 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 switch (list_menu.get(position)){
-
+                    case "로그아웃":
+                        listener.btnLogout();
+                        break;
                 }
             }
         });

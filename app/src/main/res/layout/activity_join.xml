@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:src="@drawable/ic_launcher_foreground"
+        ></ImageView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="회원가입"
+        android:gravity="center"
+        android:textSize="50sp"
+        android:layout_gravity="center"
+        android:background="@android:color/holo_blue_light"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="나이 : "
+            android:textSize="30sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="핸드폰 번호 : "
+            android:textSize="30sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></EditText>
+    </LinearLayout>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="핸드폰 번호 확인"
+        android:textSize="20"
+        android:layout_gravity="center"
+        android:gravity="center"
+        ></Button>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="닉네임 : "
+            android:textSize="30sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></EditText>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임 중복 확인"
+        android:textSize="20"
+        android:layout_gravity="center"
+        android:gravity="center"
+        ></Button>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="직업 : "
+            android:textSize="30sp"
+            ></TextView>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="학생"
+                android:textSize="20"
+                ></RadioButton>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="직장인"
+                android:textSize="20"
+                ></RadioButton>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="무직"
+                android:textSize="20"
+                ></RadioButton>
+
+        </RadioGroup>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="선택완료"
+            android:textSize="20"
+            ></Button>
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="목적 : "
+            android:textSize="30sp"
+            ></TextView>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="공부"
+                android:textSize="20sp"
+                ></RadioButton>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="휴식"
+                android:textSize="20sp"
+                ></RadioButton>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="사진"
+                android:textSize="20sp"
+                ></RadioButton>
+
+        </RadioGroup>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="선택완료"
+            android:textSize="20"
+            ></Button>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        ></Button>
+
+</LinearLayout>

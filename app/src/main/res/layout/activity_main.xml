@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.75"
-            android:background="#202735"/>
+            android:background="#202735" />
 
         <FrameLayout
             android:id="@+id/view_sildemenu"

@@ -15,91 +15,89 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="cafe"
+        android:text="카페 등록하기"
         android:gravity="center"
-        android:textSize="70sp"
+        android:textSize="50sp"
         android:layout_gravity="center"
         android:background="@android:color/holo_blue_light"
         />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="카페에서 공부하고 싶어요"
-        android:textSize="35sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@android:color/holo_green_light"
-        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-
-        <EditText
-            android:id="@+id/editText_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-        <EditText
-            android:id="@+id/editText_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="로그인" />
-
-    <Button
-        android:id="@+id/button_login_kakao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="카카오계정 로그인" />
-
-    <Button
-        android:id="@+id/button_login_facebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="페이스북 계정 로그인" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        >
-        <Button
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이디/비밀번호 찾기"
-            android:layout_weight="1"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="회원가입"
-            android:layout_weight="1"
-            />
+            android:layout_height="match_parent"
+            android:text="카페 이름 : "
+            android:textSize="30sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></EditText>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="사업자 등록 번호 : "
+            android:textSize="30sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></EditText>
+    </LinearLayout>
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="비회원으로 시작하기"
+        android:text="사업자 등록 번호 확인"
+        android:textSize="20sp"
         android:layout_gravity="center"
         android:gravity="center"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="카페 주소 : "
+            android:textSize="30sp"
+            ></TextView>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></EditText>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="주소 확인"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="카페 등록"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
 </LinearLayout>

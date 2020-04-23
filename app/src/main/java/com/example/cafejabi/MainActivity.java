@@ -2,6 +2,9 @@ package com.example.cafejabi;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import android.widget.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -65,6 +69,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseAuth mAuth;     //Firebase 인증 여부 확인용
     private FirebaseUser currentUser;   //로그인 사용자
 
+    private IntroActivity adapter;    // 사용자, 사장님 페이지
+    private ViewPager viewPager;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +89,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //사이드메뉴 활성화
         isLoggedIn = currentUser != null;
         addSideMenu();
+
+        // 초기 페이지 보이기
+        viewPager = (ViewPager) findViewById(R.id.view);
+        adapter = new IntroActivity(this);
+        viewPager.setAdapter((PagerAdapter) adapter);
+
     }
 
     private void init(){

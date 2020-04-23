@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.naver.maps.geometry.LatLng;
@@ -36,6 +37,7 @@ import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.CompassView;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback , View.OnClickListener {
 
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationSource locationSource;
     private Location lastLocation;
 
-    private SharedPreferences preferences;
+    private SharedPreferences locationPreferences, loginPreferences;
 
     private ViewGroup searchLayout;   //사이드 나왔을때 클릭방지할 영역
     private ViewGroup viewLayout;   //전체 감싸는 영역
@@ -90,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         editText_search = findViewById(R.id.editText_search_cafe);
 
+        loginPreferences = getSharedPreferences("login", MODE_PRIVATE);
+
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -123,8 +127,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void btnGoLogin() {
                 Log.e(TAG, "btnGoLogin");
 
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(mContext, LoginActivity.class));
                 finish();
             }
 
@@ -137,7 +140,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             //로그아웃
             @Override
             public void btnLogout() {
-                FirebaseAuth.getInstance().signOut();
+                mAuth.signOut();
+
+                String method = loginPreferences.getString("method", null);
+                if(method != null && method.equals("Facebook"))
+                    LoginManager.getInstance().logOut();
+
+                SharedPreferences.Editor editor = loginPreferences.edit();
+                editor.clear();
+                editor.apply();
+
                 startActivity(new Intent(mContext, LoginActivity.class));
                 finish();
             }
@@ -224,9 +236,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         compassView.setMap(naverMap);
 
         // 최근 위치로 이동
-        preferences = getSharedPreferences("LatestLocation", MODE_PRIVATE);
-        double lat = (double)preferences.getFloat("Latitude", 37.2788f);
-        double lon = (double)preferences.getFloat("Longitude", 127.0437f);
+        locationPreferences = getSharedPreferences("LatestLocation", MODE_PRIVATE);
+        double lat = (double)locationPreferences.getFloat("Latitude", 37.2788f);
+        double lon = (double)locationPreferences.getFloat("Longitude", 127.0437f);
 
         naverMap.setCameraPosition(new CameraPosition(new LatLng(lat, lon), 17, 0, 0));
 
@@ -261,8 +273,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onPause();
 
         // 현위치 좌표 저장하기
-        preferences = getSharedPreferences("LatestLocation", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
+        locationPreferences = getSharedPreferences("LatestLocation", MODE_PRIVATE);
+        SharedPreferences.Editor editor = locationPreferences.edit();
         if(lastLocation != null){
             editor.putFloat("Latitude", (float)lastLocation.getLatitude());
             editor.putFloat("Longitude", (float)lastLocation.getLongitude());

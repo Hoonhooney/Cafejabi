@@ -73,8 +73,8 @@
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/button_login_facebook"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp" />
@@ -92,6 +92,7 @@
             android:layout_weight="1"
             />
         <Button
+            android:id="@+id/button_go_join"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="회원가입"
@@ -99,6 +100,7 @@
             />
     </LinearLayout>
     <Button
+        android:id="@+id/button_no_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="비회원으로 시작하기"

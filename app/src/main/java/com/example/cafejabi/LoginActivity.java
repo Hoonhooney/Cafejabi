@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -22,12 +23,15 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,6 +44,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
 
     private ProgressDialog progressDialog;
+
+    private String method = "";
+    private SharedPreferences loginPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +62,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editText_password = findViewById(R.id.editText_password);
 
         findViewById(R.id.button_login).setOnClickListener(this);
-//        findViewById(R.id.button_login_facebook).setOnClickListener(this);
+        findViewById(R.id.button_go_join).setOnClickListener(this);
+        findViewById(R.id.button_no_login).setOnClickListener(this);
 
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
@@ -82,6 +90,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
         mAuth = FirebaseAuth.getInstance();
+        loginPreferences = getSharedPreferences("login", MODE_PRIVATE);
 
         //프로그래스바
         progressDialog = new ProgressDialog(this);
@@ -96,9 +105,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 loginEmail();
                 break;
 
-//            case R.id.button_login_facebook:
-//                loginFacebook();
-//                break;
+            case R.id.button_go_join:
+                method = "Email";
+                goActivity(JoinActivity.class);
+                break;
+
+            case R.id.button_no_login:
+                goActivity(MainActivity.class);
         }
     }
 
@@ -131,7 +144,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Log.d(TAG, "signInWithEmail:success");
                                 progressDialog.dismiss();
 
-                                goMainActivity();
+                                method = "Email";
+                                goActivity(MainActivity.class);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -144,6 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+//   Facebook login
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
@@ -157,21 +172,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            goMainActivity();
-//                            updateUI(user);
+                            method = "Facebook";
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("users").whereEqualTo("uid", user.getUid())
+                                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    if(queryDocumentSnapshots.getDocuments().isEmpty()){
+                                        goActivity(JoinActivity.class);
+                                    }else
+                                        goActivity(MainActivity.class);
+                                }
+                            });
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
                         }
                     }
                 });
     }
 
-    private void goMainActivity(){
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+    private void goActivity(Class c){
+        Intent intent = new Intent(LoginActivity.this, c);
+        SharedPreferences.Editor editor = loginPreferences.edit();
+        editor.putString("method", method);
+        editor.apply();
         startActivity(intent);
         finish();
     }

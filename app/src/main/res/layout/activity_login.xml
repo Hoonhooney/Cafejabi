@@ -12,15 +12,16 @@
         android:background="@null"
         android:src="@drawable/ic_launcher_foreground"
         ></ImageView>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="cafe"
-        android:gravity="center"
-        android:textSize="70sp"
         android:layout_gravity="center"
         android:background="@android:color/holo_blue_light"
-        />
+        android:gravity="center"
+        android:text="cafe"
+        android:textSize="70sp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

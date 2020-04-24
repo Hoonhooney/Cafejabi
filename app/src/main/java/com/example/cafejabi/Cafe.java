@@ -1,17 +1,17 @@
 package com.example.cafejabi;
 
 public class Cafe {
-    private String cid;
-    private String cafe_name;
-    private double locate_x;
-    private double locate_y;
-    private int total_table;
-    private int table;
-    private long update_time;
-    private String cafe_info;
-    private int open_time;
-    private int close_time;
-    private long update_time_alarm;
+    private String cid;                  //카페 관리자 유저
+    private String cafe_name;            //카페 이름
+    private double locate_x;             //카페 위치 x좌표
+    private double locate_y;             //카페 위치 y좌표
+    private int total_table;             //카페에 있는 총 테이블 개수
+    private int table;                   //남은 테이블 개수 or 카페 수용인원 퍼센트? 단계
+    private long table_update_time;            //좌석업데이트를 한 시간
+    private String cafe_info;                  //카페 정보
+    private int open_time;                     //카페 여는 시간
+    private int close_time;                    //카페 닫는 시간
+    private long update_time_alarm;            //좌석 업데이트 알람 설정 시간
 
     public Cafe() {
     }
@@ -75,12 +75,12 @@ public class Cafe {
         this.table = table;
     }
 
-    public long getUpdate_time() {
-        return update_time;
+    public long getTable_update_time() {
+        return table_update_time;
     }
 
-    public void setUpdate_time(long update_time) {
-        this.update_time = update_time;
+    public void setTable_update_time(long table_update_time) {
+        this.table_update_time = table_update_time;
     }
 
     public String getCafe_info() {

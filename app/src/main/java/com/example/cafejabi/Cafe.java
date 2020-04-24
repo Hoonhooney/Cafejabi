@@ -2,6 +2,7 @@ package com.example.cafejabi;
 
 public class Cafe {
     private String cid;
+    private String cafe_name;
     private double locate_x;
     private double locate_y;
     private int total_table;
@@ -15,8 +16,9 @@ public class Cafe {
     public Cafe() {
     }
 
-    public Cafe(String cid, double locate_x, double locate_y, int total_table, int open_time, int close_time, long update_time_alarm) {
+    public Cafe(String cid, String cafe_name, double locate_x, double locate_y, int total_table, int open_time, int close_time, long update_time_alarm) {
     this.cid = cid;
+    this.cafe_name = cafe_name;
     this.locate_x = locate_x;
     this.locate_y = locate_y;
     this.total_table = total_table;
@@ -31,6 +33,14 @@ public class Cafe {
 
     public void setCid(String cid) {
         this.cid = cid;
+    }
+
+    public String getCafe_name() {
+        return cafe_name;
+    }
+
+    public void setCafe_name(String cafe_name) {
+        this.cafe_name = cafe_name;
     }
 
     public double getLocate_x() {

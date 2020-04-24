@@ -12,6 +12,7 @@ public class UserInfo {
     private List<String> style;
     private List<Cafe> visitedCafeList;
     private List<Cafe> likingCafeList;
+    private List<Cafe> managingCafeList;
 
     public UserInfo(){}
 
@@ -24,6 +25,7 @@ public class UserInfo {
         this.style = style;
         this.visitedCafeList = new ArrayList<>();
         this.likingCafeList = new ArrayList<>();
+        this.managingCafeList = new ArrayList<>();
     }
 
     public String getEmail() {
@@ -88,5 +90,13 @@ public class UserInfo {
 
     public void setLikingCafeList(List<Cafe> likingCafeList) {
         this.likingCafeList = likingCafeList;
+    }
+
+    public List<Cafe> getManagingCafeList() {
+        return managingCafeList;
+    }
+
+    public void setManagingCafeList(List<Cafe> managingCafeList) {
+        this.managingCafeList = managingCafeList;
     }
 }

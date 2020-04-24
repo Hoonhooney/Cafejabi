@@ -91,9 +91,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         addSideMenu();
 
         // 초기 페이지 보이기
-        viewPager = (ViewPager) findViewById(R.id.view);
-        adapter = new IntroActivity(this);
-        viewPager.setAdapter((PagerAdapter) adapter);
+//        viewPager = (ViewPager) findViewById(R.id.view);
+//        adapter = new IntroActivity(this);
+//        viewPager.setAdapter((PagerAdapter) adapter);
 
     }
 

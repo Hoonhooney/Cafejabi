@@ -13,11 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CafeRegisterActivity"></activity>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="ikkq6wbgvq" />
+        <meta-data
+            android:name="com.naver.search.CLIENT_ID"
+            android:value="${ApiNaverClientId}" />
+        <meta-data
+            android:name="com.naver.search.CLIENT_SECRET"
+            android:value="${ApiNaverClientSecret}" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id" />
@@ -48,14 +53,24 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".SplashActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".JoinActivity" />
+        <activity android:name=".CafeRegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".JoinActivity" />
+        <activity android:name=".SelectLocationPopupActivity" android:theme="@android:style/Theme.Dialog"/>
     </application>
 
 </manifest>

@@ -381,7 +381,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
                 //데이터 받기
                 Log.e(TAG, data.getStringExtra("SELECTED_CAFE_NAME")+"");
                 editText_cafe_name.setText(data.getStringExtra("SELECTED_CAFE_NAME"));
-                textView_cafe_address.setText("카페 주소 : "+data.getStringExtra("SELECTED_CAFE_ADDRESS"));
+                textView_cafe_address.setText(data.getStringExtra("SELECTED_CAFE_ADDRESS"));
 
                 Tm128 tm128 = new Tm128(data.getIntExtra("SELECTED_CAFE_MAPX", 0), data.getIntExtra("SELECTED_CAFE_MAPY", 0));
                 LatLng latLng = tm128.toLatLng();

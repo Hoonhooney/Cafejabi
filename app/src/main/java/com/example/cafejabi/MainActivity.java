@@ -68,10 +68,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ViewGroup searchLayout;   //사이드 나왔을때 클릭방지할 영역
     private ViewGroup viewLayout;   //전체 감싸는 영역
     private ViewGroup sideLayout;   //사이드바만 감싸는 영역
+    private ViewGroup bottomLayout;
 
     private EditText editText_search;
 
     private Boolean isMenuShow = false;
+    private Boolean isInfoShow = false;
     private Boolean isExitFlag = false;
     private Boolean isLoggedIn = false;
 
@@ -113,6 +115,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         searchLayout = findViewById(R.id.linearLayout_search);
         viewLayout = findViewById(R.id.fl_silde);
         sideLayout = findViewById(R.id.view_sildemenu);
+
+        bottomLayout = findViewById(R.id.view_bottominfo);
 
         editText_search = findViewById(R.id.editText_search_cafe);
 
@@ -203,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void showMenu(){
         Log.e(TAG, "showMenu()");
+        bottomLayout.removeAllViews();
 
         isMenuShow = true;
         Animation slide = AnimationUtils.loadAnimation(this, R.anim.sidemenu_show);
@@ -297,13 +302,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Cafe cafe = document.toObject(Cafe.class);
+                        final Cafe cafe = document.toObject(Cafe.class);
                         Log.d(TAG, cafe.getCafe_name()+"");
                         Marker marker = new Marker();
-                        marker.setPosition(new LatLng(cafe.getLocate_x(), cafe.getLocate_y()));
+                        final LatLng cafeLocation = new LatLng(cafe.getLocate_x(), cafe.getLocate_y());
+                        marker.setPosition(cafeLocation);
                         marker.setOnClickListener(new Overlay.OnClickListener() {
                             @Override
                             public boolean onClick(@NonNull Overlay overlay) {
+                                CameraUpdate cameraUpdate = CameraUpdate.scrollTo(cafeLocation)
+                                        .animate(CameraAnimation.Easing, 200);
+                                map.moveCamera(cameraUpdate);
+                                showCafeInfo(cafe);
                                 return false;
                             }
                         });
@@ -314,6 +324,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
+    }
+
+    private void showCafeInfo(Cafe cafe){
+        Log.d(TAG, "showCafeInfo()");
+
+        isInfoShow = true;
+
+        bottomLayout.removeAllViews();
+        BottomCafeInformationView bottomInfoView = new BottomCafeInformationView(mContext, cafe);
+        bottomLayout.addView(bottomInfoView);
+
+        Animation slide = AnimationUtils.loadAnimation(this, R.anim.bottominfo_show);
+        bottomLayout.startAnimation(slide);
+        bottomLayout.setVisibility(View.VISIBLE);
+        sideLayout.setEnabled(true);
     }
 
 //    위치 서비스 권한

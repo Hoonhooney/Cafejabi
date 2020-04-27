@@ -80,8 +80,9 @@ public class SelectLocationPopupActivity extends Activity {
                 Log.d(TAG, object.toString());
                 String title = object.getString("title").replace("<b>", "").replace("</b>","");
                 String address = object.getString("address");
-                String mapx = object.getString("mapx");
-                String mapy = object.getString("mapy");
+                int mapx = object.getInt("mapx");
+                int mapy = object.getInt("mapy");
+                Log.d(TAG, mapx+", "+mapy);
 
                 adapter.addItem(new SimpleCafeInfo(title, address, mapx, mapy));
             }
@@ -137,9 +138,9 @@ public class SelectLocationPopupActivity extends Activity {
     public static class SimpleCafeInfo{
         private String cafeName;
         private String cafeAddress;
-        private String mapx, mapy;
+        private int mapx, mapy;
 
-        public SimpleCafeInfo(String cafeName, String cafeAddress, String mapx, String mapy) {
+        public SimpleCafeInfo(String cafeName, String cafeAddress, int mapx, int mapy) {
             this.cafeName = cafeName;
             this.cafeAddress = cafeAddress;
             this.mapx = mapx;
@@ -154,11 +155,11 @@ public class SelectLocationPopupActivity extends Activity {
             return cafeAddress;
         }
 
-        public String getMapx() {
+        public int getMapx() {
             return mapx;
         }
 
-        public String getMapy() {
+        public int getMapy() {
             return mapy;
         }
     }

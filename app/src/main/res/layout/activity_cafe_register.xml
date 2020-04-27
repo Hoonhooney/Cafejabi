@@ -1,120 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@null"
-        android:src="@drawable/ic_launcher_foreground"
-        />
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="카페 등록하기"
-        android:gravity="center"
-        android:textSize="40sp"
-        android:layout_gravity="center"
-        android:background="@android:color/holo_blue_light"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="카페 이름 : "
-            android:textSize="20sp"
-            />
-        <EditText
-            android:id="@+id/editText_cafe_name"
-            android:hint="ex) OOO카페 아주대점"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button_check_cafe_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="지도로 카페 검색"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/holo_blue_light"
+                android:gravity="center"
+                android:text="카페 등록하기"
+                android:textSize="40sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="사업자 등록 번호 : "
-            android:textSize="20sp"
-            />
-        <EditText
-            android:id="@+id/editText_business_id"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="카페 이름 : "
+                    android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/button_cam_business_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="사업자 등록증 인증"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
-    <Button
-        android:id="@+id/button_check_business_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="사업자 등록 번호 확인"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
+                <EditText
+                    android:id="@+id/editText_cafe_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="ex) OOO카페 아주대점" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="카페 주소 : "
-            android:textSize="20sp"
-            />
-        <EditText
-            android:id="@+id/editText_cafe_address"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="여기에 카페 이름을 검색하세요"
-            />
-    </LinearLayout>
+            <Button
+                android:id="@+id/button_check_cafe_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="지도로 카페 검색"
+                android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/button_register_cafe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="카페 등록"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView_search_cafe_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="사업자 등록 번호 : "
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/editText_business_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_cam_business_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="사업자 등록증 인증"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="내 카페 소개하기"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editText_cafe_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="영업 시간"
+                android:textSize="20sp" />
+
+            <CheckBox
+                android:id="@+id/checkbox_24working"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24시간 영업" />
+
+            <me.bendik.simplerangeview.SimpleRangeView
+                android:id="@+id/rangeSeekBar_set_working_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:activeLabelColor="@color/colorPrimary"
+                app:activeLineColor="@color/colorPrimary"
+                app:activeThumbColor="@color/colorPrimary"
+                app:activeThumbLabelColor="@color/colorPrimary"
+                app:count="18"
+                app:labelColor="#808080"
+                app:labelFontSize="13sp"
+                app:labelMarginBottom="16dp"
+                app:movable="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="실시간 카페 자리 현황 정보 제공 서비스"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="카페 관리자는 영업시간 내 카페 이용자들에게 일정 시간에 한 번 실시간
+자리 현황을 직접 알려주는 카페 관리자 주관 서비스입니다.\n
+이 기능 사용을 등록하면 정해진 시간에 실시간 자리 현황을 갱신을 요청
+하는 푸쉬 알림이 일어나며, 카페 관리자는 이 요청에 응할 수 있습니다."
+                android:textSize="17sp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_allow_seat_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_allow_seat_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="위 서비스 사용에 동의합니다." />
+
+                <RadioButton
+                    android:id="@+id/rb_disallow_seat_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="위 서비스 사용에 동의하지 않습니다." />
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_allow_seat_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="푸쉬 알림 허용 시간"
+                    android:textSize="20sp" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_alarm_same_working_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="영업시간과 동일" />
+
+                <me.bendik.simplerangeview.SimpleRangeView
+                    android:id="@+id/rangeSeekBar_set_alarm_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:activeLabelColor="@color/colorPrimary"
+                    app:activeLineColor="@color/colorPrimary"
+                    app:activeThumbColor="@color/colorPrimary"
+                    app:activeThumbLabelColor="@color/colorPrimary"
+                    app:count="18"
+                    app:labelColor="#808080"
+                    app:labelFontSize="13sp"
+                    app:labelMarginBottom="16dp"
+                    app:movable="true" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="푸쉬 알림 간격"
+                    android:textSize="20sp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_set_alarm_gap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_gap_15min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15분" />
+
+                    <RadioButton
+                        android:id="@+id/rb_gap_30min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="30분" />
+
+                    <RadioButton
+                        android:id="@+id/rb_gap_60min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1시간" />
+
+                    <RadioButton
+                        android:id="@+id/rb_gap_120min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2시간" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_register_cafe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="카페 등록"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

@@ -19,7 +19,7 @@
             android:value="@string/naver_maps_client_id" />
         <meta-data
             android:name="com.naver.search.CLIENT_ID"
-            android:value="@string/naver_maps_client_id" />
+            android:value="@string/naver_search_client_id" />
         <meta-data
             android:name="com.naver.search.CLIENT_SECRET"
             android:value="@string/naver_search_client_secret" />

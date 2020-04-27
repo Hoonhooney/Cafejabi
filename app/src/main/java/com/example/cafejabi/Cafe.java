@@ -3,12 +3,15 @@ package com.example.cafejabi;
 public class Cafe {
     private String cid;                  //카페 관리자 유저
     private String cafe_name;            //카페 이름
+    private String address;              //카페 주소
     private double locate_x;             //카페 위치 x좌표
     private double locate_y;             //카페 위치 y좌표
     private int total_table;             //카페에 있는 총 테이블 개수
     private int table;                   //남은 테이블 개수 or 카페 수용인원 퍼센트? 단계
     private long table_update_time;            //좌석업데이트를 한 시간
     private String cafe_info;                  //카페 정보
+    private boolean is24Working;               //24시간 영업 여부
+    private boolean allowAlarm;                //푸쉬알람서비스 여부
     private int open_time;                     //카페 여는 시간
     private int close_time;                    //카페 닫는 시간
     private long update_time_alarm;            //좌석 업데이트 알람 설정 시간
@@ -16,15 +19,16 @@ public class Cafe {
     public Cafe() {
     }
 
-    public Cafe(String cid, String cafe_name, double locate_x, double locate_y, int total_table, int open_time, int close_time, long update_time_alarm) {
+    public Cafe(String cid, String cafe_name, String address,
+                double locate_x, double locate_y, int total_table, boolean is24Working, boolean allowAlarm) {
     this.cid = cid;
     this.cafe_name = cafe_name;
+    this.address = address;
     this.locate_x = locate_x;
     this.locate_y = locate_y;
     this.total_table = total_table;
-    this.open_time=open_time;
-    this.close_time=close_time;
-    this.update_time_alarm=update_time_alarm;
+    this.is24Working = is24Working;
+    this.allowAlarm = allowAlarm;
     }
 
     public String getCid() {
@@ -41,6 +45,14 @@ public class Cafe {
 
     public void setCafe_name(String cafe_name) {
         this.cafe_name = cafe_name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public double getLocate_x() {
@@ -77,6 +89,22 @@ public class Cafe {
 
     public long getTable_update_time() {
         return table_update_time;
+    }
+
+    public boolean isIs24Working() {
+        return is24Working;
+    }
+
+    public void setIs24Working(boolean is24Working) {
+        this.is24Working = is24Working;
+    }
+
+    public boolean isAllowAlarm() {
+        return allowAlarm;
+    }
+
+    public void setAllowAlarm(boolean allowAlarm) {
+        this.allowAlarm = allowAlarm;
     }
 
     public void setTable_update_time(long table_update_time) {

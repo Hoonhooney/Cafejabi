@@ -168,6 +168,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(new Intent(mContext, LoginActivity.class));
                 finish();
             }
+
+            @Override
+            public void btnGoRegisterCafe() {
+                startActivity(new Intent(mContext, CafeRegisterActivity.class));
+            }
         });
     }
 

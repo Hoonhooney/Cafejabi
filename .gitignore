@@ -14,3 +14,4 @@
 .cxx
 *.bat
 /.idea/misc.xml
+/app/src/main/res/values/ids.xml

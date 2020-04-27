@@ -16,13 +16,13 @@
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="ikkq6wbgvq" />
+            android:value="@string/naver_maps_client_id" />
         <meta-data
             android:name="com.naver.search.CLIENT_ID"
-            android:value="${ApiNaverClientId}" />
+            android:value="@string/naver_maps_client_id" />
         <meta-data
             android:name="com.naver.search.CLIENT_SECRET"
-            android:value="${ApiNaverClientSecret}" />
+            android:value="@string/naver_search_client_secret" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id" />

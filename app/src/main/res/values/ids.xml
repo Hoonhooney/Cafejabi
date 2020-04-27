@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="view" type="id" />
+
+<!--    API Keys-->
+    <string name="facebook_application_id" translatable="false">261464505027331</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb261464505027331</string>
+    <string name="naver_maps_client_id" translatable="false">ikkq6wbgvq</string>
+    <string name="naver_search_client_id" translatable="false">v21K3e3KSd0jyvYkpmXh</string>
+    <string name="naver_search_client_secret" translatable="false">gKIJnkb1mA</string>
 </resources>

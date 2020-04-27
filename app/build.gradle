@@ -1,12 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-def API_NAVER_CLIENTID = properties.getProperty('naver.search.client.id')
-def API_NAVER_CLIENTSECRET = properties.getProperty('naver.search.client.secret')
-
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -16,9 +10,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        manifestPlaceholders = [ApiNaverClientId    : API_NAVER_CLIENTID,
-                                ApiNaverClientSecret: API_NAVER_CLIENTSECRET]
     }
     buildTypes {
         release {

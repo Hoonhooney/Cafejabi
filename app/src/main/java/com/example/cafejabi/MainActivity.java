@@ -27,8 +27,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
@@ -37,9 +43,12 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.Overlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.CompassView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private IntroActivity adapter;    // 사용자, 사장님 페이지
     private ViewPager viewPager;
 
-
+    private List<Cafe> cafeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,6 +254,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         naverMap.setMinZoom(12.0);
         naverMap.setMaxZoom(20.0);
 
+        //symbol 크기 조정
+        naverMap.setSymbolScale(0.7f);
+
+        //카페 마킹하기
+        drawCafes(naverMap);
+
         // GPS 버튼 활성화
         locationSource = new FusedLocationSource(this, ACCESS_LOCATION_PERMISSION_REQUEST_CODE);
         naverMap.setLocationSource(locationSource);
@@ -270,6 +285,33 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // 최근 위치 정보 갱신
                 lastLocation.setLatitude(naverMap.getCameraPosition().target.latitude);
                 lastLocation.setLongitude(naverMap.getCameraPosition().target.longitude);
+            }
+        });
+    }
+
+    private void drawCafes(final NaverMap map){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("cafes").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Cafe cafe = document.toObject(Cafe.class);
+                        Log.d(TAG, cafe.getCafe_name()+"");
+                        Marker marker = new Marker();
+                        marker.setPosition(new LatLng(cafe.getLocate_x(), cafe.getLocate_y()));
+                        marker.setOnClickListener(new Overlay.OnClickListener() {
+                            @Override
+                            public boolean onClick(@NonNull Overlay overlay) {
+                                return false;
+                            }
+                        });
+                        marker.setMap(map);
+                    }
+                } else {
+                    Log.w(TAG, "Error getting documents.", task.getException());
+                }
             }
         });
     }

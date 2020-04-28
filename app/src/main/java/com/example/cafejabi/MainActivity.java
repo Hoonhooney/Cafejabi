@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseAuth mAuth;     //Firebase 인증 여부 확인용
     private FirebaseUser currentUser;   //로그인 사용자
 
-    private IntroActivity adapter;    // 사용자, 사장님 페이지
-    private ViewPager viewPager;
 
     private List<Cafe> cafeList;
 
@@ -105,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        viewPager = (ViewPager) findViewById(R.id.view);
 //        adapter = new IntroActivity(this);
 //        viewPager.setAdapter((PagerAdapter) adapter);
+
+        startActivity(new Intent(this, ViewPagerActivity.class));
 
     }
 

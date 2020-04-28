@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:src="@drawable/ic_launcher_foreground"
+        ></ImageView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="회원 정보 수정"
+        android:gravity="center"
+        android:textSize="50sp"
+        android:layout_gravity="center"
+        android:background="@android:color/holo_blue_light"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        > <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임 수정"
+        android:textSize="20sp"
+        ></TextView>
+
+        <EditText
+            android:id="@+id/new_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></EditText>
+    </LinearLayout>
+    <Button
+        android:id="@+id/new_name_ok_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="닉네임 중복 확인"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        ></Button>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        > <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="직업 수정"
+        android:textSize="20sp"
+        ></TextView>
+
+        <Button
+            android:id="@+id/job1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="직업1"
+            ></Button>
+
+        <Button
+            android:id="@+id/job2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="직업2"
+            ></Button>
+        <Button
+            android:id="@+id/job3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="직업3"
+            ></Button>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        > <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="목적 수정"
+        android:textSize="20sp"
+        ></TextView>
+
+        <Button
+            android:id="@+id/purpose1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목적1"
+            ></Button>
+
+        <Button
+            android:id="@+id/purpose2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목적2"
+            ></Button>
+        <Button
+            android:id="@+id/purpose3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목적3"
+            ></Button>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/new_info_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        ></Button>
+
+</LinearLayout>
+

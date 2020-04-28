@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -41,8 +42,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import me.bendik.simplerangeview.SimpleRangeView;
@@ -59,6 +62,10 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
     private RadioGroup radioGroup_allow_service, radioGroup_set_gap;
     private SimpleRangeView rangeSeekBar_set_working_time, rangeSeekBar_set_alarm_time;
     private LinearLayout linearLayout_allow_service;
+    private ListView listView_keywords;
+
+    private KeywordAdapter keywordAdapter;
+    private List<Keyword> keywords;
 
     private String searchApiClientId, searchApiClientSecret;
     private int gap;
@@ -98,6 +105,8 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 
         linearLayout_allow_service = findViewById(R.id.linearLayout_allow_seat_info);
 
+        listView_keywords = findViewById(R.id.listView_cafe_register_keywords);
+
         checkBox_is24Working.setOnCheckedChangeListener(this);
 
         radioGroup_allow_service.setOnCheckedChangeListener(this);
@@ -108,6 +117,20 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 
         setRangeSeekBar(rangeSeekBar_set_working_time);
         setRangeSeekBar(rangeSeekBar_set_alarm_time);
+
+        keywords = new ArrayList<>();
+
+        Log.e(TAG, keywords.size()+"");
+
+        keywordAdapter = new KeywordAdapter(keywords);
+        keywordAdapter.addItem(new Keyword("대규모"));
+        keywordAdapter.addItem(new Keyword("콘센트 제공"));
+        keywordAdapter.addItem(new Keyword("팀 프로젝트"));
+        keywordAdapter.addItem(new Keyword("분위기"));
+        keywordAdapter.addItem(new Keyword("데이트"));
+        keywordAdapter.addItem(new Keyword("공부"));
+        keywordAdapter.addItem(new Keyword("디저트"));
+        listView_keywords.setAdapter(keywordAdapter);
 
         //사용자 정보 불러오기
         mAuth = FirebaseAuth.getInstance();
@@ -325,7 +348,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         String description = editText_cafe_description.getText().toString();
 
         Cafe cafe = new Cafe(uid, cafeName, cafeAddress,
-                locate_x, locate_y, 0, is24Working, isAllowedWithAlarm);
+                locate_x, locate_y, 0, is24Working, isAllowedWithAlarm, new ArrayList<String>());
 
         if(!is24Working){
             cafe.setOpen_time(rangeSeekBar_set_working_time.getStart()+7);

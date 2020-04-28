@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -38,7 +39,8 @@
                     android:id="@+id/editText_cafe_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="ex) OOO카페 아주대점" />
+                    android:hint="ex) OOO카페 아주대점"
+                    android:maxLines="1"/>
             </LinearLayout>
 
             <Button
@@ -78,7 +80,8 @@
                 <EditText
                     android:id="@+id/editText_business_id"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:maxLines="1"/>
             </LinearLayout>
 
             <Button
@@ -100,7 +103,14 @@
             <EditText
                 android:id="@+id/editText_cafe_description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:maxLines="5"/>
+
+            <ListView
+                android:id="@+id/listView_cafe_register_keywords"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"/>
 
             <TextView
                 android:layout_width="match_parent"

@@ -1,5 +1,8 @@
 package com.example.cafejabi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cafe {
     private String cid;                  //카페 관리자 유저
     private String cafe_name;            //카페 이름
@@ -15,12 +18,13 @@ public class Cafe {
     private int open_time;                     //카페 여는 시간
     private int close_time;                    //카페 닫는 시간
     private long update_time_alarm;            //좌석 업데이트 알람 설정 시간
+    private List<String> keywords;             //카페 키워드 리스트
 
     public Cafe() {
     }
 
     public Cafe(String cid, String cafe_name, String address,
-                double locate_x, double locate_y, int total_table, boolean is24Working, boolean allowAlarm) {
+                double locate_x, double locate_y, int total_table, boolean is24Working, boolean allowAlarm, List<String> keywords) {
     this.cid = cid;
     this.cafe_name = cafe_name;
     this.address = address;
@@ -29,6 +33,7 @@ public class Cafe {
     this.total_table = total_table;
     this.is24Working = is24Working;
     this.allowAlarm = allowAlarm;
+    this.keywords = keywords;
     }
 
     public String getCid() {
@@ -141,5 +146,13 @@ public class Cafe {
 
     public void setUpdate_time_alarm(long update_time_alarm) {
         this.update_time_alarm = update_time_alarm;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
     }
 }

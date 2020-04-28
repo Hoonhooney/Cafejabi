@@ -65,6 +65,7 @@
         <activity android:name=".JoinActivity" />
         <activity android:name=".CafeRegisterActivity"/>
         <activity android:name=".SelectLocationPopupActivity" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".ViewPagerActivity"/>
     </application>
 
 </manifest>

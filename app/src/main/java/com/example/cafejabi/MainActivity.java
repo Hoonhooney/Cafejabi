@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import android.graphics.PointF;
 import android.widget.Adapter;
 
 import android.content.Context;
@@ -290,6 +292,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // 최근 위치 정보 갱신
                 lastLocation.setLatitude(naverMap.getCameraPosition().target.latitude);
                 lastLocation.setLongitude(naverMap.getCameraPosition().target.longitude);
+            }
+        });
+
+        naverMap.setOnMapLongClickListener(new NaverMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
+                bottomLayout.removeAllViews();
             }
         });
     }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout_item_keyword"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/keyword_default"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/textView_item_keyword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="keyword"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

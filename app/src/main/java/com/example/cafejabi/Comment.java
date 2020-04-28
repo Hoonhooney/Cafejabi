@@ -5,15 +5,16 @@ public class Comment {
     private UserInfo user;        //유저 이름
     private String comment;     //평가 댓글
     private int score;          //평가점수
-
+    private long update_time;   //코멘트 업데이트 시간
 
     public Comment() { }
 
-    public Comment(Cafe cafe, UserInfo user, String comment, int score)
+    public Comment(Cafe cafe, UserInfo user, String comment, int score, long update_time)
     {
         this.cafe=cafe;      //카페데이터에서 이름 꺼내온다.
         this.user=user;       //유저데이터에서 이름 꺼내온다.
         this.score=score;
+        this.update_time=update_time;
     }
 
     public Cafe getCafe() {
@@ -47,6 +48,10 @@ public class Comment {
     public void setScore(int score) {
         this.score = score;
     }
-    
-
+    public long getUpdate_time(){
+        return update_time;
+    }
+    public void setUpdate_time(long update_time) {
+        this.update_time=update_time;
+    }
 }

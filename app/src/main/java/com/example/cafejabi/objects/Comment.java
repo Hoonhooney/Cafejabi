@@ -1,4 +1,4 @@
-package com.example.cafejabi;
+package com.example.cafejabi.objects;
 
 public class Comment {
     private Cafe cafe;

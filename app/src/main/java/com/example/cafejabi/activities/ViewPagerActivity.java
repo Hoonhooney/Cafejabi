@@ -1,4 +1,4 @@
-package com.example.cafejabi;
+package com.example.cafejabi.activities;
 
 import android.os.Bundle;
 
@@ -7,6 +7,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.cafejabi.fragments.FirstFragment;
+import com.example.cafejabi.R;
+import com.example.cafejabi.fragments.SecondFragment;
+import com.example.cafejabi.fragments.ThirdFragment;
 
 public class ViewPagerActivity extends AppCompatActivity {
 

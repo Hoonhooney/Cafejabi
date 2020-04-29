@@ -1,4 +1,4 @@
-package com.example.cafejabi;
+package com.example.cafejabi.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.cafejabi.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -43,7 +43,7 @@
                 <data android:scheme="@string/facebook_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -52,7 +52,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".SplashActivity">
+        <activity android:name=".activities.SplashActivity">
 
              <intent-filter>
              <action android:name="android.intent.action.MAIN" />
@@ -61,11 +61,11 @@
              <category android:name="android.intent.category.LAUNCHER" />
              </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".JoinActivity" />
-        <activity android:name=".CafeRegisterActivity"/>
-        <activity android:name=".SelectLocationPopupActivity" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".ViewPagerActivity"/>
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.JoinActivity" />
+        <activity android:name=".activities.CafeRegisterActivity"/>
+        <activity android:name=".activities.SelectLocationPopupActivity" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".activities.ViewPagerActivity"/>
     </application>
 
 </manifest>

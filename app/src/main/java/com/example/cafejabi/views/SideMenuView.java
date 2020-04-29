@@ -1,7 +1,6 @@
-package com.example.cafejabi;
+package com.example.cafejabi.views;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.cafejabi.R;
+import com.example.cafejabi.objects.UserInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,12 +23,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
-import java.util.jar.Attributes;
 
 public class SideMenuView extends RelativeLayout implements View.OnClickListener {
     private static final String TAG = "SideMenuView";

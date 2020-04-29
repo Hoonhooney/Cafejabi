@@ -20,7 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cafejabi.views.BottomCafeInformationView;
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private FirebaseAuth mAuth;     //Firebase 인증 여부 확인용
     private FirebaseUser currentUser;   //로그인 사용자
-
+    private FirebaseFirestore db;   //Firebase database
 
     private List<Cafe> cafeList;
 
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void init(){
         findViewById(R.id.button_menu).setOnClickListener(this);
-        findViewById(R.id.button_search_cafe).setOnClickListener(this);
+//        findViewById(R.id.button_search_cafe).setOnClickListener(this);
 
         searchLayout = findViewById(R.id.linearLayout_search);
         viewLayout = findViewById(R.id.fl_silde);
@@ -117,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         bottomLayout = findViewById(R.id.view_bottominfo);
 
         editText_search = findViewById(R.id.editText_search_cafe);
+        editText_search.setSingleLine();
+        editText_search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 
         loginPreferences = getSharedPreferences("login", MODE_PRIVATE);
 
@@ -124,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mAuth = FirebaseAuth.getInstance();
         // Check if user is signed in (non-null) and update UI accordingly.
         currentUser = mAuth.getCurrentUser();
+
+        db = FirebaseFirestore.getInstance();
     }
 
 //    사이드메뉴 추가
@@ -215,23 +221,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         searchLayout.setVisibility(View.GONE);
     }
 
-//    카페 검색
-    public void searchCafe(){
-        Log.e(TAG, "searchCafe()");
-
-        String url = "nmap://search?query="+editText_search.getText()+"&appname=com.example.cafejabi";
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-
-        List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        if (list == null || list.isEmpty()) {
-            this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.nhn.android.nmap")));
-        } else {
-            this.startActivity(intent);
-        }
-    }
-
 //    onClick 이벤트
     @Override
     public void onClick(View view) {
@@ -242,9 +231,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 showMenu();
                 break;
 
-            case R.id.button_search_cafe:
-                searchCafe();
-                break;
+//            case R.id.button_search_cafe:
+//                searchCafe();
+//                break;
         }
     }
 
@@ -291,17 +280,32 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        //지도 길게 누르면 bottomLayout 제거
         naverMap.setOnMapLongClickListener(new NaverMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
                 bottomLayout.removeAllViews();
             }
         });
+
+        //검색 기능
+        editText_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH)
+                    searchCafe(naverMap);
+                return false;
+            }
+        });
+        findViewById(R.id.button_search_cafe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchCafe(naverMap);
+            }
+        });
     }
 
     private void drawCafes(final NaverMap map){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         db.collection("cafes").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -326,6 +330,26 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 } else {
                     Log.w(TAG, "Error getting documents.", task.getException());
+                }
+            }
+        });
+    }
+
+//    카페 검색
+    public void searchCafe(final NaverMap naverMap){
+        Log.e(TAG, "searchCafe()");
+
+        db.collection("cafes").whereGreaterThanOrEqualTo("cafe_name", editText_search.getText().toString())
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    Cafe resultCafe = task.getResult().getDocuments().get(0).toObject(Cafe.class);
+
+                    CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(resultCafe.getLocate_x(), resultCafe.getLocate_y()))
+                            .animate(CameraAnimation.Easing, 200);
+                    naverMap.moveCamera(cameraUpdate);
+                    showCafeInfo(resultCafe);
                 }
             }
         });

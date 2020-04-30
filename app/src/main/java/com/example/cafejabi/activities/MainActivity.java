@@ -21,6 +21,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +53,7 @@ import com.naver.maps.map.overlay.Overlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.CompassView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback , View.OnClickListener {
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ViewGroup sideLayout;   //사이드바만 감싸는 영역
     private ViewGroup bottomLayout;
 
-    private EditText editText_search;
+    private AutoCompleteTextView editText_search;
 
     private Boolean isMenuShow = false;
     private Boolean isInfoShow = false;
@@ -81,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseUser currentUser;   //로그인 사용자
     private FirebaseFirestore db;   //Firebase database
 
-    private List<Cafe> cafeList;
+    private List<String> cafeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -297,6 +301,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return false;
             }
         });
+        editText_search.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, cafeList));
+        editText_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                searchCafe(naverMap);
+            }
+        });
+
         findViewById(R.id.button_search_cafe).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -312,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         final Cafe cafe = document.toObject(Cafe.class);
+                        cafeList.add(cafe.getCafe_name());
                         Log.d(TAG, cafe.getCafe_name()+"");
                         Marker marker = new Marker();
                         final LatLng cafeLocation = new LatLng(cafe.getLocate_x(), cafe.getLocate_y());

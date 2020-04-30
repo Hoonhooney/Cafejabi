@@ -18,7 +18,7 @@ public class Cafe {
     private int close_time;                    //카페 닫는 시간
     private long update_time_alarm;            //좌석 업데이트 알람 설정 시간
     private List<String> keywords;             //카페 키워드 리스트
-    private Comment comment_list;                    //카페에 대한 평가
+    private List<Comment> comment_list;                    //카페에 대한 평가
 
     public Cafe() {
     }
@@ -156,11 +156,11 @@ public class Cafe {
         this.keywords = keywords;
     }
 
-    public Comment getComment() {
+    public List<Comment> getComment() {
         return comment_list;
     }
 
-    public void setComment(Comment comment) {
-        this.comment_list = comment;
+    public void setComment(List<Comment> comment_list) {
+        this.comment_list = comment_list;
     }
 }

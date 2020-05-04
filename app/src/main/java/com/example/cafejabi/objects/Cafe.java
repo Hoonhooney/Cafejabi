@@ -19,6 +19,7 @@ public class Cafe {
     private long update_time_alarm;            //좌석 업데이트 알람 설정 시간
     private List<String> keywords;             //카페 키워드 리스트
     private List<Comment> comment_list;                    //카페에 대한 평가
+    private float grade_cafe;                               //카페 평점
 
     public Cafe() {
     }
@@ -162,5 +163,13 @@ public class Cafe {
 
     public void setComment(List<Comment> comment_list) {
         this.comment_list = comment_list;
+    }
+
+    public float getGrade_cafe() {
+        return grade_cafe;
+    }
+
+    public void setGrade_cafe(float grade_cafe) {
+        this.grade_cafe = grade_cafe;
     }
 }

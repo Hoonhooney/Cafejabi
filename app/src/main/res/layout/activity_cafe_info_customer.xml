@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
@@ -72,7 +73,7 @@
                     android:id="@+id/textView_info_customer_workingtime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" ? ~ ?"
+                    android:text="0~0"
                     android:textSize="20sp"/>
 
             </LinearLayout>
@@ -83,33 +84,61 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:id="@+id/textView_info_customer_grade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="평점 : "
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/button_info_customer_showcomment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="댓글"
-                android:textSize="20sp"
-            ></TextView>
+                android:layout_marginTop="10dp"
+                android:textSize="20sp" />
 
             <LinearLayout
+                android:id="@+id/linearLayout_info_customer_addcomment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:visibility="gone"
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/editText_info_customer_comment"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start"/>
-                <Button
+                <RatingBar
+                    android:id="@+id/ratingBar_set_grade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="end"/>
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:numStars="5"
+                    android:max="5"
+                    android:isIndicator="false"
+                    android:stepSize="0.5"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editText_info_customer_comment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"/>
+                    <Button
+                        android:id="@+id/button_info_customer_addcomment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"/>
+                </LinearLayout>
             </LinearLayout>
 
             <ListView
+                android:id="@+id/listView_info_customer_comments"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                ></ListView>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </ScrollView>

@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Context mContext = MainActivity.this;
 
+    private MapFragment mapFragment;
     private FusedLocationSource locationSource;
     private Location lastLocation;
 
@@ -94,22 +95,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         init();
 
-        //지도 보이기
-        MapFragment mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
-
-        //사이드메뉴 활성화
-        isLoggedIn = currentUser != null;
-        addSideMenu();
-
         // 초기 페이지 보이기
-//        viewPager = (ViewPager) findViewById(R.id.view);
-//        adapter = new IntroActivity(this);
-//        viewPager.setAdapter((PagerAdapter) adapter);
-
         startActivity(new Intent(this, ViewPagerActivity.class));
-
     }
 
     private void init(){
@@ -134,6 +121,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         currentUser = mAuth.getCurrentUser();
 
         db = FirebaseFirestore.getInstance();
+
+//        //지도 보이기
+        mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+//        assert mapFragment != null;
+//        mapFragment.getMapAsync(this);
+
+        //사이드메뉴 활성화
+        isLoggedIn = currentUser != null;
+        addSideMenu();
     }
 
 //    사이드메뉴 추가
@@ -193,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void btnGoRegisterCafe() {
                 startActivity(new Intent(mContext, CafeRegisterActivity.class));
+                closeMenu();
             }
         });
     }
@@ -319,6 +316,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void drawCafes(final NaverMap map){
+        cafeList.clear();
         db.collection("cafes").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -375,7 +373,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         isInfoShow = true;
 
         bottomLayout.removeAllViews();
-        BottomCafeInformationView bottomInfoView = new BottomCafeInformationView(mContext, cafe);
+        final BottomCafeInformationView bottomInfoView = new BottomCafeInformationView(mContext, cafe);
+        bottomInfoView.setEventListener(new BottomCafeInformationView.EventListener() {
+            @Override
+            public void btnCancel() {
+
+            }
+
+            @Override
+            public void btnGoCafeInfo() {
+                Log.e(TAG, "goCafeInfo()");
+                Intent intent = new Intent(MainActivity.this, CafeInfoCustomerActivity.class);
+                intent.putExtra("CafeId", bottomInfoView.cafe.getCid());
+                startActivity(intent);
+            }
+        });
+        bottomInfoView.setClickable(true);
         bottomLayout.addView(bottomInfoView);
 
         Animation slide = AnimationUtils.loadAnimation(this, R.anim.bottominfo_show);
@@ -410,6 +423,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             editor.putFloat("Longitude", (float)lastLocation.getLongitude());
         }
         editor.apply();
+    }
+
+//   onResume 호출 시 새로고침
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.e(TAG, "onResume()");
+        mapFragment.onDestroy();
+        assert mapFragment != null;
+        mapFragment.getMapAsync(this);
     }
 
 //    back 버튼 두 번 누르면 종료

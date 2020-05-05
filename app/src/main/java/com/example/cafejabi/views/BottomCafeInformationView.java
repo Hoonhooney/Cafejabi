@@ -2,6 +2,7 @@ package com.example.cafejabi.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -18,7 +19,7 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
 
     public EventListener listener;
 
-    private Cafe cafe;
+    public Cafe cafe;
 
     private TextView textView_cafe_name, textView_cafe_address,
             textView_cafe_description, textView_cafe_seats, textView_last_updated_time;
@@ -68,6 +69,8 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
                 flowLayout_keywords.addView(keywordView);
             }
         }
+
+        findViewById(R.id.linearLayout_bottom_info).setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +81,7 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
 //                break;
 
             case R.id.linearLayout_bottom_info:
+                Log.e(TAG, "goCafeInfo()");
                 listener.btnGoCafeInfo();
                 break;
 

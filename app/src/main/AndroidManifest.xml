@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.CafeInfoCustomerActivity"></activity>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
@@ -43,7 +44,8 @@
                 <data android:scheme="@string/facebook_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity"
+        <activity
+            android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustResize">
 
             <!-- <intent-filter> -->
@@ -54,19 +56,19 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".activities.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.JoinActivity" />
-        <activity android:name=".activities.CafeRegisterActivity"/>
-        <activity android:name=".activities.SelectLocationPopupActivity" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".activities.ViewPagerActivity"/>
+        <activity android:name=".activities.CafeRegisterActivity" />
+        <activity
+            android:name=".activities.SelectLocationPopupActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".activities.ViewPagerActivity" />
     </application>
 
 </manifest>

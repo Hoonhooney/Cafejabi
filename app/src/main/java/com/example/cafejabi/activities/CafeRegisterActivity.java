@@ -344,7 +344,8 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         String cafeAddress = textView_cafe_address.getText().toString();
         String description = editText_cafe_description.getText().toString();
 
-        Cafe cafe = new Cafe(uid, cafeName, cafeAddress,
+        String cid = db.collection("cafes").document().getId();
+        Cafe cafe = new Cafe(cid, uid, cafeName, cafeAddress,
                 locate_x, locate_y, 0, is24Working, isAllowedWithAlarm, new ArrayList<String>());
 
         if(!is24Working){
@@ -367,9 +368,9 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void addCafeInDb(final Cafe cafe){
-        db.collection("cafes").add(cafe).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        db.collection("cafes").document(cafe.getCid()).set(cafe).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
+            public void onSuccess(Void aVoid) {
                 Log.e(TAG, "Success : add cafe data into db");
                 addCafeInUserInfo(cafe);
             }

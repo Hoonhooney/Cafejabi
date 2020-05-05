@@ -39,4 +39,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:21.4.2'
 
     implementation 'me.bendik.simplerangeview:simplerangeview:0.2.0'
+    implementation 'org.apmem.tools:layouts:1.10@aar'
 }

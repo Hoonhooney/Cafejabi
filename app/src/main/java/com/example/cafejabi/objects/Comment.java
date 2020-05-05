@@ -1,36 +1,43 @@
 package com.example.cafejabi.objects;
 
+import java.util.Date;
+
 public class Comment {
-    private Cafe cafe;
-    private UserInfo user;        //유저 이름
+    private String cid;
+    private String uid;        //유저 이름
     private String comment;     //평가 댓글
-    private int score;          //평가점수
-    private long update_time;   //코멘트 업데이트 시간
+    private float score;          //평가점수
+    private Date update_time;   //코멘트 업데이트 시간
 
     public Comment() { }
 
-    public Comment(Cafe cafe, UserInfo user, String comment, int score, long update_time)
+    public Comment(String cid, String uid, String comment, float score, Date update_time)
     {
-        this.cafe=cafe;      //카페데이터에서 이름 꺼내온다.
-        this.user=user;       //유저데이터에서 이름 꺼내온다.
+        this.cid=cid;      //카페데이터에서 이름 꺼내온다.
+        this.uid=uid;       //유저데이터에서 이름 꺼내온다.
+        this.comment = comment;
         this.score=score;
         this.update_time=update_time;
     }
 
-    public Cafe getCafe() {
-        return cafe;
+    public String getCid() {
+        return cid;
     }
 
-    public void setCafe(Cafe cafe) {
-        this.cafe = cafe;
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 
-    public UserInfo getUser() {
-        return user;
+    public String getUid() {
+        return uid;
     }
 
-    public void setUser(UserInfo user) {
-        this.user = user;
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
     }
 
     public String getComment() {
@@ -41,17 +48,14 @@ public class Comment {
         this.comment = comment;
     }
 
-    public int getScore() {
+    public float getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-    public long getUpdate_time(){
+    public Date getUpdate_time(){
         return update_time;
     }
-    public void setUpdate_time(long update_time) {
+    public void setUpdate_time(Date update_time) {
         this.update_time=update_time;
     }
 }

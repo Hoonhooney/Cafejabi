@@ -1,9 +1,11 @@
 package com.example.cafejabi.objects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cafe {
-    private String cid;                  //카페 관리자 유저
+    private String cid;                  //카페 id
+    private String uid;                  //카페 관리자 유저
     private String cafe_name;            //카페 이름
     private String address;              //카페 주소
     private double locate_x;             //카페 위치 x좌표
@@ -24,9 +26,10 @@ public class Cafe {
     public Cafe() {
     }
 
-    public Cafe(String cid, String cafe_name, String address,
+    public Cafe(String cid, String uid, String cafe_name, String address,
                 double locate_x, double locate_y, int total_table, boolean is24Working, boolean allowAlarm, List<String> keywords) {
     this.cid = cid;
+    this.uid = uid;
     this.cafe_name = cafe_name;
     this.address = address;
     this.locate_x = locate_x;
@@ -35,6 +38,7 @@ public class Cafe {
     this.is24Working = is24Working;
     this.allowAlarm = allowAlarm;
     this.keywords = keywords;
+    this.comment_list = new ArrayList<>();
     }
 
     public String getCid() {
@@ -43,6 +47,22 @@ public class Cafe {
 
     public void setCid(String cid) {
         this.cid = cid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public List<Comment> getComment_list() {
+        return comment_list;
+    }
+
+    public void setComment_list(List<Comment> comment_list) {
+        this.comment_list = comment_list;
     }
 
     public String getCafe_name() {

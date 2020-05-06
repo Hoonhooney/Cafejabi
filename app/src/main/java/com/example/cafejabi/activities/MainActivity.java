@@ -96,7 +96,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         init();
 
         // 초기 페이지 보이기
-        startActivity(new Intent(this, ViewPagerActivity.class));
+        if(mAuth == null && loginPreferences.getBoolean("firstTime", true))
+            startActivity(new Intent(this, ViewPagerActivity.class));
     }
 
     private void init(){
@@ -122,10 +123,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         db = FirebaseFirestore.getInstance();
 
-//        //지도 보이기
+        //지도 보이기
         mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
-//        assert mapFragment != null;
-//        mapFragment.getMapAsync(this);
+        assert mapFragment != null;
+        mapFragment.getMapAsync(this);
 
         //사이드메뉴 활성화
         isLoggedIn = currentUser != null;
@@ -189,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void btnGoRegisterCafe() {
                 startActivity(new Intent(mContext, CafeRegisterActivity.class));
-                closeMenu();
+                finish();
             }
         });
     }
@@ -423,16 +424,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             editor.putFloat("Longitude", (float)lastLocation.getLongitude());
         }
         editor.apply();
-    }
-
-//   onResume 호출 시 새로고침
-    @Override
-    public void onResume(){
-        super.onResume();
-        Log.e(TAG, "onResume()");
-        mapFragment.onDestroy();
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
     }
 
 //    back 버튼 두 번 누르면 종료

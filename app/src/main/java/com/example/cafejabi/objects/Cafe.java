@@ -20,7 +20,6 @@ public class Cafe {
     private int close_time;                    //카페 닫는 시간
     private long update_time_alarm;            //좌석 업데이트 알람 설정 시간
     private List<String> keywords;             //카페 키워드 리스트
-    private List<Comment> comment_list;                    //카페에 대한 평가
     private float grade_cafe;                               //카페 평점
 
     public Cafe() {
@@ -38,7 +37,6 @@ public class Cafe {
     this.is24Working = is24Working;
     this.allowAlarm = allowAlarm;
     this.keywords = keywords;
-    this.comment_list = new ArrayList<>();
     }
 
     public String getCid() {
@@ -55,14 +53,6 @@ public class Cafe {
 
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public List<Comment> getComment_list() {
-        return comment_list;
-    }
-
-    public void setComment_list(List<Comment> comment_list) {
-        this.comment_list = comment_list;
     }
 
     public String getCafe_name() {
@@ -175,14 +165,6 @@ public class Cafe {
 
     public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
-    }
-
-    public List<Comment> getComment() {
-        return comment_list;
-    }
-
-    public void setComment(List<Comment> comment_list) {
-        this.comment_list = comment_list;
     }
 
     public float getGrade_cafe() {

@@ -2,8 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
 
@@ -132,7 +130,7 @@
                         android:id="@+id/ratingBar_set_grade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        style="@style/Widget.AppCompat.RatingBar.Indicator"
                         android:numStars="5"
                         android:max="5"
                         android:isIndicator="false"
@@ -143,6 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0.0"
+                        android:textSize="15sp"
                         android:layout_marginStart="3dp"/>
                 </LinearLayout>
 
@@ -169,7 +168,7 @@
             <ListView
                 android:id="@+id/listView_info_customer_comments"
                 android:layout_width="match_parent"
-                android:layout_height="500dp" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </ScrollView>

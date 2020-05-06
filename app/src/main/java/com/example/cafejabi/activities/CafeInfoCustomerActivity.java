@@ -10,8 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -150,7 +153,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                         textView_workingTime.setText("24시간 영업");
                     else
                         textView_workingTime.setText(cafe.getOpen_time()+"시 ~ "+cafe.getClose_time()+"시");
-                    textView_grade.setText(String.format("%.2f", cafe.getGrade_cafe()));
+                    textView_grade.setText(String.format("%.2f", cafe.getGrade_cafe())+"/5");
                     ratingBar_cafe.setRating(cafe.getGrade_cafe());
 
                     if(cafe.getKeywords() != null){
@@ -172,7 +175,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                             for (QueryDocumentSnapshot document : queryDocumentSnapshots){
                                 Comment comment = document.toObject(Comment.class);
                                 commentAdapter.addItem(comment);
-                                commentAdapter.notifyDataSetChanged();
+                                setListViewHeightBasedOnItems(listView_comments);
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -215,6 +218,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                     Log.d(TAG, "add comment to db : success");
 
                     commentAdapter.addItem(comment);
+                    setListViewHeightBasedOnItems(listView_comments);
                     commentAdapter.notifyDataSetChanged();
 
                     //카페 평점 업데이트
@@ -257,6 +261,41 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
             }).setNegativeButton("아니오", null);
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
+        }
+    }
+
+    public static boolean setListViewHeightBasedOnItems(ListView listView) {
+
+        CommentAdapter listAdapter = (CommentAdapter) listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                float px = 500 * (listView.getResources().getDisplayMetrics().density);
+                item.measure(View.MeasureSpec.makeMeasureSpec((int) px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+            // Get padding
+            int totalPadding = listView.getPaddingTop() + listView.getPaddingBottom();
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight + totalPadding;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+            //setDynamicHeight(listView);
+            return true;
+
+        } else {
+            return false;
         }
     }
 }

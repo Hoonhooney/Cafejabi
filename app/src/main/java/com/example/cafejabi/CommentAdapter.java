@@ -2,6 +2,7 @@ package com.example.cafejabi;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,9 +77,11 @@ public class CommentAdapter extends BaseAdapter {
         textView_created_at = view.findViewById(R.id.textView_item_comment_created_at);
 
         ratingBar_rating.setRating(comment.getScore());
-        textView_rating.setText(comment.getScore()+"");
+        textView_rating.setText(comment.getScore()+"/5");
 
         textView_comment.setText(comment.getComment());
+
+        textView_nickname.setText(comment.getUid());
 
         FirebaseFirestore.getInstance().collection("users").document(comment.getUid())
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

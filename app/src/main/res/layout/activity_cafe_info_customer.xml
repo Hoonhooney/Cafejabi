@@ -156,9 +156,7 @@
             <ListView
                 android:id="@+id/listView_info_customer_comments"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="500dp"
-                android:scrollbars="none" />
+                android:layout_height="500dp" />
 
         </LinearLayout>
     </ScrollView>

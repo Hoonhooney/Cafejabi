@@ -56,7 +56,7 @@ public class CommentAdapter extends BaseAdapter {
     }
 
     public void addItem(Comment comment){
-        commentList.add(comment);
+        commentList.add(0, comment);
     }
 
     @SuppressLint("SetTextI18n")

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
 
@@ -83,12 +84,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/textView_info_customer_grade"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="평점 : "
-                android:textSize="20sp"/>
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/ratingBar_info_customer_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:max="5"
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:numStars="5"
+                    android:stepSize="0.01"
+                    android:isIndicator="true"/>
+
+                <TextView
+                    android:id="@+id/textView_info_customer_grade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="평점 : "
+                    android:textSize="20sp"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/button_info_customer_showcomment"
@@ -138,7 +156,9 @@
             <ListView
                 android:id="@+id/listView_info_customer_comments"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:minHeight="500dp"
+                android:scrollbars="none" />
 
         </LinearLayout>
     </ScrollView>

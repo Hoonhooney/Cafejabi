@@ -3,7 +3,9 @@ package com.example.cafejabi.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.cafejabi.CommentAdapter;
 import com.example.cafejabi.R;
 import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.objects.Comment;
@@ -24,8 +27,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.apmem.tools.layouts.FlowLayout;
@@ -35,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import static android.view.View.GONE;
 
 public class CafeInfoCustomerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -49,7 +57,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
     private TextView textview_cafeName, textView_cafeAddress, textView_cafeStatus, textView_cafeInfo,
     textView_workingTime, textView_grade;
 
-    private RatingBar ratingBar_comment;
+    private RatingBar ratingBar_cafe, ratingBar_comment;
     private float grade = 1.0f;
     private EditText editText_comment;
 
@@ -57,6 +65,8 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
     private LinearLayout linearLayout_addComment;
 
     private ListView listView_comments;
+    private List<Comment> comments;
+    private CommentAdapter commentAdapter;
 
     private ProgressDialog progressDialog;
 
@@ -83,6 +93,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
 
         listView_comments = findViewById(R.id.listView_info_customer_comments);
 
+        ratingBar_cafe = findViewById(R.id.ratingBar_info_customer_average);
         ratingBar_comment = findViewById(R.id.ratingBar_set_grade);
         linearLayout_addComment = findViewById(R.id.linearLayout_info_customer_addcomment);
 
@@ -95,6 +106,9 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
         mAuth = FirebaseAuth.getInstance();
 
         //카페 정보 가져오기
+        commentAdapter = new CommentAdapter(this);
+        listView_comments.setAdapter(commentAdapter);
+
         getCafeInfo();
 
         findViewById(R.id.button_info_customer_showcomment).setOnClickListener(this);
@@ -113,10 +127,10 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
         switch(view.getId()){
 
             case R.id.button_info_customer_showcomment:
-                if(linearLayout_addComment.getVisibility() == View.GONE)
+                if(linearLayout_addComment.getVisibility() == GONE)
                     linearLayout_addComment.setVisibility(View.VISIBLE);
                 else
-                    linearLayout_addComment.setVisibility(View.GONE);
+                    linearLayout_addComment.setVisibility(GONE);
                 break;
 
             case R.id.button_info_customer_addcomment:
@@ -143,7 +157,8 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                         textView_workingTime.setText("24시간 영업");
                     else
                         textView_workingTime.setText(cafe.getOpen_time()+"시 ~ "+cafe.getClose_time()+"시");
-                    textView_grade.setText(cafe.getGrade_cafe()+"");
+                    textView_grade.setText(String.format("%.2f", cafe.getGrade_cafe()));
+                    ratingBar_cafe.setRating(cafe.getGrade_cafe());
 
                     if(cafe.getKeywords() != null){
                         for(String str : cafe.getKeywords()){
@@ -155,31 +170,85 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                         }
                     }
 
+                    db.collection("comments").whereEqualTo("cid", cafeId).orderBy("update_time")
+                            .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            Log.d(TAG, "getting comment data : success");
+
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots){
+                                Comment comment = document.toObject(Comment.class);
+                                commentAdapter.addItem(comment);
+                                commentAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "getting comment data : failure", e);
+                        }
+                    });
+
                     progressDialog.dismiss();
                 }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "getting cafe info : failed", e);
+                progressDialog.dismiss();
+                AlertDialog.Builder builder = new AlertDialog.Builder(CafeInfoCustomerActivity.this);
+                builder.setTitle("오류").setMessage("카페 정보를 불러오는데 실패했습니다.")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
 
     private void addComment(){
-        Comment comment = new Comment(cafeId, mAuth.getUid(), editText_comment.getText().toString(),
+        final Comment comment = new Comment(cafeId, mAuth.getUid(), editText_comment.getText().toString(),
                 grade, new Date(System.currentTimeMillis()));
 
-        List<Comment> commentList = new ArrayList<>();
-        if(cafe.getComment_list() != null)
-            commentList = cafe.getComment_list();
-        commentList.add(comment);
-
-        db.collection("cafes").document(cafeId).update("comment_list", commentList)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("comments").add(comment).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Succeeded to add comment");
+            public void onSuccess(DocumentReference documentReference) {
+                Log.d(TAG, "add comment to db : success");
+
+                commentAdapter.addItem(comment);
+                commentAdapter.notifyDataSetChanged();
+
+                //카페 평점 업데이트
+                final float averageRating = commentAdapter.getAverage();
+                db.collection("cafes").document(cafeId).update("grade_cafe", averageRating)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "update cafe grade : success");
+
+                        textView_grade.setText(String.format("%.2f", averageRating));
+                        ratingBar_cafe.setRating(averageRating);
+
+                        ratingBar_comment.clearFocus();
+                        editText_comment.setText("");
+                        linearLayout_addComment.setVisibility(GONE);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "update cafe grade : failure", e);
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "Failed to add comment", e);
+                Log.e(TAG, "add comment to db : failure", e);
             }
         });
     }

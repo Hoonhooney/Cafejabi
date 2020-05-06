@@ -3,6 +3,8 @@ package com.example.cafejabi.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -345,8 +347,14 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         String description = editText_cafe_description.getText().toString();
 
         String cid = db.collection("cafes").document().getId();
+
+        for(Keyword keyword : keywords){
+            if(keyword.isChosen())
+                keywords_selected.add(keyword.getName());
+        }
+
         Cafe cafe = new Cafe(cid, uid, cafeName, cafeAddress,
-                locate_x, locate_y, 0, is24Working, isAllowedWithAlarm, new ArrayList<String>());
+                locate_x, locate_y, 0, is24Working, isAllowedWithAlarm, keywords_selected);
 
         if(!is24Working){
             cafe.setOpen_time(rangeSeekBar_set_working_time.getStart()+7);
@@ -358,12 +366,6 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 
         cafe.setCafe_info(description);
 
-        for(Keyword keyword : keywords){
-            if(keyword.isChosen())
-                keywords_selected.add(keyword.getName());
-        }
-        cafe.setKeywords(keywords_selected);
-
         addCafeInDb(cafe);
     }
 
@@ -372,27 +374,51 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onSuccess(Void aVoid) {
                 Log.e(TAG, "Success : add cafe data into db");
+
                 addCafeInUserInfo(cafe);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.e(TAG, "Fail : add cafe data into db", e);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(CafeRegisterActivity.this);
+                builder.setTitle("카페 등록").setMessage("카페를 등록하는데 실패했습니다.")
+                        .setPositiveButton("OK", null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
 
     private void addCafeInUserInfo(final Cafe cafe){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(CafeRegisterActivity.this);
+        builder.setTitle("카페 등록");
+
         db.collection("users").document(uid).update("managingCafe", cafe)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.e(TAG, "Success: update userInfo");
+
+                builder.setMessage("카페 등록을 완료했습니다!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(CafeRegisterActivity.this, MainActivity.class));
+                        finish();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.e(TAG, "Fail: update userInfo", e);
+
+                builder.setMessage("카페 등록을 실패했습니다!").setPositiveButton("OK", null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
@@ -416,5 +442,11 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
                 locate_y = latLng.longitude;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }

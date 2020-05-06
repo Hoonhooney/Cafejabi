@@ -332,4 +332,9 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void onBackPressed(){
+        goActivity(LoginActivity.class);
+    }
 }

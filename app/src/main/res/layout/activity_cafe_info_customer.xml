@@ -123,15 +123,28 @@
                 android:visibility="gone"
                 android:orientation="vertical">
 
-                <RatingBar
-                    android:id="@+id/ratingBar_set_grade"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.AppCompat.RatingBar.Indicator"
-                    android:numStars="5"
-                    android:max="5"
-                    android:isIndicator="false"
-                    android:stepSize="0.5"/>
+                    android:orientation="horizontal">
+
+                    <RatingBar
+                        android:id="@+id/ratingBar_set_grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:numStars="5"
+                        android:max="5"
+                        android:isIndicator="false"
+                        android:stepSize="0.5"/>
+
+                    <TextView
+                        android:id="@+id/textView_info_customer_comment_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.0"
+                        android:layout_marginStart="3dp"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

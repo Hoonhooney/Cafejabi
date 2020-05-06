@@ -55,7 +55,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
     private FirebaseAuth mAuth;
 
     private TextView textview_cafeName, textView_cafeAddress, textView_cafeStatus, textView_cafeInfo,
-    textView_workingTime, textView_grade;
+    textView_workingTime, textView_grade, textView_comment_rating;
 
     private RatingBar ratingBar_cafe, ratingBar_comment;
     private float grade = 1.0f;
@@ -86,6 +86,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
         textView_cafeInfo = findViewById(R.id.textView_info_customer_cafeinfo);
         textView_workingTime = findViewById(R.id.textView_info_customer_workingtime);
         textView_grade = findViewById(R.id.textView_info_customer_grade);
+        textView_comment_rating = findViewById(R.id.textView_info_customer_comment_rating);
 
         editText_comment = findViewById(R.id.editText_info_customer_comment);
 
@@ -118,6 +119,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 grade = v;
+                textView_comment_rating.setText(v+"");
             }
         });
     }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,27 +21,19 @@ import com.example.cafejabi.R;
 import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.objects.Comment;
 import com.example.cafejabi.objects.Keyword;
-import com.example.cafejabi.objects.UserInfo;
 import com.example.cafejabi.views.KeywordView;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.apmem.tools.layouts.FlowLayout;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 import static android.view.View.GONE;
 
@@ -49,7 +42,6 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
     private final String TAG = "CafeInfoCusActivity";
     private String cafeId;
 
-    private UserInfo user;
     private Cafe cafe;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -65,7 +57,6 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
     private LinearLayout linearLayout_addComment;
 
     private ListView listView_comments;
-    private List<Comment> comments;
     private CommentAdapter commentAdapter;
 
     private ProgressDialog progressDialog;
@@ -214,44 +205,58 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
     }
 
     private void addComment(){
-        final Comment comment = new Comment(cafeId, mAuth.getUid(), editText_comment.getText().toString(),
-                grade, new Date(System.currentTimeMillis()));
+        if(mAuth.getCurrentUser() != null){
+            final Comment comment = new Comment(cafeId, mAuth.getUid(), editText_comment.getText().toString(),
+                    grade, new Date(System.currentTimeMillis()));
 
-        db.collection("comments").add(comment).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d(TAG, "add comment to db : success");
+            db.collection("comments").add(comment).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Log.d(TAG, "add comment to db : success");
 
-                commentAdapter.addItem(comment);
-                commentAdapter.notifyDataSetChanged();
+                    commentAdapter.addItem(comment);
+                    commentAdapter.notifyDataSetChanged();
 
-                //카페 평점 업데이트
-                final float averageRating = commentAdapter.getAverage();
-                db.collection("cafes").document(cafeId).update("grade_cafe", averageRating)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "update cafe grade : success");
+                    //카페 평점 업데이트
+                    final float averageRating = commentAdapter.getAverage();
+                    db.collection("cafes").document(cafeId).update("grade_cafe", averageRating)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "update cafe grade : success");
 
-                        textView_grade.setText(String.format("%.2f", averageRating));
-                        ratingBar_cafe.setRating(averageRating);
+                                    textView_grade.setText(String.format("%.2f", averageRating));
+                                    ratingBar_cafe.setRating(averageRating);
 
-                        ratingBar_comment.clearFocus();
-                        editText_comment.setText("");
-                        linearLayout_addComment.setVisibility(GONE);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "update cafe grade : failure", e);
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "add comment to db : failure", e);
-            }
-        });
+                                    ratingBar_comment.clearFocus();
+                                    editText_comment.setText("");
+                                    linearLayout_addComment.setVisibility(GONE);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "update cafe grade : failure", e);
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "add comment to db : failure", e);
+                }
+            });
+        } else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("로그인 필요").setMessage("댓글을 쓰려면 로그인이 필요합니다.\n로그인하시겠습니까?")
+                    .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(CafeInfoCustomerActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }).setNegativeButton("아니오", null);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
     }
 }

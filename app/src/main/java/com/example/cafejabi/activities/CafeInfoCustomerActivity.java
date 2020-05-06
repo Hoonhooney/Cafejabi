@@ -54,7 +54,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
-    private TextView textview_cafeName, textView_cafeAddress, textView_cafeStatus, textView_cafeInfo,
+    private TextView textView_cafeName, textView_cafeAddress, textView_cafeStatus, textView_cafeInfo,
     textView_workingTime, textView_grade, textView_comment_rating;
 
     private RatingBar ratingBar_cafe, ratingBar_comment;
@@ -80,7 +80,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
 
     private void init(){
 
-        textview_cafeName = findViewById(R.id.textView_info_customer_cafename);
+        textView_cafeName = findViewById(R.id.textView_info_customer_cafename);
         textView_cafeAddress = findViewById(R.id.textView_info_customer_cafeaddress);
         textView_cafeStatus = findViewById(R.id.textView_info_customer_cafestatus);
         textView_cafeInfo = findViewById(R.id.textView_info_customer_cafeinfo);
@@ -151,7 +151,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                 cafe = documentSnapshot.toObject(Cafe.class);
 
                 if(cafe != null){
-                    textview_cafeName.setText(cafe.getCafe_name());
+                    textView_cafeName.setText(cafe.getCafe_name());
                     textView_cafeAddress.setText(cafe.getAddress());
                     textView_cafeStatus.setText(cafe.getTable()+"");
                     textView_cafeInfo.setText(cafe.getCafe_info());

@@ -28,57 +28,71 @@
         > <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="닉네임 수정"
+        android:text="닉네임"
         android:textSize="20sp"
-        ></TextView>
+        />
 
         <EditText
-            android:id="@+id/new_name"
+            android:id="@+id/editText_edit_nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            ></EditText>
+            android:maxLines="1"
+            />
     </LinearLayout>
+
     <Button
-        android:id="@+id/new_name_ok_button"
+        android:id="@+id/button_edit_check_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="닉네임 중복 확인"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:gravity="center"
-        ></Button>
+        />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        > <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="직업 수정"
-        android:textSize="20sp"
-        ></TextView>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
-        <Button
-            android:id="@+id/job1"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="직업1"
-            ></Button>
+            android:text="직업"
+            android:textSize="20sp"
+            android:layout_marginEnd="10dp"/>
 
-        <Button
-            android:id="@+id/job2"
+        <RadioGroup
+            android:id="@+id/rg_edit_jobs"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="직업2"
-            ></Button>
-        <Button
-            android:id="@+id/job3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="직업3"
-            ></Button>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_edit_student"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="학생"
+                android:textSize="20sp" />
+            <RadioButton
+                android:id="@+id/rb_edit_worker"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="직장인"
+                android:textSize="20sp" />
+            <RadioButton
+                android:id="@+id/rb_edit_none"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:text="무직"
+                android:textSize="20sp" />
+
+        </RadioGroup>
     </LinearLayout>
 
 
@@ -88,32 +102,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        > <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="목적 수정"
-        android:textSize="20sp"
-        ></TextView>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
-        <Button
-            android:id="@+id/purpose1"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="목적1"
-            ></Button>
+            android:text="목적"
+            android:layout_marginEnd="10dp"
+            android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/purpose2"
+        <CheckBox
+            android:id="@+id/checkBox_edit_study"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="목적2"
-            ></Button>
-        <Button
-            android:id="@+id/purpose3"
+            android:layout_height="match_parent"
+            android:checked="true"
+            android:text="공부"
+            android:textSize="20sp" />
+        <CheckBox
+            android:id="@+id/checkBox_edit_rest"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="목적3"
-            ></Button>
+            android:layout_height="match_parent"
+            android:checked="true"
+            android:text="휴식"
+            android:textSize="20sp" />
+        <CheckBox
+            android:id="@+id/checkbox_edit_mood"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:checked="true"
+            android:text="사진"
+            android:textSize="20sp" />
+
     </LinearLayout>
 
 

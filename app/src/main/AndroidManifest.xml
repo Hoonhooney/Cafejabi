@@ -69,6 +69,7 @@
             android:name=".activities.SelectLocationPopupActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".activities.ViewPagerActivity" />
+        <activity android:name=".activities.EditUserInfoActivity" />
     </application>
 
 </manifest>

@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -294,8 +295,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         editText_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_SEARCH)
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
                     searchCafe(naverMap);
+                    hideKeyboard(v);
+                }
                 return false;
             }
         });
@@ -305,6 +308,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 searchCafe(naverMap);
+                hideKeyboard(editText_search);
             }
         });
 
@@ -312,6 +316,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 searchCafe(naverMap);
+                hideKeyboard(v);
             }
         });
     }
@@ -409,6 +414,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults);
                 return;
         }
+    }
+
+    private void hideKeyboard(View view){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 //    종료할 때

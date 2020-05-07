@@ -2,7 +2,6 @@ package com.example.cafejabi;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,17 +80,7 @@ public class CommentAdapter extends BaseAdapter {
 
         textView_comment.setText(comment.getComment());
 
-        textView_nickname.setText(comment.getUid());
-
-        FirebaseFirestore.getInstance().collection("users").document(comment.getUid())
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                UserInfo user = documentSnapshot.toObject(UserInfo.class);
-                assert user != null;
-                textView_nickname.setText(user.getNickname());
-            }
-        });
+        textView_nickname.setText(comment.getUser_nickname());
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
         textView_created_at.setText(format.format(comment.getUpdate_time()));

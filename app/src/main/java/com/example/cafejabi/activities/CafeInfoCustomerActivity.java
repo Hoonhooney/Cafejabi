@@ -24,6 +24,7 @@ import com.example.cafejabi.R;
 import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.objects.Comment;
 import com.example.cafejabi.objects.Keyword;
+import com.example.cafejabi.objects.UserInfo;
 import com.example.cafejabi.views.KeywordView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -209,44 +210,62 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
 
     private void addComment(){
         if(mAuth.getCurrentUser() != null){
-            final Comment comment = new Comment(cafeId, mAuth.getUid(), editText_comment.getText().toString(),
-                    grade, new Date(System.currentTimeMillis()));
-
-            db.collection("comments").add(comment).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            db.collection("users").document(mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    Log.d(TAG, "add comment to db : success");
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String userNickname = documentSnapshot.toObject(UserInfo.class).getNickname();
 
-                    commentAdapter.addItem(comment);
-                    setListViewHeightBasedOnItems(listView_comments);
-                    commentAdapter.notifyDataSetChanged();
+                    if(userNickname != null){
+                        final Comment comment = new Comment(cafeId, userNickname, editText_comment.getText().toString(),
+                                grade, new Date(System.currentTimeMillis()));
 
-                    //카페 평점 업데이트
-                    final float averageRating = commentAdapter.getAverage();
-                    db.collection("cafes").document(cafeId).update("grade_cafe", averageRating)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "update cafe grade : success");
+                        db.collection("comments").add(comment).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "add comment to db : success");
 
-                                    textView_grade.setText(String.format("%.2f", averageRating));
-                                    ratingBar_cafe.setRating(averageRating);
+                                commentAdapter.addItem(comment);
+                                setListViewHeightBasedOnItems(listView_comments);
+                                commentAdapter.notifyDataSetChanged();
 
-                                    ratingBar_comment.clearFocus();
-                                    editText_comment.setText("");
-                                    linearLayout_addComment.setVisibility(GONE);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e(TAG, "update cafe grade : failure", e);
-                        }
-                    });
+                                //카페 평점 업데이트
+                                final float averageRating = commentAdapter.getAverage();
+                                db.collection("cafes").document(cafeId).update("grade_cafe", averageRating)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "update cafe grade : success");
+
+                                                textView_grade.setText(String.format("%.2f", averageRating));
+                                                ratingBar_cafe.setRating(averageRating);
+
+                                                ratingBar_comment.clearFocus();
+                                                editText_comment.setText("");
+                                                linearLayout_addComment.setVisibility(GONE);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e(TAG, "update cafe grade : failure", e);
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG, "add comment to db : failure", e);
+                            }
+                        });
+                    }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.e(TAG, "add comment to db : failure", e);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CafeInfoCustomerActivity.this);
+                    builder.setTitle("오류").setMessage("사용자 정보를 불러오지 못했습니다.\n다시 시도하거나 재로그인하십시오.")
+                            .setPositiveButton("OK", null);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             });
         } else{

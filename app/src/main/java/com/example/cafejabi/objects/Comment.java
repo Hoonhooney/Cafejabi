@@ -4,17 +4,17 @@ import java.util.Date;
 
 public class Comment {
     private String cid;
-    private String uid;        //유저 이름
+    private String user_nickname;        //유저 이름
     private String comment;     //평가 댓글
     private float score;          //평가점수
     private Date update_time;   //코멘트 업데이트 시간
 
     public Comment() { }
 
-    public Comment(String cid, String uid, String comment, float score, Date update_time)
+    public Comment(String cid, String user_nickname, String comment, float score, Date update_time)
     {
         this.cid=cid;      //카페데이터에서 이름 꺼내온다.
-        this.uid=uid;       //유저데이터에서 이름 꺼내온다.
+        this.user_nickname = user_nickname;       //유저데이터에서 이름 꺼내온다.
         this.comment = comment;
         this.score=score;
         this.update_time=update_time;
@@ -28,12 +28,12 @@ public class Comment {
         this.cid = cid;
     }
 
-    public String getUid() {
-        return uid;
+    public String getUser_nickname() {
+        return user_nickname;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUser_nickname(String user_nickname) {
+        this.user_nickname = user_nickname;
     }
 
     public void setScore(float score) {

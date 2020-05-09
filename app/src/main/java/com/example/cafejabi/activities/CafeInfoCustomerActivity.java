@@ -223,12 +223,13 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                     String userNickname = documentSnapshot.toObject(UserInfo.class).getNickname();
 
                     if(userNickname != null){
-                        final Comment comment = new Comment(cafeId, userNickname, editText_comment.getText().toString(),
+                        final Comment comment = new Comment(db.collection("comments").document().getId(), cafeId, userNickname, editText_comment.getText().toString(),
                                 grade, new Date(System.currentTimeMillis()));
 
-                        db.collection("comments").add(comment).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        db.collection("comments").document(comment.getId()).set(comment)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onSuccess(DocumentReference documentReference) {
+                            public void onSuccess(Void aVoid) {
                                 Log.d(TAG, "add comment to db : success");
 
                                 commentAdapter.addItem(comment);

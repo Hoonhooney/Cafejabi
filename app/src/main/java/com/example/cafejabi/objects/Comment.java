@@ -3,6 +3,7 @@ package com.example.cafejabi.objects;
 import java.util.Date;
 
 public class Comment {
+    private String id;
     private String cid;
     private String user_nickname;        //유저 이름
     private String comment;     //평가 댓글
@@ -11,14 +12,17 @@ public class Comment {
 
     public Comment() { }
 
-    public Comment(String cid, String user_nickname, String comment, float score, Date update_time)
+    public Comment(String id, String cid, String user_nickname, String comment, float score, Date update_time)
     {
+        this.id = id;
         this.cid=cid;      //카페데이터에서 이름 꺼내온다.
         this.user_nickname = user_nickname;       //유저데이터에서 이름 꺼내온다.
         this.comment = comment;
         this.score=score;
         this.update_time=update_time;
     }
+
+    public String getId(){return id;}
 
     public String getCid() {
         return cid;

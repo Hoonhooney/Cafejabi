@@ -8,10 +8,7 @@ import android.graphics.PointF;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -25,7 +22,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -160,15 +156,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void btnGoLogin() {
                 Log.e(TAG, "btnGoLogin");
-
-                startActivity(new Intent(mContext, LoginActivity.class));
-                finish();
+                goActivity(LoginActivity.class);
             }
 
             //회원 정보 수정
             @Override
             public void btnGoEdit() {
                 Log.e(TAG, "btnGoEdit");
+                goActivity(EditUserInfoActivity.class);
             }
 
             //로그아웃
@@ -184,14 +179,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 editor.clear();
                 editor.apply();
 
-                startActivity(new Intent(mContext, LoginActivity.class));
-                finish();
+                goActivity(LoginActivity.class);
             }
 
             @Override
             public void btnGoRegisterCafe() {
-                startActivity(new Intent(mContext, CafeRegisterActivity.class));
-                finish();
+                goActivity(CafeRegisterActivity.class);
             }
         });
     }
@@ -435,6 +428,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             editor.putFloat("Longitude", (float)lastLocation.getLongitude());
         }
         editor.apply();
+    }
+
+    private void goActivity(Class c){
+        Intent intent = new Intent(mContext, c);
+        startActivity(intent);
+        finish();
     }
 
 //    back 버튼 두 번 누르면 종료

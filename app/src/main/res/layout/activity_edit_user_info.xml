@@ -138,14 +138,14 @@
 
 
     <Button
-        android:id="@+id/new_info_ok"
+        android:id="@+id/button_edit_finish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="확인"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:gravity="center"
-        ></Button>
+        />
 
 </LinearLayout>
 

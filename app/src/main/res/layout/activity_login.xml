@@ -82,6 +82,7 @@
 
 
         <Button
+            android:id="@+id/button_find_id_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="아이디/비밀번호 찾기"

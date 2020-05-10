@@ -133,9 +133,26 @@
             android:checked="true"
             android:text="사진"
             android:textSize="20sp" />
-
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전화번호  : "
+            ></TextView>
+
+
+        <EditText
+            android:id="@+id/phone_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></EditText>
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_edit_finish"
@@ -146,6 +163,85 @@
         android:layout_gravity="center"
         android:gravity="center"
         />
+
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="비밀번호 수정"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        ></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="원래 비밀번호  : "
+            ></TextView>
+
+
+        <EditText
+            android:id="@+id/find_pw_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="새 비밀번호               : "
+            ></TextView>
+
+
+        <EditText
+            android:id="@+id/new_pw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="세 비밀번호 재입력  : "
+            ></TextView>
+
+
+        <EditText
+            android:id="@+id/new_pw_re"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></EditText>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/new_pw_ok_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="비밀번호 수정"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        ></Button>
+
+
 
 </LinearLayout>
 

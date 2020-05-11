@@ -1,13 +1,16 @@
-package com.example.cafejabi;
+package com.example.cafejabi.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.cafejabi.R;
+import com.example.cafejabi.activities.CafeInfoCustomerActivity;
 import com.example.cafejabi.objects.Cafe;
 
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ public class CafeAdapter extends BaseAdapter {
     @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        Cafe cafe = cafeList.get(position);
+        final Cafe cafe = cafeList.get(position);
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -60,7 +63,16 @@ public class CafeAdapter extends BaseAdapter {
         textView_cafe_name.setText(cafe.getCafe_name());
         textView_cafe_address.setText(cafe.getAddress());
 
-        textView_cafe_status.setText(cafe.getTable());
+        textView_cafe_status.setText(cafe.getTable()+"");
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CafeInfoCustomerActivity.class);
+                intent.putExtra("CafeId", cafe.getCid());
+                mContext.startActivity(intent);
+            }
+        });
 
         return view;
     }

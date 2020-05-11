@@ -1,4 +1,4 @@
-package com.example.cafejabi;
+package com.example.cafejabi.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.cafejabi.R;
 import com.example.cafejabi.objects.Comment;
 import com.example.cafejabi.objects.UserInfo;
 import com.google.android.gms.tasks.OnSuccessListener;

@@ -10,20 +10,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.cafejabi.CommentAdapter;
+import com.example.cafejabi.adapters.CommentAdapter;
 import com.example.cafejabi.R;
 import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.objects.Comment;
@@ -33,7 +29,6 @@ import com.example.cafejabi.views.KeywordView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -262,8 +257,8 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                                 });
 
                                 //방문 카페 업데이트
-                                List<Cafe> userVisitedCafeList = user.getVisitedCafeList() == null ? new ArrayList<Cafe>() : user.getVisitedCafeList();
-                                userVisitedCafeList.add(cafe);
+                                List<String> userVisitedCafeList = user.getVisitedCafeList() == null ? new ArrayList<String>() : user.getVisitedCafeList();
+                                userVisitedCafeList.add(cafe.getCid());
                                 db.collection("users").document(mAuth.getUid()).update("visitedCafeList", userVisitedCafeList)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

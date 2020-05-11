@@ -10,8 +10,8 @@ public class UserInfo {
     private int age;
     private String job;
     private List<String> style;
-    private List<Cafe> visitedCafeList;
-    private List<Cafe> likingCafeList;
+    private List<String> visitedCafeList;
+    private List<String> likingCafeList;
     private Cafe managingCafe;
 
     public UserInfo(){}
@@ -75,19 +75,19 @@ public class UserInfo {
         this.style = style;
     }
 
-    public List<Cafe> getVisitedCafeList() {
+    public List<String> getVisitedCafeList() {
         return visitedCafeList;
     }
 
-    public void setVisitedCafeList(List<Cafe> visitedCafeList) {
+    public void setVisitedCafeList(List<String> visitedCafeList) {
         this.visitedCafeList = visitedCafeList;
     }
 
-    public List<Cafe> getLikingCafeList() {
+    public List<String> getLikingCafeList() {
         return likingCafeList;
     }
 
-    public void setLikingCafeList(List<Cafe> likingCafeList) {
+    public void setLikingCafeList(List<String> likingCafeList) {
         this.likingCafeList = likingCafeList;
     }
 

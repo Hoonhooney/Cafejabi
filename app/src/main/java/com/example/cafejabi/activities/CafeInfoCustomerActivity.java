@@ -41,7 +41,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.apmem.tools.layouts.FlowLayout;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static android.view.View.GONE;
 
@@ -220,7 +222,8 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
             db.collection("users").document(mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    String userNickname = documentSnapshot.toObject(UserInfo.class).getNickname();
+                    final UserInfo user = documentSnapshot.toObject(UserInfo.class);
+                    String userNickname = user.getNickname();
 
                     if(userNickname != null){
                         final Comment comment = new Comment(db.collection("comments").document().getId(), cafeId, userNickname, editText_comment.getText().toString(),
@@ -257,6 +260,23 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                                         Log.e(TAG, "update cafe grade : failure", e);
                                     }
                                 });
+
+                                //방문 카페 업데이트
+                                List<Cafe> userVisitedCafeList = user.getVisitedCafeList() == null ? new ArrayList<Cafe>() : user.getVisitedCafeList();
+                                userVisitedCafeList.add(cafe);
+                                db.collection("users").document(mAuth.getUid()).update("visitedCafeList", userVisitedCafeList)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "update visited cafe list in db : success");
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e(TAG, "update visited cafe list in db : failure", e);
+                                    }
+                                });
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override

@@ -34,8 +34,8 @@ public class CafeListActivity extends AppCompatActivity {
 
         viewPager_cafeList = findViewById(R.id.viewPager_cafe_list);
 
-        tabLayout_cafeList.addTab(tabLayout_cafeList.newTab().setText("방문한 카페"));
-        tabLayout_cafeList.addTab(tabLayout_cafeList.newTab().setText("좋아하는 카페"));
+        tabLayout_cafeList.addTab(tabLayout_cafeList.newTab());
+        tabLayout_cafeList.addTab(tabLayout_cafeList.newTab());
 
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout_cafeList.getTabCount());
         viewPager_cafeList.setAdapter(pagerAdapter);
@@ -74,6 +74,11 @@ public class CafeListActivity extends AppCompatActivity {
         public PagerAdapter(FragmentManager fm, int numOfTabs) {
             super(fm);
             this._numOfTabs = numOfTabs;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return position == 0 ? "방문한 카페" : "찜 카페";
         }
 
         @Override

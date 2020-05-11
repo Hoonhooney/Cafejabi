@@ -186,6 +186,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void btnGoRegisterCafe() {
                 goActivity(CafeRegisterActivity.class);
             }
+
+            @Override
+            public void btnGoCafeList(int code) {
+                Intent intent = new Intent(mContext, CafeListActivity.class);
+                intent.putExtra("CODE", code);
+                startActivity(intent);
+                finish();
+            }
         });
     }
 

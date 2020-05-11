@@ -48,6 +48,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         void btnGoEdit();
         void btnLogout();
         void btnGoRegisterCafe();
+        void btnGoCafeList(int code);
     }
 
     public SideMenuView(Context context, boolean isloggedin){
@@ -68,7 +69,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
 
         //로그아웃 상태, 로그인 상태 메뉴 다르게 보이기
         final List<String> list_menu = new ArrayList<>();
-        list_menu.add("자주 가는 카페");
+        list_menu.add("방문한 카페");
         list_menu.add("찜 카페");
         list_menu.add("설정");
         list_menu.add("카페 등록하기");
@@ -131,6 +132,13 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                         break;
                     case "카페 등록하기":
                         listener.btnGoRegisterCafe();
+                        break;
+                    case "방문한 카페":
+                        listener.btnGoCafeList(1);
+                        break;
+                    case "찜 카페":
+                        listener.btnGoCafeList(2);
+                        break;
                 }
             }
         });

@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.button_login).setOnClickListener(this);
         findViewById(R.id.button_go_join).setOnClickListener(this);
         findViewById(R.id.button_no_login).setOnClickListener(this);
+        findViewById(R.id.button_go_reset_password).setOnClickListener(this);
 
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
@@ -109,6 +110,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.button_no_login:
                 goActivity(MainActivity.class);
+                break;
+
+            case R.id.button_go_reset_password:
+                startActivity(new Intent(this, ResetPasswordActivity.class));
+                break;
         }
     }
 

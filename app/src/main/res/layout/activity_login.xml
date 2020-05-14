@@ -82,10 +82,10 @@
 
 
         <Button
-            android:id="@+id/button_find_id_pw"
+            android:id="@+id/button_go_reset_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="아이디/비밀번호 찾기"
+            android:text="비밀번호를 잊어버리셨나요?"
             />
         <Button
             android:id="@+id/button_go_join"

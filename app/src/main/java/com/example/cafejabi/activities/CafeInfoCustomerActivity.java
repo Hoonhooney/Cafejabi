@@ -340,4 +340,8 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
             return false;
         }
     }
+
+
+
+
 }

@@ -29,6 +29,8 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
         listener = l;
     }
 
+
+
     public interface EventListener{
         void btnCancel();
         void btnGoCafeInfo();

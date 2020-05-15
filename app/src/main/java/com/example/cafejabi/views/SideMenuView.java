@@ -36,6 +36,12 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
     private TextView textView_username, textView_userstyle;
     private ListView listView_menu;
 
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = mAuth.getCurrentUser();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private UserInfo userInfo;
+
+
     public boolean isloggedin;
 
     public void setEventListener(EventListener l){
@@ -57,6 +63,8 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         init();
     }
 
+
+
     public SideMenuView(Context context, AttributeSet attrs){
         super(context, attrs);
     }
@@ -69,10 +77,8 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
 
         //로그아웃 상태, 로그인 상태 메뉴 다르게 보이기
         final List<String> list_menu = new ArrayList<>();
-        list_menu.add("방문한 카페");
-        list_menu.add("찜 카페");
-        list_menu.add("설정");
-        list_menu.add("카페 등록하기");
+
+
 
         if(!isloggedin){
             linearLayout_login.setVisibility(GONE);
@@ -85,22 +91,31 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
             linearLayout_login.setVisibility(VISIBLE);
             linearLayout_logout.setVisibility(GONE);
             list_menu.add("로그아웃");
+            list_menu.add("방문한 카페");
+            list_menu.add("찜 카페");
+
+
 
             textView_username = findViewById(R.id.textView_menu_userName);
             textView_userstyle = findViewById(R.id.textView_menu_userStyle);
 
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            FirebaseUser user = mAuth.getCurrentUser();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
             assert user != null;
             DocumentReference ref = db.collection("users").document(user.getUid());
             ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    UserInfo userInfo = documentSnapshot.toObject(UserInfo.class);
+                    userInfo = documentSnapshot.toObject(UserInfo.class);
                     assert userInfo != null;
                     textView_username.setText(userInfo.getNickname());
                     textView_userstyle.setText(userInfo.getStyle().toString());
+
+                    if(userInfo.getManagingCafe() !=null){
+                        list_menu.add("카페 관리");
+                    }
+                    else{
+                        list_menu.add("카페 등록하기");
+                    }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -110,7 +125,10 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
             });
 
             findViewById(R.id.button_go_edit).setOnClickListener(this);
+
+
         }
+        list_menu.add("설정");
 
         //메뉴 ListView
         findViewById(R.id.button_menu_back).setOnClickListener(this);

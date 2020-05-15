@@ -37,17 +37,17 @@
 
                     <TextView
                         android:id="@+id/textView_info_cafename"
-                        android:layout_width="wrap_content"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:text="Cafe Name"
-                        android:textSize="20sp"
                         android:textColor="#303030"
-                        android:textStyle="bold"/>
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
 
                     <TextView
                         android:id="@+id/textView_info_cafenaddress"
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="wrap_content"
                         android:text="Cafe Address"
                         android:textColor="#707070" />

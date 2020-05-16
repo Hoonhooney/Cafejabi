@@ -45,6 +45,7 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
 import com.naver.maps.map.overlay.OverlayImage;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseFirestore db;   //Firebase database
 
     private List<String> cafeList = new ArrayList<>();
+    private List<Marker> markers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -355,8 +357,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 break;
                         }
 
-                        marker.setWidth(70);
-                        marker.setHeight(100);
+                        final int markerWidth = 90;
+                        final int markerHeight = 135;
+                        marker.setWidth(markerWidth);
+                        marker.setHeight(markerHeight);
+
+                        markers.add(marker);
 
                         marker.setOnClickListener(new Overlay.OnClickListener() {
                             @Override
@@ -364,6 +370,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 CameraUpdate cameraUpdate = CameraUpdate.scrollTo(cafeLocation)
                                         .animate(CameraAnimation.Easing, 200);
                                 map.moveCamera(cameraUpdate);
+
+                                Marker marker = (Marker)overlay;
+
+                                for(Marker m : markers){
+                                    if(marker == m){
+                                        m.setWidth(markerWidth/3*4);
+                                        m.setHeight(markerHeight/3*4);
+                                    }
+                                    else{
+                                        m.setWidth(markerWidth);
+                                        m.setHeight(markerHeight);
+                                    }
+                                }
+
                                 showCafeInfo(cafe);
                                 return false;
                             }

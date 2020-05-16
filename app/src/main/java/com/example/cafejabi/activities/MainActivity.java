@@ -47,6 +47,7 @@ import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.CompassView;
 
@@ -335,6 +336,28 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Marker marker = new Marker();
                         final LatLng cafeLocation = new LatLng(cafe.getLocate_x(), cafe.getLocate_y());
                         marker.setPosition(cafeLocation);
+
+                        switch(cafe.getTable()){
+                            case 0:
+                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin1));
+                                break;
+                            case 1:
+                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin2));
+                                break;
+                            case 2:
+                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin3));
+                                break;
+                            case 3:
+                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin4));
+                                break;
+                            case 4:
+                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin5));
+                                break;
+                        }
+
+                        marker.setWidth(70);
+                        marker.setHeight(100);
+
                         marker.setOnClickListener(new Overlay.OnClickListener() {
                             @Override
                             public boolean onClick(@NonNull Overlay overlay) {

@@ -353,7 +353,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
                 keywords_selected.add(keyword.getName());
         }
 
-        Cafe cafe = new Cafe(cid, null, cafeName, cafeAddress,
+        Cafe cafe = new Cafe(cid, uid, cafeName, cafeAddress,
                 locate_x, locate_y, 0, is24Working, isAllowedWithAlarm, keywords_selected);
 
         if(!is24Working){
@@ -375,7 +375,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
             public void onSuccess(Void aVoid) {
                 Log.e(TAG, "Success : add cafe data into db");
 
-//                addCafeInUserInfo(cafe);
+                addCafeInUserInfo(cafe);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

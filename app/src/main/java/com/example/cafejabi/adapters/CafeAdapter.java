@@ -60,11 +60,13 @@ public class CafeAdapter extends BaseAdapter {
         textView_cafe_address = view.findViewById(R.id.textView_item_cafe_address);
         textView_cafe_status = view.findViewById(R.id.textView_item_cafe_status);
 
-        textView_cafe_name.setText(cafe.getCafe_name());
-        textView_cafe_address.setText(cafe.getAddress());
+        if(cafe != null){
+            textView_cafe_name.setText(cafe.getCafe_name());
+            textView_cafe_address.setText(cafe.getAddress());
 
-        textView_cafe_status.setText(cafe.getTable()+"");
+            textView_cafe_status.setText(cafe.getTable()+"");
 
+        }
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

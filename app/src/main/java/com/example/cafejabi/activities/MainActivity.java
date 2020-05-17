@@ -3,6 +3,7 @@ package com.example.cafejabi.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.graphics.PointF;
 
 import android.content.Context;
@@ -45,8 +46,11 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.Align;
+import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.CompassView;
 
@@ -58,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final String TAG = "MainActivity";
 
     private static final int ACCESS_LOCATION_PERMISSION_REQUEST_CODE = 100;
+
+    private final int markerWidth = 90;
+    private final int markerHeight = 135;
 
     private Context mContext = MainActivity.this;
 
@@ -84,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseFirestore db;   //Firebase database
 
     private List<String> cafeList = new ArrayList<>();
+    private List<Marker> markers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,6 +297,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onMapLongClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
                 bottomLayout.removeAllViews();
+                for(Marker m : markers){
+                    m.setWidth(markerWidth);
+                    m.setHeight(markerHeight);
+                    m.setCaptionColor(Color.BLACK);
+                    m.setCaptionHaloColor(Color.WHITE);
+                }
             }
         });
 
@@ -335,12 +349,64 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Marker marker = new Marker();
                         final LatLng cafeLocation = new LatLng(cafe.getLocate_x(), cafe.getLocate_y());
                         marker.setPosition(cafeLocation);
+
+                        switch(cafe.getTable()){
+                            case 0:
+                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin1));
+                                break;
+                            case 1:
+                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin2));
+                                break;
+                            case 2:
+                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin3));
+                                break;
+                            case 3:
+                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin4));
+                                break;
+                            case 4:
+                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin5));
+                                break;
+                        }
+
+                        marker.setWidth(markerWidth);
+                        marker.setHeight(markerHeight);
+
+                        marker.setCaptionText(cafe.getCafe_name());
+                        marker.setCaptionTextSize(16);
+                        marker.setCaptionAligns(Align.Top);
+                        marker.setCaptionRequestedWidth(200);
+                        marker.setCaptionMinZoom(16.0);
+
+                        marker.setHideCollidedSymbols(true);
+
+                        markers.add(marker);
+
                         marker.setOnClickListener(new Overlay.OnClickListener() {
                             @Override
                             public boolean onClick(@NonNull Overlay overlay) {
                                 CameraUpdate cameraUpdate = CameraUpdate.scrollTo(cafeLocation)
                                         .animate(CameraAnimation.Easing, 200);
                                 map.moveCamera(cameraUpdate);
+
+                                Marker marker = (Marker)overlay;
+
+                                for(Marker m : markers){
+                                    if(marker == m){
+                                        m.setWidth(markerWidth/3*4);
+                                        m.setHeight(markerHeight/3*4);
+                                        m.setCaptionColor(Color.BLUE);
+                                        m.setCaptionHaloColor(Color.rgb(200, 255, 200));
+                                        m.setZIndex(100);
+                                    }
+                                    else{
+                                        m.setWidth(markerWidth);
+                                        m.setHeight(markerHeight);
+                                        m.setCaptionColor(Color.BLACK);
+                                        m.setCaptionHaloColor(Color.WHITE);
+                                        m.setZIndex(1);
+                                    }
+                                }
+
                                 showCafeInfo(cafe);
                                 return false;
                             }

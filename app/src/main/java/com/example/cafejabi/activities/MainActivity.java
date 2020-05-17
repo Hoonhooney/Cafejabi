@@ -3,6 +3,7 @@ package com.example.cafejabi.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.graphics.PointF;
 
 import android.content.Context;
@@ -45,6 +46,7 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.Align;
 import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
@@ -60,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final String TAG = "MainActivity";
 
     private static final int ACCESS_LOCATION_PERMISSION_REQUEST_CODE = 100;
+
+    private final int markerWidth = 90;
+    private final int markerHeight = 135;
 
     private Context mContext = MainActivity.this;
 
@@ -292,6 +297,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onMapLongClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
                 bottomLayout.removeAllViews();
+                for(Marker m : markers){
+                    m.setWidth(markerWidth);
+                    m.setHeight(markerHeight);
+                    m.setCaptionColor(Color.BLACK);
+                    m.setCaptionHaloColor(Color.WHITE);
+                }
             }
         });
 
@@ -357,10 +368,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 break;
                         }
 
-                        final int markerWidth = 90;
-                        final int markerHeight = 135;
                         marker.setWidth(markerWidth);
                         marker.setHeight(markerHeight);
+
+                        marker.setCaptionText(cafe.getCafe_name());
+                        marker.setCaptionTextSize(16);
+                        marker.setCaptionAligns(Align.Top);
+                        marker.setCaptionRequestedWidth(200);
+                        marker.setCaptionMinZoom(16.0);
+
+                        marker.setHideCollidedSymbols(true);
 
                         markers.add(marker);
 
@@ -377,10 +394,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     if(marker == m){
                                         m.setWidth(markerWidth/3*4);
                                         m.setHeight(markerHeight/3*4);
+                                        m.setCaptionColor(Color.BLUE);
+                                        m.setCaptionHaloColor(Color.rgb(200, 255, 200));
+                                        m.setZIndex(100);
                                     }
                                     else{
                                         m.setWidth(markerWidth);
                                         m.setHeight(markerHeight);
+                                        m.setCaptionColor(Color.BLACK);
+                                        m.setCaptionHaloColor(Color.WHITE);
+                                        m.setZIndex(1);
                                     }
                                 }
 

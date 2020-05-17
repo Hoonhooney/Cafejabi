@@ -22,15 +22,15 @@
                 android:background="@null"
                 android:src="@drawable/ic_launcher_foreground"
                 />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="회원가입"
-                android:gravity="center"
-                android:textSize="50sp"
                 android:layout_gravity="center"
-                android:background="@android:color/holo_blue_light"
-                />
+                android:background="#D4CBB8"
+                android:gravity="center"
+                android:text="회원가입"
+                android:textSize="50sp" />
 
             <LinearLayout
                 android:id="@+id/linearLayout_join_email"
@@ -71,6 +71,8 @@
                     android:layout_height="match_parent"
                     android:text="나이 : "
                     android:textSize="20sp"
+
+                    android:gravity="center"
                     />
                 <Spinner
                     android:id="@+id/spinner_join_age"
@@ -82,6 +84,7 @@
                     android:layout_height="match_parent"
                     android:text="년생"
                     android:textSize="20sp"
+                    android:gravity="center"
                     />
             </LinearLayout>
 
@@ -90,12 +93,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="핸드폰 번호 : "
-                    android:textSize="30sp"
-                    />
+                    android:textSize="20sp"
+                    android:gravity = "center"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -123,6 +127,7 @@
                     android:layout_height="match_parent"
                     android:text="닉네임 : "
                     android:textSize="30sp"
+                    android:gravity="center"
                     />
                 <EditText
                     android:id="@+id/editText_join_nickname"
@@ -232,11 +237,12 @@
 
             <Button
                 android:id="@+id/button_join_finish"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:text="등록"
-                android:textSize="20sp"
-                />
+                android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>
 

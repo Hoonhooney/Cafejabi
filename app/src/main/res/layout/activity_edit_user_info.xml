@@ -11,15 +11,15 @@
         android:background="@null"
         android:src="@drawable/ic_launcher_foreground"
         ></ImageView>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="회원 정보 수정"
-        android:gravity="center"
-        android:textSize="50sp"
         android:layout_gravity="center"
-        android:background="@android:color/holo_blue_light"
-        />
+        android:background="#D4CBB8"
+        android:gravity="center"
+        android:text="회원 정보 수정"
+        android:textSize="50sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,13 +42,12 @@
 
     <Button
         android:id="@+id/button_edit_check_nickname"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="닉네임 중복 확인"
-        android:textSize="20sp"
         android:layout_gravity="center"
         android:gravity="center"
-        />
+        android:text="닉네임 중복 확인"
+        android:textSize="20sp" />
 
 
     <LinearLayout
@@ -156,13 +155,12 @@
 
     <Button
         android:id="@+id/button_edit_finish"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="확인"
-        android:textSize="20sp"
         android:layout_gravity="center"
         android:gravity="center"
-        />
+        android:text="확인"
+        android:textSize="20sp" />
 
 
         <TextView
@@ -233,13 +231,12 @@
 
     <Button
         android:id="@+id/new_pw_ok_button"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="비밀번호 수정"
-        android:textSize="20sp"
         android:layout_gravity="center"
         android:gravity="center"
-        ></Button>
+        android:text="비밀번호 수정"
+        android:textSize="20sp"></Button>
 
 
 

@@ -43,10 +43,10 @@
             <TextView
                 android:id="@+id/textView_info_customer_cafestatus"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="카페 혼잡도"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="20sp"/>
+                android:text="카페 혼잡도"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView_info_customer_cafeinfo"

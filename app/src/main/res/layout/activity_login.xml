@@ -17,29 +17,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@android:color/holo_blue_light"
+        android:background="#c8bca8"
         android:gravity="center"
-        android:text="cafe"
+        android:text="CAFEJABI"
         android:textSize="70sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="카페에서 공부하고 싶어요"
-        android:textSize="35sp"
         android:layout_gravity="center"
+        android:background="#d4cbb8"
         android:gravity="center"
-        android:background="@android:color/holo_green_light"
-        />
+        android:text="커피 한잔과 함께하는 시간"
+        android:textSize="35sp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center_horizontal"
         >
 
         <EditText
             android:id="@+id/editText_email"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Email"
             android:inputType="textEmailAddress" />
@@ -50,11 +50,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center_horizontal"
         >
 
         <EditText
             android:id="@+id/editText_password"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Password"
             android:inputType="textPassword" />
@@ -62,44 +63,49 @@
 
     <Button
         android:id="@+id/button_login"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="로그인" />
 
     <Button
         android:id="@+id/button_login_kakao"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="카카오계정 로그인" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/button_login_facebook"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="5dp"
+        android:gravity="center" />
 
 
-        <Button
-            android:id="@+id/button_go_reset_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="비밀번호를 잊어버리셨나요?"
-            />
-        <Button
-            android:id="@+id/button_go_join"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="회원가입"
-            />
+    <Button
+        android:id="@+id/button_go_reset_password"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="비밀번호를 잊어버리셨나요?" />
+
+    <Button
+        android:id="@+id/button_go_join"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="회원가입" />
 
     <Button
         android:id="@+id/button_no_login"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="비회원으로 시작하기"
         android:layout_gravity="center"
         android:gravity="center"
+        android:text="비회원으로 시작하기"
+
         />
 </LinearLayout>

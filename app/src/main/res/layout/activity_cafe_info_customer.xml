@@ -14,31 +14,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <ImageView
+            <!--<ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@null"
-                android:src="@drawable/ic_launcher_foreground"/>
+                android:src="@drawable/ic_launcher_foreground"/>-->
 
             <TextView
                 android:id="@+id/textView_info_customer_cafename"
-                android:layout_width="209dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="카페 이름"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:layout_marginTop="40dp"/>
 
             <TextView
                 android:id="@+id/textView_info_customer_cafeaddress"
-                android:layout_width="240dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="카페 주소"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"/>
 
             <TextView
                 android:id="@+id/textView_info_customer_cafestatus"
@@ -46,7 +48,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="카페 혼잡도"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"/>
 
             <TextView
                 android:id="@+id/textView_info_customer_cafeinfo"
@@ -66,7 +69,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="운영 시간 : "
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/textView_info_customer_workingtime"
@@ -95,15 +100,18 @@
                     style="@style/Widget.AppCompat.RatingBar.Indicator"
                     android:numStars="5"
                     android:stepSize="0.01"
-                    android:isIndicator="true"/>
+                    android:isIndicator="true"
+                    android:layout_marginLeft="10dp"/>
 
                 <TextView
                     android:id="@+id/textView_info_customer_grade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:gravity="center"
                     android:text="평점 : "
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:layout_gravity="center"/>
             </LinearLayout>
 
             <TextView
@@ -112,7 +120,8 @@
                 android:layout_height="wrap_content"
                 android:text="댓글"
                 android:layout_marginTop="10dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_marginLeft="10dp"/>
 
             <LinearLayout
                 android:id="@+id/linearLayout_info_customer_addcomment"
@@ -168,7 +177,8 @@
             <ListView
                 android:id="@+id/listView_info_customer_comments"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
 
         </LinearLayout>
     </ScrollView>

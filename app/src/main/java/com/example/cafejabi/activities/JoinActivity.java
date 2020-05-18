@@ -125,7 +125,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         //목적
         style = new ArrayList<>();
         findViewById(R.id.checkBox_join_study).setOnClickListener(this);
-        findViewById(R.id.checkBox_join_rest).setOnClickListener(this);
+        findViewById(R.id.checkBox_join_talk).setOnClickListener(this);
         findViewById(R.id.checkbox_join_mood).setOnClickListener(this);
 
         //프로그래스바
@@ -157,11 +157,11 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e(TAG, style.toString());
                 break;
 
-            case R.id.checkBox_join_rest:
-                if(((CheckBox)v).isChecked() && !style.contains("휴식"))
-                    style.add("휴식");
+            case R.id.checkBox_join_talk:
+                if(((CheckBox)v).isChecked() && !style.contains("대화"))
+                    style.add("대화");
                 else if(!((CheckBox)v).isChecked())
-                    style.remove("휴식");
+                    style.remove("대화");
                 Log.e(TAG, style.toString());
                 break;
 

@@ -5,13 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@null"
-        android:src="@drawable/ic_launcher_foreground"
-        ></ImageView>
+
     <TextView
         android:id="@+id/textview_title"
         android:layout_width="match_parent"
@@ -20,12 +14,13 @@
         android:gravity="center"
         android:textSize="50sp"
         android:layout_gravity="center"
-        android:background="@android:color/holo_blue_light"
+        android:layout_marginTop="20dp"
         />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
         >
         <LinearLayout
             android:layout_width="match_parent"

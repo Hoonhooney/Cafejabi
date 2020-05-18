@@ -32,6 +32,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.apmem.tools.layouts.FlowLayout;
 
+import java.util.Objects;
+
 public class BottomCafeInformationView extends RelativeLayout implements View.OnClickListener {
     private static final String TAG = "BottomInfoView";
     private Context mContext = getContext();
@@ -40,7 +42,7 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
 
     public Cafe cafe;
 
-    public UserInfo userinfo;
+    public UserInfo userInfo;
 
     private TextView textView_cafe_name, textView_comments, textView_last_updated_time, textView_distance;
     private RatingBar ratingBar_cafe_grade;
@@ -91,21 +93,24 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        db.collection("users").document(mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                userinfo = documentSnapshot.toObject(UserInfo.class);
+        if(mAuth.getUid() != null){
+            db.collection("users").document(mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    userInfo = documentSnapshot.toObject(UserInfo.class);
 
-                if (userinfo != null) {
-                    for (int i = 0; i < userinfo.getLikingCafeList().size(); i++) {
-                        if (userinfo.getLikingCafeList().get(i).equals(cafe.getCid())) {      //해당 유저의 찜 리스트 카페들의 이름을 차례로 검사
-                            liking_cafe_list_checkbox.setBackground(getResources().getDrawable(R.drawable.like_check));
-                            isChecked = true;                                               //같은 경우 체크가 되어있는 상태로 만든다. (초기 상태) , 사용자가 체크박스 누르는 경우도 만들어야 함
+                    if (userInfo != null) {
+                        for (int i = 0; i < userInfo.getLikingCafeList().size(); i++) {
+                            if (userInfo.getLikingCafeList().get(i).equals(cafe.getCid())) {      //해당 유저의 찜 리스트 카페들의 이름을 차례로 검사
+                                liking_cafe_list_checkbox.setBackground(getResources().getDrawable(R.drawable.like_check));
+                                liking_cafe_list_checkbox.setVisibility(VISIBLE);
+                                isChecked = true;                                               //같은 경우 체크가 되어있는 상태로 만든다. (초기 상태) , 사용자가 체크박스 누르는 경우도 만들어야 함
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
 
         liking_cafe_list_checkbox.setOnClickListener(this);
 
@@ -170,28 +175,30 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
                 break;
 
             case R.id.liking_cafe_list_checkbox:
-                if(!isChecked){
-                    userinfo.getLikingCafeList().add(cafe.getCid());
-                    liking_cafe_list_checkbox.setBackground(getResources().getDrawable(R.drawable.like_check));
-                    isChecked = true;
-                }else{
-                    userinfo.getLikingCafeList().remove(cafe.getCid());
-                    liking_cafe_list_checkbox.setBackground(getResources().getDrawable(R.drawable.like_uncheck));
-                    isChecked = false;
-                }
+                if(userInfo != null){
+                    if(!isChecked){
+                        userInfo.getLikingCafeList().add(cafe.getCid());
+                        liking_cafe_list_checkbox.setBackground(getResources().getDrawable(R.drawable.like_check));
+                        isChecked = true;
+                    }else{
+                        userInfo.getLikingCafeList().remove(cafe.getCid());
+                        liking_cafe_list_checkbox.setBackground(getResources().getDrawable(R.drawable.like_uncheck));
+                        isChecked = false;
+                    }
 
-                db.collection("users").document(userinfo.getUid())
-                        .update("likingCafeList", userinfo.getLikingCafeList()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "update likingCafeList : success");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "update likingCafeList : failure", e);
-                    }
-                });
+                    db.collection("users").document(userInfo.getUid())
+                            .update("likingCafeList", userInfo.getLikingCafeList()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "update likingCafeList : success");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "update likingCafeList : failure", e);
+                        }
+                    });
+                }
                 break;
 
             default:

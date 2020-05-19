@@ -23,15 +23,20 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cafejabi.objects.Keyword;
 import com.example.cafejabi.views.BottomCafeInformationView;
 import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.R;
+import com.example.cafejabi.views.KeywordView;
+import com.example.cafejabi.views.KeywordViewForMain;
 import com.example.cafejabi.views.SideMenuView;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,9 +60,11 @@ import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.CompassView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback , View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback , View.OnClickListener, KeywordViewForMain.EventListener {
 
     private final String TAG = "MainActivity";
 
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Context mContext = MainActivity.this;
 
+    private NaverMap map;
     private MapFragment mapFragment;
     private FusedLocationSource locationSource;
     private Location lastLocation;
@@ -78,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ViewGroup viewLayout;   //전체 감싸는 영역
     private ViewGroup sideLayout;   //사이드바만 감싸는 영역
     private ViewGroup bottomLayout;
+    private LinearLayout linearLayout_keywords;
 
     private AutoCompleteTextView editText_search;
 
@@ -91,7 +100,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseFirestore db;   //Firebase database
 
     private List<String> cafeList = new ArrayList<>();
-    private List<Marker> markers = new ArrayList<>();
+//    private List<Marker> markers = new ArrayList<>();
+//    private List<Marker> newMarkers = new ArrayList<>();
+    private Map<Marker, Integer> markerMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +147,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //사이드메뉴 활성화
         isLoggedIn = currentUser != null;
         addSideMenu();
+
+        linearLayout_keywords = findViewById(R.id.linearLayout_keywords);
+        String[] arr_keyword = getResources().getStringArray(R.array.keywords);
+        for (String kw : arr_keyword){
+            final KeywordViewForMain keywordView = new KeywordViewForMain(this, new Keyword(kw));
+            keywordView.setEventListener(this);
+            linearLayout_keywords.addView(keywordView);
+        }
     }
 
 //    사이드메뉴 추가
@@ -297,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onMapLongClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
                 bottomLayout.removeAllViews();
-                for(Marker m : markers){
+                for(Marker m : markerMap.keySet()){
                     m.setWidth(markerWidth);
                     m.setHeight(markerHeight);
                     m.setCaptionColor(Color.BLACK);
@@ -334,6 +353,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 hideKeyboard(v);
             }
         });
+
+        map = naverMap;
     }
 
     private void drawCafes(final NaverMap map){
@@ -379,7 +400,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         marker.setHideCollidedSymbols(true);
 
-                        markers.add(marker);
+                        markerMap.put(marker, 1);
+//                        markers.add(marker);
 
                         marker.setOnClickListener(new Overlay.OnClickListener() {
                             @Override
@@ -390,7 +412,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                                 Marker marker = (Marker)overlay;
 
-                                for(Marker m : markers){
+                                for(Marker m : markerMap.keySet()){
                                     if(marker == m){
                                         m.setWidth(markerWidth/3*4);
                                         m.setHeight(markerHeight/3*4);
@@ -489,6 +511,49 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+//    KeywordView 버튼 카페 Marker 분류 EventListener
+    @Override
+    public void showMarkers(final KeywordViewForMain keywordView) {
+        for (Marker marker : markerMap.keySet())
+            marker.setMap(null);
+
+        db.collection("cafes").whereArrayContains("keywords", keywordView.getKeyword().getName())
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                        Cafe chosenCafe = documentSnapshot.toObject(Cafe.class);
+                        for (Marker marker : markerMap.keySet()){
+                            if (marker.getCaptionText().equals(chosenCafe.getCafe_name())){
+                                int num_chosen = markerMap.get(marker);
+                                markerMap.put(marker, keywordView.getKeyword().isChosen() ? num_chosen+1 : num_chosen-1);
+                            }
+                        }
+                    }
+
+                    int num_markers = 0;
+
+                    for (Marker marker : markerMap.keySet()){
+                        if (markerMap.get(marker) > 1){
+                            marker.setMap(map);
+                            num_markers++;
+                        }
+                        else
+                            marker.setMap(null);
+                    }
+
+                    if (num_markers == 0){
+                        for(Marker marker : markerMap.keySet())
+                            marker.setMap(map);
+                    }
+
+                    bottomLayout.removeAllViews();
+                }
+            }
+        });
+    }
+
 //    종료할 때
     @Override
     public void onPause(){
@@ -543,4 +608,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
+
 }

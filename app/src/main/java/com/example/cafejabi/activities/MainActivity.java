@@ -530,8 +530,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //    KeywordView 버튼 카페 Marker 분류 EventListener
     @Override
     public void showMarkers(final KeywordViewForMain keywordView) {
-        for (Marker marker : markerMap.keySet())
-            marker.setMap(null);
 
         db.collection("cafes").whereArrayContains("keywords", keywordView.getKeyword().getName())
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

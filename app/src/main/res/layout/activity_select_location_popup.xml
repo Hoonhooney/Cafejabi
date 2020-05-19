@@ -26,7 +26,8 @@
         android:background="#ffffff"
         android:divider="#ffffff00"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        />
 
     <!--  검색결과가 없을 때 보이는 Layout  -->
     <LinearLayout

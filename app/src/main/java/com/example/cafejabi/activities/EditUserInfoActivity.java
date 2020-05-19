@@ -48,7 +48,7 @@ public class EditUserInfoActivity extends AppCompatActivity implements View.OnCl
     private EditText editText_nickname;
     private RadioButton rb_job_student, rb_job_worker, rb_job_none;
     private List<RadioButton> rbList;
-    private CheckBox cb_study, cb_rest, cb_mood;
+    private CheckBox cb_study, cb_talk, cb_mood; // 공부, 대화, 사진
     private List<CheckBox> cbList;
 
     private ProgressDialog progressDialog;
@@ -85,11 +85,11 @@ public class EditUserInfoActivity extends AppCompatActivity implements View.OnCl
         rbList.add(rb_job_none);
 
         cb_study = findViewById(R.id.checkBox_edit_study);
-        cb_rest = findViewById(R.id.checkBox_edit_rest);
+        cb_talk = findViewById(R.id.checkBox_edit_talk);
         cb_mood = findViewById(R.id.checkbox_edit_mood);
         cbList = new ArrayList<>();
         cbList.add(cb_study);
-        cbList.add(cb_rest);
+        cbList.add(cb_talk);
         cbList.add(cb_mood);
         for(CheckBox cb : cbList)
             cb.setChecked(false);
@@ -148,7 +148,7 @@ public class EditUserInfoActivity extends AppCompatActivity implements View.OnCl
 
                     //목적
                     cb_study.setOnClickListener(EditUserInfoActivity.this);
-                    cb_rest.setOnClickListener(EditUserInfoActivity.this);
+                    cb_talk.setOnClickListener(EditUserInfoActivity.this);
                     cb_mood.setOnClickListener(EditUserInfoActivity.this);
                 }
             }
@@ -198,11 +198,11 @@ public class EditUserInfoActivity extends AppCompatActivity implements View.OnCl
                 Log.e(TAG, style.toString());
                 break;
 
-            case R.id.checkBox_edit_rest:
-                if(((CheckBox)v).isChecked() && !style.contains("휴식"))
-                    style.add("휴식");
+            case R.id.checkBox_edit_talk:
+                if(((CheckBox)v).isChecked() && !style.contains("대"))
+                    style.add("대화");
                 else if(!((CheckBox)v).isChecked())
-                    style.remove("휴식");
+                    style.remove("대화");
                 Log.e(TAG, style.toString());
                 break;
 

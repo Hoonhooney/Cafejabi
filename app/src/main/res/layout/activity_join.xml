@@ -15,22 +15,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <ImageView
+            <!--<ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@null"
                 android:src="@drawable/ic_launcher_foreground"
-                />
+                />-->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#D4CBB8"
                 android:gravity="center"
                 android:text="회원가입"
-                android:textSize="50sp" />
+                android:textSize="50sp"
+                android:layout_marginTop="20dp" />
 
             <LinearLayout
                 android:id="@+id/linearLayout_join_email"
@@ -43,21 +43,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:hint="이메일"/>
+                    android:hint="이메일"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
 
                 <EditText
                     android:id="@+id/editText_join_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textWebPassword"
-                    android:hint="패스워드(6자 이상)"/>
+                    android:hint="패스워드(6자 이상)"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"/>
 
                 <EditText
                     android:id="@+id/editText_join_password2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textWebPassword"
-                    android:hint="패스워드 확인"/>
+                    android:hint="패스워드 확인"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
 
             </LinearLayout>
 
@@ -65,14 +71,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="나이 : "
                     android:textSize="20sp"
-
                     android:gravity="center"
+                    android:layout_marginLeft="10dp"
                     />
                 <Spinner
                     android:id="@+id/spinner_join_age"
@@ -92,6 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 >
 
                 <TextView
@@ -99,16 +107,18 @@
                     android:layout_height="match_parent"
                     android:text="핸드폰 번호 : "
                     android:textSize="20sp"
-                    android:gravity = "center"/>
+                    android:gravity = "center"
+                    android:layout_marginLeft="10dp"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
                     />
             </LinearLayout>
 
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="핸드폰 번호 확인"
                 android:textSize="20sp"
@@ -121,24 +131,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="닉네임 : "
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:gravity="center"
+                    android:layout_marginLeft="10dp"
                     />
                 <EditText
                     android:id="@+id/editText_join_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
                     />
             </LinearLayout>
 
             <Button
                 android:id="@+id/button_join_check_nickname"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="닉네임 중복 확인"
                 android:textSize="20sp"
@@ -155,7 +168,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="직업 : "
-                    android:textSize="30sp"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
                     />
 
                 <RadioGroup
@@ -205,7 +220,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="목적 : "
-                    android:textSize="30sp"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
                     />
 
                 <CheckBox
@@ -217,11 +234,11 @@
                     android:textSize="20sp"
                     />
                 <CheckBox
-                    android:id="@+id/checkBox_join_rest"
+                    android:id="@+id/checkBox_join_talk"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:checked="true"
-                    android:text="휴식"
+                    android:text="대화"
                     android:textSize="20sp"
                     />
                 <CheckBox
@@ -237,7 +254,7 @@
 
             <Button
                 android:id="@+id/button_join_finish"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"

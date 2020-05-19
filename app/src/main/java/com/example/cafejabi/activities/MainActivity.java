@@ -100,8 +100,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseFirestore db;   //Firebase database
 
     private List<String> cafeList = new ArrayList<>();
-//    private List<Marker> markers = new ArrayList<>();
-//    private List<Marker> newMarkers = new ArrayList<>();
     private Map<Marker, Integer> markerMap = new HashMap<>();
 
     @Override
@@ -401,7 +399,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         marker.setHideCollidedSymbols(true);
 
                         markerMap.put(marker, 1);
-//                        markers.add(marker);
 
                         marker.setOnClickListener(new Overlay.OnClickListener() {
                             @Override
@@ -456,6 +453,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(resultCafe.getLocate_x(), resultCafe.getLocate_y()))
                             .animate(CameraAnimation.Easing, 200);
                     naverMap.moveCamera(cameraUpdate);
+
+                    for(Marker m : markerMap.keySet()){
+                        if(m.getCaptionText().equals(resultCafe.getCafe_name())){
+                            m.setWidth(markerWidth/3*4);
+                            m.setHeight(markerHeight/3*4);
+                            m.setCaptionColor(Color.BLUE);
+                            m.setCaptionHaloColor(Color.rgb(200, 255, 200));
+                            m.setZIndex(100);
+                        }
+                        else{
+                            m.setWidth(markerWidth);
+                            m.setHeight(markerHeight);
+                            m.setCaptionColor(Color.BLACK);
+                            m.setCaptionHaloColor(Color.WHITE);
+                            m.setZIndex(1);
+                        }
+                    }
                     showCafeInfo(resultCafe);
                 }
             }
@@ -535,6 +549,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     int num_markers = 0;
 
                     for (Marker marker : markerMap.keySet()){
+
+                        marker.setWidth(markerWidth);
+                        marker.setHeight(markerHeight);
+                        marker.setCaptionColor(Color.BLACK);
+                        marker.setCaptionHaloColor(Color.WHITE);
+                        marker.setZIndex(1);
+
                         if (markerMap.get(marker) > 1){
                             marker.setMap(map);
                             num_markers++;

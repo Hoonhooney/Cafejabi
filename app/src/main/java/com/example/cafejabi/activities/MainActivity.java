@@ -403,6 +403,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         marker.setOnClickListener(new Overlay.OnClickListener() {
                             @Override
                             public boolean onClick(@NonNull Overlay overlay) {
+                                editText_search.setText("");
+
                                 CameraUpdate cameraUpdate = CameraUpdate.scrollTo(cafeLocation)
                                         .animate(CameraAnimation.Easing, 200);
                                 map.moveCamera(cameraUpdate);

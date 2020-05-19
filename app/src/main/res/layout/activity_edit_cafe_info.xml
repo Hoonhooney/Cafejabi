@@ -117,6 +117,10 @@
                 android:layout_marginRight="10dp"
                 android:maxLines="5" />
 
+            <org.apmem.tools.layouts.FlowLayout
+                android:id="@+id/flowLayout_keywords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -127,7 +131,7 @@
                 android:textSize="20sp" />
 
             <CheckBox
-                android:id="@+id/checkbox_full_time"
+                android:id="@+id/checkbox_24working"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -231,12 +235,9 @@
                 android:text="카페 키워드 설정"
                 android:textSize="20sp" />
 
-            <org.apmem.tools.layouts.FlowLayout
-                android:id="@+id/flowLayout__cafe_keywords"
+            <RadioGroup
+                android:id="@+id/radioGroup_keyword_list"
                 android:layout_width="match_parent"
-<<<<<<< HEAD
-                android:layout_height="wrap_content" />
-=======
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:orientation="vertical">
@@ -277,16 +278,10 @@
 
             </RadioGroup>
 
->>>>>>> 6c02ff727e0628391449ab7814bd9fdb94b4b24a
 
             <Button
-<<<<<<< HEAD
-                android:id="@+id/button_edit_finish_cafe"
-                android:layout_width="match_parent"
-=======
                 android:id="@+id/button_register_cafe"
                 android:layout_width="200dp"
->>>>>>> 6c02ff727e0628391449ab7814bd9fdb94b4b24a
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"

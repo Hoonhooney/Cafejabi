@@ -106,8 +106,7 @@ public class EditUserInfoActivity extends AppCompatActivity implements View.OnCl
         db.collection("users").document(Objects.requireNonNull(mAuth.getUid()))
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Log.d(TAG, "getting UserInfo : success");
+            public void onSuccess(DocumentSnapshot documentSnapshot) { Log.d(TAG, "getting UserInfo : success");
                 user = documentSnapshot.toObject(UserInfo.class);
 
                 progressDialog.dismiss();

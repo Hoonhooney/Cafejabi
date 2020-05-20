@@ -8,4 +8,9 @@
 
     <color name="colorAccent">#eeba30</color>
 <!--    <color name="colorAccent">#FF0000</color>-->
+    <color name="colorTable0">#33c79c</color>
+    <color name="colorTable1">#fff936</color>
+    <color name="colorTable2">#ffa37b</color>
+    <color name="colorTable3">#ff6890</color>
+    <color name="colorTable4">#fc6764</color>
 </resources>

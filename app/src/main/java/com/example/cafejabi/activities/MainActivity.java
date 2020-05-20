@@ -60,6 +60,7 @@ import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.CompassView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -369,22 +370,30 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         final LatLng cafeLocation = new LatLng(cafe.getLocate_x(), cafe.getLocate_y());
                         marker.setPosition(cafeLocation);
 
-                        switch(cafe.getTable()){
-                            case 0:
-                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin1));
-                                break;
-                            case 1:
-                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin2));
-                                break;
-                            case 2:
-                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin3));
-                                break;
-                            case 3:
-                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin4));
-                                break;
-                            case 4:
-                                marker.setIcon(OverlayImage.fromResource(R.drawable.pin5));
-                                break;
+                        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+                        if (currentHour < cafe.getOpen_time() || currentHour > cafe.getClose_time()){
+                            marker.setIcon(OverlayImage.fromResource(R.drawable.pin_closed));
+                        }else if(!cafe.isAllowAlarm()){
+                            marker.setIcon(OverlayImage.fromResource(R.drawable.pin_unknown));
+                        } else{
+                            switch(cafe.getTable()){
+                                case 0:
+                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin1));
+                                    break;
+                                case 1:
+                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin2));
+                                    break;
+                                case 2:
+                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin3));
+                                    break;
+                                case 3:
+                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin4));
+                                    break;
+                                case 4:
+                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin5));
+                                    break;
+                            }
                         }
 
                         marker.setWidth(markerWidth);

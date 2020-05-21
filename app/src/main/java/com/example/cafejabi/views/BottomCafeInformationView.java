@@ -95,6 +95,7 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
 
         if(mAuth.getUid() != null){
             liking_cafe_list_checkbox.setVisibility(VISIBLE);
+//            liking_cafe_list_checkbox.
 
             db.collection("users").document(mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override

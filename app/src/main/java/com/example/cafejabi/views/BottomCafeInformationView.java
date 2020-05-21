@@ -94,6 +94,8 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
         db = FirebaseFirestore.getInstance();
 
         if(mAuth.getUid() != null){
+            liking_cafe_list_checkbox.setVisibility(VISIBLE);
+
             db.collection("users").document(mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -103,7 +105,7 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
                         for (int i = 0; i < userInfo.getLikingCafeList().size(); i++) {
                             if (userInfo.getLikingCafeList().get(i).equals(cafe.getCid())) {      //해당 유저의 찜 리스트 카페들의 이름을 차례로 검사
                                 liking_cafe_list_checkbox.setBackground(getResources().getDrawable(R.drawable.like_check));
-                                liking_cafe_list_checkbox.setVisibility(VISIBLE);
+
                                 isChecked = true;                                               //같은 경우 체크가 되어있는 상태로 만든다. (초기 상태) , 사용자가 체크박스 누르는 경우도 만들어야 함
                             }
                         }

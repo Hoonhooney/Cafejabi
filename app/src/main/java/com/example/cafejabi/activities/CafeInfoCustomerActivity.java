@@ -156,7 +156,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
 
                     int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-                    if (currentHour < cafe.getOpen_time() || currentHour > cafe.getClose_time()){
+                    if (!cafe.isIs24Working() && (currentHour < cafe.getOpen_time() || currentHour >= cafe.getClose_time())){
                         textView_cafeStatus.setText("현재 카페는 닫힌 상태입니다.");
                     }else if(!cafe.isAllowAlarm()) {
                         textView_cafeStatus.setText("해당 카페는 자리 정보 제공을 하지 않습니다.");

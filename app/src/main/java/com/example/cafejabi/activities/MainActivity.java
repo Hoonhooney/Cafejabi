@@ -372,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-                        if (currentHour < cafe.getOpen_time() || currentHour > cafe.getClose_time()){
+                        if (!cafe.isIs24Working() && (currentHour < cafe.getOpen_time() || currentHour >= cafe.getClose_time())){
                             marker.setIcon(OverlayImage.fromResource(R.drawable.pin_closed));
                         }else if(!cafe.isAllowAlarm()){
                             marker.setIcon(OverlayImage.fromResource(R.drawable.pin_unknown));

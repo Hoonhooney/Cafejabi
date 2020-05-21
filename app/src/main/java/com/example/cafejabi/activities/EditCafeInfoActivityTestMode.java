@@ -50,7 +50,9 @@
 //
 //    private Cafe cafe;
 //
-//    private String table, description;
+//    private String description;
+//
+//    private int table;
 //
 //    private EditText editText_cafe_description;
 //    private RadioButton rb_table_1, rb_table_2, rb_table_3, rb_table_4, rb_table_5,
@@ -144,19 +146,19 @@
 //                        public void onCheckedChanged(RadioGroup group, int checkedId) {
 //                            switch (checkedId){
 //                                case R.id.rb_table_1:
-//                                    table = "매우한산";
+//                                    table = 0;
 //                                    break;
 //                                case R.id.rb_table_2:
-//                                    table = "한산";
+//                                    table = 1;
 //                                    break;
 //                                case R.id.rb_table_3:
-//                                    table = "보통";
+//                                    table = 2;
 //                                    break;
 //                                case R.id.rb_table_4:
-//                                    table = "혼잡";
+//                                    table = 3;
 //                                    break;
 //                                case R.id.rb_table_5:
-//                                    table = "매우혼잡";
+//                                    table = 4;
 //                                    break;
 //                            }
 //                            Log.e(TAG, table);

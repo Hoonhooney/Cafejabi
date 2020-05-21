@@ -11,7 +11,7 @@ public class Cafe {
     private double locate_x;             //카페 위치 x좌표
     private double locate_y;             //카페 위치 y좌표
     private int total_table;             //카페에 있는 총 테이블 개수
-    private String table;                   //남은 테이블 개수 or 카페 수용인원 퍼센트? 단계
+    private int table;                   //남은 테이블 개수 or 카페 수용인원 퍼센트? 단계
     private long table_update_time;            //좌석업데이트를 한 시간
     private String cafe_info;                  //카페 정보
     private boolean is24Working;               //24시간 영업 여부
@@ -95,11 +95,11 @@ public class Cafe {
         this.total_table = total_table;
     }
 
-    public String getTable() {
+    public int getTable() {
         return table;
     }
 
-    public void setTable(String table) {
+    public void setTable(int table) {
         this.table = table;
     }
 

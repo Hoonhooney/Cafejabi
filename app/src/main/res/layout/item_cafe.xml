@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="5dp"
+    android:paddingHorizontal="10dp"
     android:paddingVertical="15dp">
 
     <LinearLayout
@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:text="Status"
         android:textSize="25sp"
+        android:textStyle="bold"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"/>
 

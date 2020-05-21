@@ -14,6 +14,7 @@ import com.example.cafejabi.activities.CafeInfoCustomerActivity;
 import com.example.cafejabi.objects.Cafe;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class CafeAdapter extends BaseAdapter {
@@ -66,6 +67,36 @@ public class CafeAdapter extends BaseAdapter {
 
             textView_cafe_status.setText(cafe.getTable()+"");
 
+            int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+            if (!cafe.isIs24Working() && (currentHour < cafe.getOpen_time() || currentHour >= cafe.getClose_time())){
+                textView_cafe_status.setText("닫힘");
+            }else if(!cafe.isAllowAlarm()) {
+                textView_cafe_status.setVisibility(View.INVISIBLE);
+            }else{
+                switch(cafe.getTable()){
+                    case 0:
+                        textView_cafe_status.setText("매우 한산");
+                        textView_cafe_status.setTextColor(mContext.getColor(R.color.colorTable0));
+                        break;
+                    case 1:
+                        textView_cafe_status.setText("한산");
+                        textView_cafe_status.setTextColor(mContext.getColor(R.color.colorTable1));
+                        break;
+                    case 2:
+                        textView_cafe_status.setText("보통");
+                        textView_cafe_status.setTextColor(mContext.getColor(R.color.colorTable2));
+                        break;
+                    case 3:
+                        textView_cafe_status.setText("많음");
+                        textView_cafe_status.setTextColor(mContext.getColor(R.color.colorTable3));
+                        break;
+                    case 4:
+                        textView_cafe_status.setText("꽉 참");
+                        textView_cafe_status.setTextColor(mContext.getColor(R.color.colorTable4));
+                        break;
+                }
+            }
         }
         view.setOnClickListener(new View.OnClickListener() {
             @Override

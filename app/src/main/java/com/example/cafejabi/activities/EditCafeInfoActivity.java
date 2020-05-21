@@ -117,6 +117,14 @@ public class EditCafeInfoActivity extends AppCompatActivity implements View.OnCl
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Log.d(TAG, "getting UserInfo : success");
                 cafe = documentSnapshot.toObject(Cafe.class);
+
+                progressDialog.dismiss();
+
+                if(cafe==null){
+
+
+                }
+
             }
         });
     }

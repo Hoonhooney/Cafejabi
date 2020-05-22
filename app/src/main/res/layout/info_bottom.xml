@@ -28,13 +28,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/liking_cafe_list_checkbox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/like_uncheck"
-                    android:visibility="gone"
-                    android:layout_alignParentEnd="true"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/liking_cafe_list_checkbox"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/like_uncheck"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:layout_alignParentEnd="true"/>-->
 
                 <TextView
                     android:id="@+id/textView_info_cafename"
@@ -46,12 +46,15 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/liking_cafe_list_checkbox"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/like_uncheck"-->
-<!--                    android:visibility="gone" />-->
+                <ImageView
+                    android:id="@+id/liking_cafe_list_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/like_uncheck"
+                    android:visibility="gone"
+                    android:layout_toRightOf="@+id/textView_info_cafename"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="1dp"/>
 
 
 

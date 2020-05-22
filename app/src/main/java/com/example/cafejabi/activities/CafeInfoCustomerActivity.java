@@ -156,9 +156,36 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
 
                     int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-                    if (!cafe.isIs24Working() && (currentHour < cafe.getOpen_time() || currentHour >= cafe.getClose_time())){
-                        textView_cafeStatus.setText("현재 카페는 영업종료 되었습니다.");
-                    }else if(!cafe.isAllowAlarm()) {
+//                    if (!cafe.isIs24Working() && (currentHour < cafe.getOpen_time() || currentHour >= cafe.getClose_time())){
+//                        textView_cafeStatus.setText("현재 카페는 영업종료 되었습니다.");
+//                    }else if(!cafe.isAllowAlarm()) {
+//                        textView_cafeStatus.setText("해당 카페는 자리 정보 제공을 하지 않습니다.");
+//                    }else{
+//                        switch(cafe.getTable()){
+//                            case 0:
+//                                textView_cafeStatus.setText("현재 카페는 매우 한산합니다!");
+//                                textView_cafeStatus.setTextColor(getColor(R.color.colorTable0));
+//                                break;
+//                            case 1:
+//                                textView_cafeStatus.setText("현재 카페는 한산한 편입니다.");
+//                                textView_cafeStatus.setTextColor(getColor(R.color.colorTable1));
+//                                break;
+//                            case 2:
+//                                textView_cafeStatus.setText("현재 카페에 적당한 자리 여유가 있습니다.");
+//                                textView_cafeStatus.setTextColor(getColor(R.color.colorTable2));
+//                                break;
+//                            case 3:
+//                                textView_cafeStatus.setText("현재 카페에 사람이 많은 편입니다.");
+//                                textView_cafeStatus.setTextColor(getColor(R.color.colorTable3));
+//                                break;
+//                            case 4:
+//                                textView_cafeStatus.setText("현재 카페에 사람들로 가득 차있습니다!");
+//                                textView_cafeStatus.setTextColor(getColor(R.color.colorTable4));
+//                                break;
+//                        }
+//                    }
+
+                    if(!cafe.isAllowAlarm()) {
                         textView_cafeStatus.setText("해당 카페는 자리 정보 제공을 하지 않습니다.");
                     }else{
                         switch(cafe.getTable()){
@@ -186,10 +213,10 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                     }
 
                     textView_cafeInfo.setText(cafe.getCafe_info());
-                    if(cafe.isIs24Working())
-                        textView_workingTime.setText("24시간 영업");
-                    else
-                        textView_workingTime.setText(cafe.getOpen_time()+"시 ~ "+cafe.getClose_time()+"시");
+//                    if(cafe.isIs24Working())
+//                        textView_workingTime.setText("24시간 영업");
+//                    else
+//                        textView_workingTime.setText(cafe.getOpen_time()+"시 ~ "+cafe.getClose_time()+"시");
                     textView_grade.setText(String.format("%.2f", cafe.getGrade_cafe())+"/5");
                     ratingBar_cafe.setRating(cafe.getGrade_cafe());
 

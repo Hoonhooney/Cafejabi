@@ -69,7 +69,7 @@ public class CafeAdapter extends BaseAdapter {
 
             int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-            if (!cafe.isIs24Working() && (currentHour < cafe.getOpen_time() || currentHour >= cafe.getClose_time())){
+            if (!cafe.isIs24Working() && (currentHour < 12 || currentHour >= 22)){  //임시방편
                 textView_cafe_status.setText("닫힘");
             }else if(!cafe.isAllowAlarm()) {
                 textView_cafe_status.setVisibility(View.INVISIBLE);

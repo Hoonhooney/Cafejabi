@@ -209,16 +209,16 @@ public class EditCafeInfoActivity extends AppCompatActivity implements View.OnCl
                 editCafeInfo();
                 break;
 
-            case R.id.checkbox_24working:
-                if (((CheckBox) v).isChecked()) {//체크를 한 경우 open_time, close_time 어떻게 설정?(24시간 영업인 경우)
-                    cafe.setOpen_time(0);
-                    cafe.setClose_time(0);
-                } else {//24시간 영업이 아닌 경우
-                    //progressbar로 설정
-//                            cafe.setOpen_time(progressDialog());
-//                            cafe.setOpen_time(progressDialog());
-                }
-                break;
+//            case R.id.checkbox_24working:
+//                if (((CheckBox) v).isChecked()) {//체크를 한 경우 open_time, close_time 어떻게 설정?(24시간 영업인 경우)
+//                    cafe.setOpen_time(0);
+//                    cafe.setClose_time(0);
+//                } else {//24시간 영업이 아닌 경우
+//                    //progressbar로 설정
+////                            cafe.setOpen_time(progressDialog());
+////                            cafe.setOpen_time(progressDialog());
+//                }
+//                break;
 
 
             case R.id.checkBox_alarm_same_working_time:

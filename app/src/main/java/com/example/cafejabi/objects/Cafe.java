@@ -16,11 +16,12 @@ public class Cafe {
     private String cafe_info;                  //카페 정보
     private boolean is24Working;               //24시간 영업 여부
     private boolean allowAlarm;                //푸쉬알람서비스 여부
-    private int open_time;                     //카페 여는 시간
-    private int close_time;                    //카페 닫는 시간
+//    private int open_time;                     //카페 여는 시간
+//    private int close_time;                    //카페 닫는 시간
     private long update_time_alarm;            //좌석 업데이트 알람 설정 시간
     private List<String> keywords;             //카페 키워드 리스트
     private float grade_cafe;                               //카페 평점
+    private List<WorkTime> workTimes;
 
     public Cafe() {
     }
@@ -37,6 +38,7 @@ public class Cafe {
     this.is24Working = is24Working;
     this.allowAlarm = allowAlarm;
     this.keywords = keywords;
+    this.workTimes = new ArrayList<>();
     }
 
     public String getCid() {
@@ -135,21 +137,21 @@ public class Cafe {
         this.cafe_info = cafe_info;
     }
 
-    public int getOpen_time() {
-        return open_time;
-    }
-
-    public void setOpen_time(int open_time) {
-        this.open_time = open_time;
-    }
-
-    public int getClose_time() {
-        return close_time;
-    }
-
-    public void setClose_time(int close_time) {
-        this.close_time = close_time;
-    }
+//    public int getOpen_time() {
+//        return open_time;
+//    }
+//
+//    public void setOpen_time(int open_time) {
+//        this.open_time = open_time;
+//    }
+//
+//    public int getClose_time() {
+//        return close_time;
+//    }
+//
+//    public void setClose_time(int close_time) {
+//        this.close_time = close_time;
+//    }
 
     public long getUpdate_time_alarm() {
         return update_time_alarm;
@@ -173,5 +175,13 @@ public class Cafe {
 
     public void setGrade_cafe(float grade_cafe) {
         this.grade_cafe = grade_cafe;
+    }
+
+    public List<WorkTime> getWorkTimes() {
+        return workTimes;
+    }
+
+    public void setWorkTimes(List<WorkTime> workTimes) {
+        this.workTimes = workTimes;
     }
 }

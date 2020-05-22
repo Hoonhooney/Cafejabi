@@ -105,7 +105,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 
         linearLayout_allow_service = findViewById(R.id.linearLayout_allow_seat_info);
 
-        checkBox_is24Working.setOnCheckedChangeListener(this);
+//        checkBox_is24Working.setOnCheckedChangeListener(this);
 
         radioGroup_allow_service.setOnCheckedChangeListener(this);
 
@@ -113,8 +113,8 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 
         checkBox_alarm_same_work_time.setOnCheckedChangeListener(this);
 
-        setRangeSeekBar(rangeSeekBar_set_working_time);
-        setRangeSeekBar(rangeSeekBar_set_alarm_time);
+//        setRangeSeekBar(rangeSeekBar_set_working_time);
+//        setRangeSeekBar(rangeSeekBar_set_alarm_time);
 
         //키워드 등록
         keywords = new ArrayList<>();
@@ -323,22 +323,22 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
     }
 
 //    rangeSeekBar 설정하기
-    private void setRangeSeekBar(SimpleRangeView rangeSeekBar){
-        final String[] hourRange = {"7", "8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-
-        rangeSeekBar.setStart(5);
-        rangeSeekBar.setEnd(15);
-
-        rangeSeekBar.setOnRangeLabelsListener(new SimpleRangeView.OnRangeLabelsListener() {
-            @Nullable
-            @Override
-            public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull SimpleRangeView.State state) {
-                return hourRange[i];
-            }
-        });
-
-//        rangeSeekBar.setOnChangeRangeListener(this);
-    }
+//    private void setRangeSeekBar(SimpleRangeView rangeSeekBar){
+//        final String[] hourRange = {"7", "8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+//
+//        rangeSeekBar.setStart(5);
+//        rangeSeekBar.setEnd(15);
+//
+//        rangeSeekBar.setOnRangeLabelsListener(new SimpleRangeView.OnRangeLabelsListener() {
+//            @Nullable
+//            @Override
+//            public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull SimpleRangeView.State state) {
+//                return hourRange[i];
+//            }
+//        });
+//
+////        rangeSeekBar.setOnChangeRangeListener(this);
+//    }
 
 //    카페 등록하기
     private void registerCafe(){

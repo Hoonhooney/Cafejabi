@@ -24,9 +24,17 @@
             >
 
             <RelativeLayout
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/liking_cafe_list_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/like_uncheck"
+                    android:visibility="gone"
+                    android:layout_alignParentEnd="true"/>
 
                 <TextView
                     android:id="@+id/textView_info_cafename"
@@ -40,10 +48,10 @@
 
 <!--                <ImageView-->
 <!--                    android:id="@+id/liking_cafe_list_checkbox"-->
-<!--                    android:layout_width="50dp"-->
-<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
 <!--                    android:background="@drawable/like_uncheck"-->
-<!--                    android:visibility="visible" />    -->
+<!--                    android:visibility="gone" />-->
 
 
 
@@ -102,13 +110,13 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/liking_cafe_list_checkbox"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:background="@drawable/like_uncheck"
-            android:visibility="visible"
-            android:layout_marginRight="5dp"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/liking_cafe_list_checkbox"-->
+<!--            android:layout_width="75dp"-->
+<!--            android:layout_height="75dp"-->
+<!--            android:background="@drawable/like_uncheck"-->
+<!--            android:visibility="visible"-->
+<!--            android:layout_marginRight="5dp"/>-->
 
     </LinearLayout>
 

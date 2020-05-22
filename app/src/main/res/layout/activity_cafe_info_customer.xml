@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     >
 
 
@@ -41,7 +40,7 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="카페 주소"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="3dp"/>
 
             <TextView
                 android:id="@+id/textView_info_customer_cafestatus"
@@ -50,12 +49,13 @@
                 android:gravity="center"
                 android:text="카페 혼잡도"
                 android:textSize="20sp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:id="@+id/textView_info_customer_cafeinfo"
                 android:layout_width="match_parent"
-                android:layout_height="200sp"
+                android:layout_height="150sp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="관리자가 쓴 카페 소개 데이터"
@@ -119,7 +119,7 @@
                 android:id="@+id/button_info_customer_showcomment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="댓글"
+                android:text="댓글 "
                 android:layout_marginTop="10dp"
                 android:textSize="20sp"
                 android:layout_marginLeft="10dp"/>

@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         init();
 
         // 초기 페이지 보이기
-        if(mAuth == null && loginPreferences.getBoolean("firstTime", true))
+//        if(mAuth == null && loginPreferences.getBoolean("firstTime", true))
             startActivity(new Intent(this, ViewPagerActivity.class));
     }
 
@@ -372,9 +372,31 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-                        if (!cafe.isIs24Working() && (currentHour < cafe.getOpen_time() || currentHour >= cafe.getClose_time())){
-                            marker.setIcon(OverlayImage.fromResource(R.drawable.pin_closed));
-                        }else if(!cafe.isAllowAlarm()){
+//                        if (!cafe.isIs24Working() && (currentHour < cafe.getOpen_time() || currentHour >= cafe.getClose_time())){
+//                            marker.setIcon(OverlayImage.fromResource(R.drawable.pin_closed));
+//                        }else if(!cafe.isAllowAlarm()){
+//                            marker.setIcon(OverlayImage.fromResource(R.drawable.pin_unknown));
+//                        } else{
+//                            switch(cafe.getTable()){
+//                                case 0:
+//                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin1));
+//                                    break;
+//                                case 1:
+//                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin2));
+//                                    break;
+//                                case 2:
+//                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin3));
+//                                    break;
+//                                case 3:
+//                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin4));
+//                                    break;
+//                                case 4:
+//                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin5));
+//                                    break;
+//                            }
+//                        }
+
+                        if(!cafe.isAllowAlarm()){
                             marker.setIcon(OverlayImage.fromResource(R.drawable.pin_unknown));
                         } else{
                             switch(cafe.getTable()){

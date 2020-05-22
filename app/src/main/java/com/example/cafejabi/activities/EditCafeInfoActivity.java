@@ -58,12 +58,14 @@ public class EditCafeInfoActivity extends AppCompatActivity implements View.OnCl
             rb_gap_15min, rb_gap_30min, rb_gap_60min, rb_gap_120min;
 
 
+
     private List<String> keyword;
 
     private List<RadioButton> rbList_alarm, rbList_table;
 
 
     private CheckBox checkbox_full_time, checkbox_alarm_same_work_time;
+
 
 
     private List<CheckBox> cbList;
@@ -220,11 +222,10 @@ public class EditCafeInfoActivity extends AppCompatActivity implements View.OnCl
 
 
             case R.id.checkBox_alarm_same_working_time:
-                if (((CheckBox) v).isChecked()) {//체크를 한 경우 푸쉬 알림시간과 영업 시간이 동일
 
-                } else {
-                    //체크 안한 경우 알람 시간 24시간 계속                        -->>>>> 굳이 넣어야 하는지 확인(무조건 영업시간과 동일로 하는게 깔끔할것같은 느낌)
-                }
+                    //체크 박스가 아니라 switch로 바꿈 on인 경우 알람기능 활성 off면 끔
+
+
                 break;
 
 
@@ -241,7 +242,7 @@ public class EditCafeInfoActivity extends AppCompatActivity implements View.OnCl
 
             progressDialog.show();
 
-            db.collection("cafes").document(cafe.getUid())
+            db.collection("cafes").document(cafe.getUid())// 이 부분 수정되는 부분 다시 봐야함
                     .update("description", description,
                             "rblist_alarm", rbList_alarm, "table", table, "cbList", cbList).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -260,7 +261,7 @@ public class EditCafeInfoActivity extends AppCompatActivity implements View.OnCl
 
                     progressDialog.dismiss();
                     Toast.makeText(EditCafeInfoActivity.this, "카페 정보 수정 완료", Toast.LENGTH_SHORT).show();
-                    goActivity(MainActivity.class);//밑에서 정의한 클래스가 왜 에러인지 모르겠으나 해결하면 여기도 해결
+                    goActivity(MainActivity.class);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -270,7 +271,6 @@ public class EditCafeInfoActivity extends AppCompatActivity implements View.OnCl
                     builder.create().show();
                 }
             });
-
         }
 
     }

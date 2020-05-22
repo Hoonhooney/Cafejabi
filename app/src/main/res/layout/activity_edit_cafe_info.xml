@@ -100,6 +100,26 @@
                     android:text="매우혼잡" />
             </RadioGroup>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="카페 이름 : "
+                    android:textSize="15sp"
+                    ></TextView>
+
+                <EditText
+                    android:id="@+id/editText_cafe_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    ></EditText>
+                
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -149,7 +169,7 @@
                         ></TextView>
 
                     <CheckBox
-                        android:id="@+id/cb_monday"
+                        android:id="@+id/cb_monday_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="24시 영업  "
@@ -182,6 +202,14 @@
                         android:layout_height="wrap_content"
                         ></EditText>
 
+                    <CheckBox
+                        android:id="@+id/cb_monday_rest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="휴무"
+                        android:textSize="15dp"
+                        ></CheckBox>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -197,7 +225,7 @@
                         ></TextView>
 
                     <CheckBox
-                        android:id="@+id/cb_tuesday"
+                        android:id="@+id/cb_tuesday_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="24시 영업  "
@@ -230,6 +258,15 @@
                         android:layout_height="wrap_content"
                         ></EditText>
 
+
+                    <CheckBox
+                        android:id="@+id/cb_tuesday_rest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="휴무"
+                        android:textSize="15dp"
+                        ></CheckBox>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -245,7 +282,7 @@
                         ></TextView>
 
                     <CheckBox
-                        android:id="@+id/cb_wednesday"
+                        android:id="@+id/cb_wednesday_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="24시 영업  "
@@ -278,6 +315,15 @@
                         android:layout_height="wrap_content"
                         ></EditText>
 
+
+                    <CheckBox
+                        android:id="@+id/cb_wednesday_rest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="휴무"
+                        android:textSize="15dp"
+                        ></CheckBox>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -293,7 +339,7 @@
                         ></TextView>
 
                     <CheckBox
-                        android:id="@+id/cb_thursday"
+                        android:id="@+id/cb_thursday_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="24시 영업  "
@@ -326,6 +372,13 @@
                         android:layout_height="wrap_content"
                         ></EditText>
 
+                    <CheckBox
+                        android:id="@+id/cb_thursday_rest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="휴무"
+                        android:textSize="15dp"
+                        ></CheckBox>
                 </LinearLayout>
 
 
@@ -342,7 +395,7 @@
                         ></TextView>
 
                     <CheckBox
-                        android:id="@+id/cb_friday"
+                        android:id="@+id/cb_friday_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="24시 영업  "
@@ -375,6 +428,15 @@
                         android:layout_height="wrap_content"
                         ></EditText>
 
+
+                    <CheckBox
+                        android:id="@+id/cb_friday_rest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="휴무"
+                        android:textSize="15dp"
+                        ></CheckBox>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -390,7 +452,7 @@
                         ></TextView>
 
                     <CheckBox
-                        android:id="@+id/cb_saturday"
+                        android:id="@+id/cb_saturday_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="24시 영업  "
@@ -423,6 +485,15 @@
                         android:layout_height="wrap_content"
                         ></EditText>
 
+
+                    <CheckBox
+                        android:id="@+id/cb_saturday_rest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="휴무"
+                        android:textSize="15dp"
+                        ></CheckBox>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -438,7 +509,7 @@
                         ></TextView>
 
                     <CheckBox
-                        android:id="@+id/cb_sunday"
+                        android:id="@+id/cb_sunday_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="24시 영업  "
@@ -470,6 +541,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         ></EditText>
+
+                    <CheckBox
+                        android:id="@+id/cb_sunday_rest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="휴무"
+                        android:textSize="15dp"
+                        ></CheckBox>
 
                 </LinearLayout>
 

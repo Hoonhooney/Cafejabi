@@ -15,3 +15,4 @@
 *.bat
 /.idea/misc.xml
 /app/src/main/res/values/ids.xml
+app/google-services.json

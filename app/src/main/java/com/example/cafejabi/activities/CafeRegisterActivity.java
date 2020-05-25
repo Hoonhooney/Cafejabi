@@ -22,7 +22,9 @@ import android.widget.TextView;
 import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.objects.Keyword;
 import com.example.cafejabi.R;
+import com.example.cafejabi.objects.WorkTime;
 import com.example.cafejabi.views.KeywordView;
+import com.example.cafejabi.views.WorkTimeSettingView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,6 +69,8 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
     private List<Keyword> keywords;
     private List<String> keywords_selected;
 
+    private List<WorkTime> workTimes = new ArrayList<>();
+
     private String searchApiClientId, searchApiClientSecret;
     private int gap;
     private double locate_x, locate_y;
@@ -100,7 +104,6 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         radioGroup_allow_service = findViewById(R.id.radioGroup_allow_seat_info);
         radioGroup_set_gap = findViewById(R.id.radioGroup_set_alarm_gap);
 
-//        rangeSeekBar_set_working_time = findViewById(R.id.rangeSeekBar_set_working_time);
         rangeSeekBar_set_alarm_time = findViewById(R.id.rangeSeekBar_set_alarm_time);
 
         linearLayout_allow_service = findViewById(R.id.linearLayout_allow_seat_info);
@@ -113,8 +116,17 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 
         checkBox_alarm_same_work_time.setOnCheckedChangeListener(this);
 
-//        setRangeSeekBar(rangeSeekBar_set_working_time);
-//        setRangeSeekBar(rangeSeekBar_set_alarm_time);
+        LinearLayout linearLayout_wt = findViewById(R.id.linearLayout_cafe_register_wt);
+        workTimes.add(new WorkTime("월"));
+        workTimes.add(new WorkTime("화"));
+        workTimes.add(new WorkTime("수"));
+        workTimes.add(new WorkTime("목"));
+        workTimes.add(new WorkTime("금"));
+        workTimes.add(new WorkTime("토"));
+        workTimes.add(new WorkTime("일"));
+        for (int i = 0; i < workTimes.size(); i++) {
+            linearLayout_wt.addView(new WorkTimeSettingView(this, workTimes.get(i)));
+        }
 
         //키워드 등록
         keywords = new ArrayList<>();
@@ -222,29 +234,6 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-//    RangeView onRangeChangedListener
-//    @Override
-//    public void onRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i, int i1) {
-//        switch(simpleRangeView.getId()){
-//            case R.id.rangeSeekBar_set_working_time:
-//                if(!is24Working){
-//                    rangeSeekBar_set_alarm_time.setStart(simpleRangeView.getStart());
-//                    rangeSeekBar_set_alarm_time.setEnd(simpleRangeView.getEnd());
-//                    rangeSeekBar_set_alarm_time.setMaxDistance(simpleRangeView.getEnd() - simpleRangeView.getStart());
-//                    rangeSeekBar_set_alarm_time.setMovable(false);
-//                }
-//                break;
-//            case R.id.rangeSeekBar_set_alarm_time:
-//                if(simpleRangeView.getStart() != rangeSeekBar_set_working_time.getStart() ||
-//                        simpleRangeView.getEnd() != rangeSeekBar_set_working_time.getEnd()){
-//                    isSameAlarmWithWorkTime = false;
-//                }else{
-//                    isSameAlarmWithWorkTime = true;
-//                }
-//                break;
-//        }
-//    }
-
 //    지역 검색으로 카페 설정하기
     private void searchLocation(){
         Log.e(TAG, "searchLocation()");
@@ -322,24 +311,6 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-//    rangeSeekBar 설정하기
-//    private void setRangeSeekBar(SimpleRangeView rangeSeekBar){
-//        final String[] hourRange = {"7", "8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
-//
-//        rangeSeekBar.setStart(5);
-//        rangeSeekBar.setEnd(15);
-//
-//        rangeSeekBar.setOnRangeLabelsListener(new SimpleRangeView.OnRangeLabelsListener() {
-//            @Nullable
-//            @Override
-//            public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull SimpleRangeView.State state) {
-//                return hourRange[i];
-//            }
-//        });
-//
-////        rangeSeekBar.setOnChangeRangeListener(this);
-//    }
-
 //    카페 등록하기
     private void registerCafe(){
         String cafeName = editText_cafe_name.getText().toString();
@@ -357,14 +328,13 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
                 locate_x, locate_y, 0, is24Working, isAllowedWithAlarm, keywords_selected);
 
         if(!is24Working){
-//            cafe.setOpen_time(rangeSeekBar_set_working_time.getStart()+7);
-//            cafe.setClose_time(rangeSeekBar_set_working_time.getEnd()+7);
         }
         if(isAllowedWithAlarm){
             cafe.setUpdate_time_alarm(gap*60*1000);
         }
 
         cafe.setCafe_info(description);
+        cafe.setWorkTimes(workTimes);
 
         addCafeInDb(cafe);
     }

@@ -4,14 +4,14 @@ public class WorkTime {
     private boolean open, working24h;
     private String dayOfWeek;
     private String openAt;
-    private String closeAt;
+    private String closedAt;
 
-    public WorkTime(String dayOfWeek, int openHour, int openMin, int closeHour, int closeMin){
+    public WorkTime(String dayOfWeek){
         this.open = false;
         this.working24h = false;
         this.dayOfWeek = dayOfWeek;
-        this.openAt = openHour+":"+openMin;
-        this.closeAt = closeHour+":"+closeMin;
+        this.openAt = 7+":"+0;
+        this.closedAt = 23+":"+0;
     }
 
     public boolean isOpen() {
@@ -42,15 +42,15 @@ public class WorkTime {
         return openAt;
     }
 
-    public void setOpenAt(String openAt) {
-        this.openAt = openAt;
+    public void setOpenAt(int openHour, int openMin) {
+        this.openAt = openHour+":"+openMin;
     }
 
-    public String getCloseAt() {
-        return closeAt;
+    public String getClosedAt() {
+        return closedAt;
     }
 
-    public void setCloseAt(String closeAt) {
-        this.closeAt = closeAt;
+    public void setClosedAt(int closedHour, int closedMin) {
+        this.closedAt = closedHour+":"+closedMin;
     }
 }

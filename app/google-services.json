@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1056904956575-uvnrp4vg61umiugk229o3k907212isk2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cafejabi",
+            "certificate_hash": "3a1beac0c5ca5a023da453d91b72a9baf9499d4e"
+          }
+        },
+        {
           "client_id": "1056904956575-8tu2cqclbeuuns3l50sg75j4lij46iku.apps.googleusercontent.com",
           "client_type": 3
         }

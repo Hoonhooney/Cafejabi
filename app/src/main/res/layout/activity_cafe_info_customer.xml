@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginHorizontal="10dp"
     >
 
     <Button
@@ -81,7 +82,6 @@
                     android:text="운영 시간"
                     android:textSize="20sp"
                     android:gravity="center"
-                    android:layout_marginLeft="10dp"
                     android:visibility="gone"/>
 
             </LinearLayout>
@@ -104,8 +104,7 @@
                     style="@style/Widget.AppCompat.RatingBar.Indicator"
                     android:numStars="5"
                     android:stepSize="0.01"
-                    android:isIndicator="true"
-                    android:layout_marginLeft="10dp"/>
+                    android:isIndicator="true"/>
 
                 <TextView
                     android:id="@+id/textView_info_customer_grade"
@@ -124,8 +123,7 @@
                 android:layout_height="wrap_content"
                 android:text="댓글 "
                 android:layout_marginTop="10dp"
-                android:textSize="20sp"
-                android:layout_marginLeft="10dp"/>
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:id="@+id/linearLayout_info_customer_addcomment"
@@ -181,8 +179,7 @@
             <ListView
                 android:id="@+id/listView_info_customer_comments"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </ScrollView>

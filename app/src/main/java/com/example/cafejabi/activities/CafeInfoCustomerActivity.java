@@ -245,7 +245,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                     progressDialog.dismiss();
 
                     //        root 계정 전용
-                    if (mAuth.getUid().equals("E41br91qlVcSc8wKRCNWmPiNfzf2")){
+                    if (mAuth != null && mAuth.getUid().equals("E41br91qlVcSc8wKRCNWmPiNfzf2")){
                         button_go_edit = findViewById(R.id.button_go_cafe_update);
                         button_go_edit.setVisibility(View.VISIBLE);
                         button_go_edit.setOnClickListener(new View.OnClickListener() {

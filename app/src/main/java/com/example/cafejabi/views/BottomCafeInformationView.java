@@ -32,6 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.apmem.tools.layouts.FlowLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 public class BottomCafeInformationView extends RelativeLayout implements View.OnClickListener {
@@ -88,7 +89,21 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
 
 
         textView_cafe_name.setText(cafe.getCafe_name());
-        textView_last_updated_time.setText("마지막 업데이트 시간 : " + cafe.getTable_update_time());
+        String updated_time = "마지막 업데이트 시간 : ";
+        if (cafe.getTable_update_time() != null){
+            long latestUpdatedTime = cafe.getTable_update_time().getTime();
+            long currentTime = System.currentTimeMillis();
+            long gapTime = currentTime - latestUpdatedTime;
+            if (gapTime < 1000*60*60)
+                updated_time += gapTime/(1000*60)+"분 전";
+            else if (gapTime < 1000*60*60*24)
+                updated_time += gapTime/(1000*60*60)+"시간 전";
+            else
+                updated_time += new SimpleDateFormat("yyyy년 MM월 dd일 HHmm").format(cafe.getTable_update_time());
+        }else{
+            updated_time += "없음";
+        }
+        textView_last_updated_time.setText(updated_time);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

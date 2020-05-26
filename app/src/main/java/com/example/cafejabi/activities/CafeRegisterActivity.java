@@ -62,7 +62,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
     private CheckBox checkBox_is24Working, checkBox_alarm_same_work_time;
     private boolean isAllowedWithAlarm, is24Working, isSameAlarmWithWorkTime;
     private RadioGroup radioGroup_allow_service, radioGroup_set_gap;
-    private SimpleRangeView rangeSeekBar_set_working_time, rangeSeekBar_set_alarm_time;
+//    private SimpleRangeView rangeSeekBar_set_working_time, rangeSeekBar_set_alarm_time;
     private LinearLayout linearLayout_allow_service;
     private FlowLayout flowLayout_keywords;
 
@@ -99,12 +99,12 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         textView_cafe_address = findViewById(R.id.textView_search_cafe_address);
 
 //        checkBox_is24Working = findViewById(R.id.checkbox_24working);
-        checkBox_alarm_same_work_time = findViewById(R.id.checkBox_alarm_same_working_time);
+//        checkBox_alarm_same_work_time = findViewById(R.id.checkBox_alarm_same_working_time);
 
         radioGroup_allow_service = findViewById(R.id.radioGroup_allow_seat_info);
         radioGroup_set_gap = findViewById(R.id.radioGroup_set_alarm_gap);
 
-        rangeSeekBar_set_alarm_time = findViewById(R.id.rangeSeekBar_set_alarm_time);
+//        rangeSeekBar_set_alarm_time = findViewById(R.id.rangeSeekBar_set_alarm_time);
 
         linearLayout_allow_service = findViewById(R.id.linearLayout_allow_seat_info);
 
@@ -117,13 +117,10 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         checkBox_alarm_same_work_time.setOnCheckedChangeListener(this);
 
         LinearLayout linearLayout_wt = findViewById(R.id.linearLayout_cafe_register_wt);
-        workTimes.add(new WorkTime("월"));
-        workTimes.add(new WorkTime("화"));
-        workTimes.add(new WorkTime("수"));
-        workTimes.add(new WorkTime("목"));
-        workTimes.add(new WorkTime("금"));
-        workTimes.add(new WorkTime("토"));
-        workTimes.add(new WorkTime("일"));
+        String[] days = getResources().getStringArray(R.array.day);
+        for (String day : days){
+            workTimes.add(new WorkTime(day));
+        }
         for (int i = 0; i < workTimes.size(); i++) {
             linearLayout_wt.addView(new WorkTimeSettingView(this, workTimes.get(i)));
         }
@@ -190,14 +187,14 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 //                }
 //                break;
 
-            case R.id.checkBox_alarm_same_working_time:
-                isAllowedWithAlarm = b;
-                if(b){
-                    rangeSeekBar_set_alarm_time.setVisibility(View.GONE);
-                }else{
-                    rangeSeekBar_set_alarm_time.setVisibility(View.VISIBLE);
-                }
-                break;
+//            case R.id.checkBox_alarm_same_working_time:
+//                isAllowedWithAlarm = b;
+//                if(b){
+//                    rangeSeekBar_set_alarm_time.setVisibility(View.GONE);
+//                }else{
+//                    rangeSeekBar_set_alarm_time.setVisibility(View.VISIBLE);
+//                }
+//                break;
         }
     }
 
@@ -325,12 +322,12 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         }
 
         Cafe cafe = new Cafe(cid, uid, cafeName, cafeAddress,
-                locate_x, locate_y, 0, is24Working, isAllowedWithAlarm, keywords_selected);
+                locate_x, locate_y, 0, isAllowedWithAlarm, keywords_selected);
 
-        if(!is24Working){
-        }
+//        if(!is24Working){
+//        }
         if(isAllowedWithAlarm){
-            cafe.setUpdate_time_alarm(gap*60*1000);
+            cafe.setAlarm_gap(gap);
         }
 
         cafe.setCafe_info(description);

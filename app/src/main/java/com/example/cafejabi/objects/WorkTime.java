@@ -6,6 +6,8 @@ public class WorkTime {
     private String openAt;
     private String closedAt;
 
+    public WorkTime(){}
+
     public WorkTime(String dayOfWeek){
         this.open = false;
         this.working24h = false;

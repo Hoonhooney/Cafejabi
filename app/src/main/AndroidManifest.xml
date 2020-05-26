@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.ResetPasswordActivity"></activity>
         <activity android:name=".activities.CafeListActivity" />
+        <activity android:name=".activities.EditCafeInfoActivity"/>
         <activity android:name=".activities.CafeInfoCustomerActivity" />
 
         <meta-data

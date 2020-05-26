@@ -10,6 +10,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
+    <TextView
+        android:id="@+id/textView_cafe_day_off"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="휴무"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="center"/>
+
     <LinearLayout
         android:id="@+id/linearLayout_wt"
         android:layout_width="match_parent"

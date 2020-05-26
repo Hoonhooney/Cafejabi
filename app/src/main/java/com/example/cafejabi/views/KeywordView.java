@@ -28,11 +28,7 @@ public class KeywordView extends LinearLayout implements View.OnClickListener{
         linearLayout_keyword = findViewById(R.id.linearLayout_item_keyword);
         TextView textView_keyword = findViewById(R.id.textView_item_keyword);
         textView_keyword.setText(keyword.getName());
-        if(keyword.isChosen()){
-            linearLayout_keyword.setBackground(getResources().getDrawable(R.drawable.keyword_chosen));
-        }else{
-            linearLayout_keyword.setBackground(getResources().getDrawable(R.drawable.keyword_default));
-        }
+        setButton(keyword.isChosen());
 
         linearLayout_keyword.setOnClickListener(this);
     }
@@ -40,13 +36,20 @@ public class KeywordView extends LinearLayout implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         if(clickable){
-            if(keyword.isChosen()){
-                keyword.setChosen(false);
-                linearLayout_keyword.setBackground(getResources().getDrawable(R.drawable.keyword_default));
-            }else{
-                keyword.setChosen(true);
-                linearLayout_keyword.setBackground(getResources().getDrawable(R.drawable.keyword_chosen));
-            }
+            setButton(!keyword.isChosen());
+        }
+    }
+
+    public Keyword getKeyword(){
+        return this.keyword;
+    }
+
+    public void setButton(boolean chosen){
+        keyword.setChosen(chosen);
+        if (chosen){
+            linearLayout_keyword.setBackground(getResources().getDrawable(R.drawable.keyword_chosen));
+        }else{
+            linearLayout_keyword.setBackground(getResources().getDrawable(R.drawable.keyword_default));
         }
     }
 

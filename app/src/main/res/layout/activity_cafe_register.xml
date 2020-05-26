@@ -136,14 +136,14 @@
                 android:id="@+id/linearLayout_cafe_register_wt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"/>
+                android:orientation="vertical" />
 
-<!--            <CheckBox-->
-<!--                android:id="@+id/checkbox_24working"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:text="24시간 영업" />-->
+            <!--            <CheckBox-->
+            <!--                android:id="@+id/checkbox_24working"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginLeft="10dp"-->
+            <!--                android:text="24시간 영업" />-->
 
             <TextView
                 android:layout_width="match_parent"
@@ -191,34 +191,6 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:visibility="gone">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="푸쉬 알림 허용 시간"
-                    android:textSize="20sp" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_alarm_same_working_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="영업시간과 동일" />
-
-                <me.bendik.simplerangeview.SimpleRangeView
-                    android:id="@+id/rangeSeekBar_set_alarm_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:activeLabelColor="@color/colorPrimary"
-                    app:activeLineColor="@color/colorPrimary"
-                    app:activeThumbColor="@color/colorPrimary"
-                    app:activeThumbLabelColor="@color/colorPrimary"
-                    app:count="18"
-                    app:labelColor="#808080"
-                    app:labelFontSize="13sp"
-                    app:labelMarginBottom="16dp"
-                    app:movable="true" />
 
                 <TextView
                     android:layout_width="match_parent"

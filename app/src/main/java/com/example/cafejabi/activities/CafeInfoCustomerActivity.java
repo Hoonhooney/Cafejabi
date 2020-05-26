@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,6 +26,7 @@ import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.objects.Comment;
 import com.example.cafejabi.objects.Keyword;
 import com.example.cafejabi.objects.UserInfo;
+import com.example.cafejabi.objects.WorkTime;
 import com.example.cafejabi.views.KeywordView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -52,6 +54,8 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
+    private LinearLayout linearLayout_work_time;
+
     private TextView textView_cafeName, textView_cafeAddress, textView_cafeStatus, textView_cafeInfo,
     textView_workingTime, textView_grade, textView_comment_rating;
 
@@ -67,6 +71,8 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
 
     private ProgressDialog progressDialog;
 
+    private Button button_go_edit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +87,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
         textView_cafeAddress = findViewById(R.id.textView_info_customer_cafeaddress);
         textView_cafeStatus = findViewById(R.id.textView_info_customer_cafestatus);
         textView_cafeInfo = findViewById(R.id.textView_info_customer_cafeinfo);
-        textView_workingTime = findViewById(R.id.textView_info_customer_workingtime);
+//        textView_workingTime = findViewById(R.id.textView_info_customer_workingtime);
         textView_grade = findViewById(R.id.textView_info_customer_grade);
         textView_comment_rating = findViewById(R.id.textView_info_customer_comment_rating);
 
@@ -94,6 +100,8 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
         ratingBar_cafe = findViewById(R.id.ratingBar_info_customer_average);
         ratingBar_comment = findViewById(R.id.ratingBar_set_grade);
         linearLayout_addComment = findViewById(R.id.linearLayout_info_customer_addcomment);
+
+        linearLayout_work_time = findViewById(R.id.linearLayout_work_time);
 
         //프로그래스바
         progressDialog = new ProgressDialog(this);
@@ -156,35 +164,6 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
 
                     int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-//                    if (!cafe.isIs24Working() && (currentHour < cafe.getOpen_time() || currentHour >= cafe.getClose_time())){
-//                        textView_cafeStatus.setText("현재 카페는 영업종료 되었습니다.");
-//                    }else if(!cafe.isAllowAlarm()) {
-//                        textView_cafeStatus.setText("해당 카페는 자리 정보 제공을 하지 않습니다.");
-//                    }else{
-//                        switch(cafe.getTable()){
-//                            case 0:
-//                                textView_cafeStatus.setText("현재 카페는 매우 한산합니다!");
-//                                textView_cafeStatus.setTextColor(getColor(R.color.colorTable0));
-//                                break;
-//                            case 1:
-//                                textView_cafeStatus.setText("현재 카페는 한산한 편입니다.");
-//                                textView_cafeStatus.setTextColor(getColor(R.color.colorTable1));
-//                                break;
-//                            case 2:
-//                                textView_cafeStatus.setText("현재 카페에 적당한 자리 여유가 있습니다.");
-//                                textView_cafeStatus.setTextColor(getColor(R.color.colorTable2));
-//                                break;
-//                            case 3:
-//                                textView_cafeStatus.setText("현재 카페에 사람이 많은 편입니다.");
-//                                textView_cafeStatus.setTextColor(getColor(R.color.colorTable3));
-//                                break;
-//                            case 4:
-//                                textView_cafeStatus.setText("현재 카페에 사람들로 가득 차있습니다!");
-//                                textView_cafeStatus.setTextColor(getColor(R.color.colorTable4));
-//                                break;
-//                        }
-//                    }
-
                     if(!cafe.isAllowAlarm()) {
                         textView_cafeStatus.setText("해당 카페는 자리 정보 제공을 하지 않습니다.");
                     }else{
@@ -212,11 +191,25 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                         }
                     }
 
+                    List<WorkTime> workTimes = cafe.getWorkTimes();
+                    if (workTimes != null && !workTimes.isEmpty()){
+                        linearLayout_work_time.setVisibility(View.VISIBLE);
+                        for (WorkTime wt : workTimes){
+                            TextView textView_wt = new TextView(CafeInfoCustomerActivity.this);
+                            if (wt.isOpen()){
+                                if (wt.isWorking24h())
+                                    textView_wt.setText(String.format("%s : 24시간 영업", wt.getDayOfWeek()));
+                                else
+                                    textView_wt.setText(String.format("%s : %s~%s", wt.getDayOfWeek(), wt.getOpenAt(), wt.getClosedAt()));
+                            }
+                            else
+                                textView_wt.setText(String.format("%s : 휴무", wt.getDayOfWeek()));
+
+                            linearLayout_work_time.addView(textView_wt);
+                        }
+                    }
+
                     textView_cafeInfo.setText(cafe.getCafe_info());
-//                    if(cafe.isIs24Working())
-//                        textView_workingTime.setText("24시간 영업");
-//                    else
-//                        textView_workingTime.setText(cafe.getOpen_time()+"시 ~ "+cafe.getClose_time()+"시");
                     textView_grade.setText(String.format("%.2f", cafe.getGrade_cafe())+"/5");
                     ratingBar_cafe.setRating(cafe.getGrade_cafe());
 
@@ -250,6 +243,20 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                     });
 
                     progressDialog.dismiss();
+
+                    //        root 계정 전용
+                    if (mAuth.getUid().equals("E41br91qlVcSc8wKRCNWmPiNfzf2")){
+                        button_go_edit = findViewById(R.id.button_go_cafe_update);
+                        button_go_edit.setVisibility(View.VISIBLE);
+                        button_go_edit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(CafeInfoCustomerActivity.this, EditCafeInfoActivity.class);
+                                intent.putExtra("cid", cafeId);
+                                startActivity(intent);
+                            }
+                        });
+                    }
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

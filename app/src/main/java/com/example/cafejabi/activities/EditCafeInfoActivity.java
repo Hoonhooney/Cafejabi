@@ -11,8 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -23,6 +26,10 @@ import com.example.cafejabi.R;
 import com.example.cafejabi.objects.Cafe;
 
 
+import com.example.cafejabi.objects.Keyword;
+import com.example.cafejabi.objects.WorkTime;
+import com.example.cafejabi.views.KeywordView;
+import com.example.cafejabi.views.WorkTimeSettingView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,14 +39,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.apmem.tools.layouts.FlowLayout;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
 
 
-public class EditCafeInfoActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditCafeInfoActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
 
     private final String TAG = "EditCafeInfoActivity";
     private Context mContext = EditCafeInfoActivity.this;
@@ -49,23 +62,27 @@ public class EditCafeInfoActivity extends AppCompatActivity implements View.OnCl
 
     private Cafe cafe;
 
-    private String description;
+    private String cid, description;
 
     private int table;
 
-    private EditText editText_cafe_description;
-    private RadioButton rb_table_1, rb_table_2, rb_table_3, rb_table_4, rb_table_5,
+    private TextView textView_latest_updated_time;
+    private EditText editText_cafe_name, editText_cafe_description;
+    private LinearLayout linearLayout_cafe_wt;
+    private FlowLayout flowLayout_keywords;
+    private Switch switch_alarm_on;
+    private RadioButton rb_table_0, rb_table_1, rb_table_2, rb_table_3, rb_table_4,
             rb_gap_15min, rb_gap_30min, rb_gap_60min, rb_gap_120min;
 
 
+    private List<String> keywords = new ArrayList<>();
+    private List<KeywordView> kwvs = new ArrayList<>();
+    private List<WorkTime> workTimes = new ArrayList<>();
 
-    private List<String> keyword;
-
-    private List<RadioButton> rbList_alarm, rbList_table;
+    private int density, gap;
 
 
     private CheckBox checkbox_full_time, checkbox_alarm_same_work_time;
-
 
 
     private List<CheckBox> cbList;
@@ -87,203 +104,255 @@ public class EditCafeInfoActivity extends AppCompatActivity implements View.OnCl
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        editText_cafe_description = findViewById(R.id.editText_cafe_description);//카페소개
+        textView_latest_updated_time = findViewById(R.id.textView_edit_last_updated_time);
 
-        rb_table_1 = findViewById(R.id.rb_table_1);
-        rb_table_2 = findViewById(R.id.rb_table_2);
-        rb_table_3 = findViewById(R.id.rb_table_3);
-        rb_table_4 = findViewById(R.id.rb_table_4);
-        rb_table_5 = findViewById(R.id.rb_table_5);
+        rb_table_0 = findViewById(R.id.rb_edit_table_0);
+        rb_table_1 = findViewById(R.id.rb_edit_table_1);
+        rb_table_2 = findViewById(R.id.rb_edit_table_2);
+        rb_table_3 = findViewById(R.id.rb_edit_table_3);
+        rb_table_4 = findViewById(R.id.rb_edit_table_4);
 
-        rb_gap_15min = findViewById(R.id.rb_gap_15min);
-        rb_gap_30min = findViewById(R.id.rb_gap_30min);
-        rb_gap_60min = findViewById(R.id.rb_gap_60min);
-        rb_gap_120min = findViewById(R.id.rb_gap_120min);
+        rb_gap_15min = findViewById(R.id.rb_edit_gap_15min);
+        rb_gap_30min = findViewById(R.id.rb_edit_gap_30min);
+        rb_gap_60min = findViewById(R.id.rb_edit_gap_60min);
+        rb_gap_120min = findViewById(R.id.rb_edit_gap_120min);
 
-        rbList_table = new ArrayList<>();//좌석 현황
-        rbList_table.add(rb_table_1);
-        rbList_table.add(rb_table_2);
-        rbList_table.add(rb_table_3);
-        rbList_table.add(rb_table_4);
-        rbList_table.add(rb_table_5);
+        editText_cafe_name = findViewById(R.id.editText_edit_cafe_name);
+        editText_cafe_description = findViewById(R.id.editText_edit_cafe_description);
 
-        rbList_alarm = new ArrayList<>();//푸쉬알림
-        rbList_alarm.add(rb_gap_15min);
-        rbList_alarm.add(rb_gap_30min);
-        rbList_alarm.add(rb_gap_60min);
-        rbList_alarm.add(rb_gap_120min);
+        flowLayout_keywords = findViewById(R.id.flowLayout_edit_keywords);
+        String[] basicKeywords = getResources().getStringArray(R.array.keywords);
+        for (String kw : basicKeywords){
+            KeywordView kwv = new KeywordView(mContext, new Keyword(kw));
+            kwvs.add(kwv);
+            flowLayout_keywords.addView(kwv);
+        }
+        linearLayout_cafe_wt = findViewById(R.id.linearLayout_cafe_edit_wt);
 
-        keyword = new ArrayList<>();
+        switch_alarm_on = findViewById(R.id.switch_alarm_setting);
 
-        //Cafe 가져오고 싶은데 계속 error 뜸
-        db.collection("cafes").document(Objects.requireNonNull(mAuth.getUid()))
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        //프로그래스바
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("잠시 기다려주세요");
+
+        setCafe();
+
+        ((RadioGroup)findViewById(R.id.radioGroup_edit_table)).setOnCheckedChangeListener(this);
+        ((RadioGroup)findViewById(R.id.radioGroup_edit_alarm_gap)).setOnCheckedChangeListener(this);
+
+        findViewById(R.id.button_edit_cafe).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Log.d(TAG, "getting Cafe : success");
-                cafe = documentSnapshot.toObject(Cafe.class);
-
-                progressDialog.dismiss();
-
-                if (cafe == null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle("오류").setMessage("카페 정보를 불러오는데 실패했습니다,")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    goActivity(MainActivity.class);
-                                }
-                            });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                } else {
-                    //기존 카페 정보 세팅
-                    setCafe();
-
-                    //좌석(RadioButton)
-                    ((RadioGroup) findViewById(R.id.radioGroup_set_table)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
-                            switch (checkedId) {
-                                case R.id.rb_table_1:
-                                    table = 0;
-                                    break;
-                                case R.id.rb_table_2:
-                                    table = 1;
-                                    break;
-                                case R.id.rb_table_3:
-                                    table = 2;
-                                    break;
-                                case R.id.rb_table_4:
-                                    table = 3;
-                                    break;
-                                case R.id.rb_table_5:
-                                    table = 4;
-                                    break;
-                            }
-                            Log.e(TAG, table+"");//왜 오류인지 모름
-                        }
-                    });
-
-                    //목적
-                    //cb_study.setOnClickListener(EditCafeInfoActivityTestMode.this);
-                    //이런 식으로 모두 써야함
-
-
-                }
+            public void onClick(View v) {
+                editCafeInfo();
             }
         });
-
-        findViewById(R.id.button_edit_finish).setOnClickListener(this);
-
     }
 
+//    cid를 이용해 기존 카페 정보 불러오기
     private void setCafe() {
-        table = cafe.getTable();
+        Intent intent = getIntent();
+        cid = intent.getStringExtra("cid");
 
+        if (cid != null){
+            db.collection("cafes").document(cid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    cafe = documentSnapshot.toObject(Cafe.class);
 
-        description = cafe.getCafe_info();
-        editText_cafe_description.setText(description);
+                    if (cafe != null){
+                        if (cafe.getTable_update_time() != null){
+                            long latestUpdatedTime = cafe.getTable_update_time().getTime();
+                            long currentTime = System.currentTimeMillis();
+                            long gapTime = currentTime - latestUpdatedTime;
+                            if (gapTime < 1000*60*60)
+                                textView_latest_updated_time.setText(gapTime/(1000*60)+"분 전");
+                            else if (gapTime < 1000*60*60*24)
+                                textView_latest_updated_time.setText(gapTime/(1000*60*60)+"시간 전");
+                            else
+                                textView_latest_updated_time.setText(new SimpleDateFormat("yyyy년 MM월 dd일 HHmm").format(cafe.getTable_update_time()));
+                        }else{
+                            textView_latest_updated_time.setText("없음");
+                        }
+//                            textView_latest_updated_time.setText(cafe.getTable_update_time().toString());
 
-        keyword = cafe.getKeywords();
-        for (String str : keyword) {
-            for (CheckBox cb : cbList) {
-                if (str.equals(cb.getText().toString()))
-                    cb.setChecked(true);
-            }
-        }
+                        editText_cafe_name.setText(cafe.getCafe_name());
+                        editText_cafe_description.setText(cafe.getCafe_info());
 
-        for (RadioButton rb : rbList_table) {
-            if (rb.getText().toString().equals(cafe.getTable())) {
-                rb.setChecked(true);
-                table = cafe.getTable();
-            }
-        }
-    }
+                        keywords = cafe.getKeywords();
+                        if (keywords != null){
+                            for (String kw : keywords){
+                                for (KeywordView kwv : kwvs){
+                                    if (kw.equals(kwv.getKeyword().getName()))
+                                        kwv.setButton(true);
+                                }
+                            }
+                        }
 
+                        workTimes = cafe.getWorkTimes();
+                        if (workTimes != null && !workTimes.isEmpty()){
+                            Log.d(TAG, "workTimes : not null and not empty");
+                            for (WorkTime wt : workTimes){
+                                WorkTimeSettingView wtv = new WorkTimeSettingView(mContext, wt);
+                                linearLayout_cafe_wt.addView(wtv);
+                            }
+                        }else{
+                            Log.d(TAG, "workTimes : null or empty");
+                            workTimes = new ArrayList<>();
+                            String[] days = getResources().getStringArray(R.array.day);
+                            for (String day : days){
+                                workTimes.add(new WorkTime(day));
+                            }
+                            for (int i = 0; i < workTimes.size(); i++) {
+                                linearLayout_cafe_wt.addView(new WorkTimeSettingView(mContext, workTimes.get(i)));
+                            }
+                        }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_edit_finish://확인 버튼
-                editCafeInfo();
-                break;
+                        density = cafe.getTable();
+                        switch (cafe.getTable()){
+                            case 0:
+                                rb_table_0.setChecked(true);
+                                break;
+                            case 1:
+                                rb_table_1.setChecked(true);
+                                break;
+                            case 2:
+                                rb_table_2.setChecked(true);
+                                break;
+                            case 3:
+                                rb_table_3.setChecked(true);
+                                break;
+                            case 4:
+                                rb_table_4.setChecked(true);
+                                break;
+                        }
 
-//            case R.id.checkbox_24working:
-//                if (((CheckBox) v).isChecked()) {//체크를 한 경우 open_time, close_time 어떻게 설정?(24시간 영업인 경우)
-//                    cafe.setOpen_time(0);
-//                    cafe.setClose_time(0);
-//                } else {//24시간 영업이 아닌 경우
-//                    //progressbar로 설정
-////                            cafe.setOpen_time(progressDialog());
-////                            cafe.setOpen_time(progressDialog());
-//                }
-//                break;
-
-
-            case R.id.checkBox_alarm_same_working_time:
-
-                    //체크 박스가 아니라 switch로 바꿈 on인 경우 알람기능 활성 off면 끔
-
-
-                break;
-
-
-            //푸쉬 알람 시간 간격 설정 rb_List_alarm 이거를 Cafe.update_time_alarm 에 저장 (Long)
-
+                        gap = cafe.getAlarm_gap();
+                        if (cafe.isAllowAlarm()){
+                            switch (cafe.getAlarm_gap()){
+                                case 15:
+                                    rb_gap_15min.setChecked(true);
+                                    break;
+                                case 30:
+                                    rb_gap_30min.setChecked(true);
+                                    break;
+                                case 60:
+                                    rb_gap_60min.setChecked(true);
+                                    break;
+                                case 120:
+                                    rb_gap_120min.setChecked(true);
+                                    break;
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
 
 
     private void editCafeInfo() {//변경한 정보를 서버에 저장하는 과정
-        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("카페 정보 수정");
-        {//닉네임 중복 확인 함수라 editcafe에는 필요 없음
+        progressDialog.show();
 
-            progressDialog.show();
+        Map<String, Object> updatedCafeMap = new HashMap<>();
 
-            db.collection("cafes").document(cafe.getUid())// 이 부분 수정되는 부분 다시 봐야함
-                    .update("description", description,
-                            "rblist_alarm", rbList_alarm, "table", table, "cbList", cbList).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d(TAG, "edit cafeInfo : success");
+        if (!editText_cafe_name.getText().toString().equals(cafe.getCafe_name()))
+            updatedCafeMap.put("cafe_name", editText_cafe_name.getText().toString());
 
-                    if (description != null) {
-                        db.collection("comments").whereEqualTo("cafe_description", description)
-                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+        if (!editText_cafe_description.getText().toString().equals(cafe.getCafe_info()))
+            updatedCafeMap.put("cafe_info", editText_cafe_description.getText().toString());
 
-                            }
-                        });
-                    }
+        List<String> newKeywords = new ArrayList<>();
+        for (KeywordView kwv : kwvs){
+            if (kwv.getKeyword().isChosen())
+                newKeywords.add(kwv.getKeyword().getName());
+        }
+        updatedCafeMap.put("keywords", newKeywords);
 
-                    progressDialog.dismiss();
-                    Toast.makeText(EditCafeInfoActivity.this, "카페 정보 수정 완료", Toast.LENGTH_SHORT).show();
-                    goActivity(MainActivity.class);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e(TAG, "edit cafeInfo : failure", e);
-                    builder.setMessage("카페 정보 수정을 실패하였습니다.").setPositiveButton("OK", null);
-                    builder.create().show();
-                }
-            });
+        if (density != cafe.getTable()){
+            updatedCafeMap.put("table", density);
+            updatedCafeMap.put("table_update_time", new Date());
         }
 
-    }
+        for (int i = 0; i < workTimes.size(); i++) {
+            if (cafe.getWorkTimes() == null || workTimes.get(i) != cafe.getWorkTimes().get(i)){
+                updatedCafeMap.put("workTimes", workTimes);
+                break;
+            }
+        }
 
-    private void goActivity (Class c){
-        Intent intent = new Intent(mContext, c);
-        startActivity(intent);
-        finish();
-    }
+        if (gap != cafe.getAlarm_gap())
+            updatedCafeMap.put("alarm_gap", gap);
 
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("카페 정보 업데이트");
+
+        db.collection("cafes").document(cid).update(updatedCafeMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "update cafeInfo : success");
+                progressDialog.dismiss();
+                builder.setMessage("카페 정보 업데이트 성공!").setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(mContext, CafeInfoCustomerActivity.class);
+                        intent.putExtra("CafeId", cid);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                builder.create().show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "update cafe info : failure", e);
+                progressDialog.dismiss();
+                builder.setMessage("카페 정보 업데이트 실패").setPositiveButton("확인", null);
+                builder.create().show();
+            }
+        });
+    }
 
     @Override
-    public void onBackPressed () {
-        goActivity(MainActivity.class);
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch(group.getId()){
+            case R.id.radioGroup_edit_table:
+                switch(checkedId){
+                    case R.id.rb_edit_table_0:
+                        density = 0;
+                        break;
+                    case R.id.rb_edit_table_1:
+                        density = 1;
+                        break;
+                    case R.id.rb_edit_table_2:
+                        density = 2;
+                        break;
+                    case R.id.rb_edit_table_3:
+                        density = 3;
+                        break;
+                    case R.id.rb_edit_table_4:
+                        density = 4;
+                        break;
+                }
+                break;
+
+            case R.id.radioGroup_set_alarm_gap:
+                switch (checkedId){
+                    case R.id.rb_edit_gap_15min:
+                        gap = 15;
+                        break;
+                    case R.id.rb_edit_gap_30min:
+                        gap = 30;
+                        break;
+                    case R.id.rb_edit_gap_60min:
+                        gap = 60;
+                        break;
+                    case R.id.rb_edit_gap_120min:
+                        gap = 120;
+                        break;
+                }
+                break;
+        }
     }
 }

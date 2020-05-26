@@ -254,6 +254,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
                                 Intent intent = new Intent(CafeInfoCustomerActivity.this, EditCafeInfoActivity.class);
                                 intent.putExtra("cid", cafeId);
                                 startActivity(intent);
+                                finish();
                             }
                         });
                     }

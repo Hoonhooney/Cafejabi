@@ -99,7 +99,7 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
             else if (gapTime < 1000*60*60*24)
                 updated_time += gapTime/(1000*60*60)+"시간 전";
             else
-                updated_time += new SimpleDateFormat("yyyy년 MM월 dd일 HHmm").format(cafe.getTable_update_time());
+                updated_time += new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm").format(cafe.getTable_update_time());
         }else{
             updated_time += "없음";
         }

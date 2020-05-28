@@ -108,7 +108,7 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        if(mAuth.getUid() != null){
+        if(mAuth != null && !mAuth.getCurrentUser().isAnonymous()){
             liking_cafe_list_checkbox.setVisibility(VISIBLE);
 //            liking_cafe_list_checkbox.
 

@@ -38,6 +38,7 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -137,15 +138,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         currentUser = mAuth.getCurrentUser();
 
         db = FirebaseFirestore.getInstance();
-
-        //지도 보이기
-        mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
-
-        //사이드메뉴 활성화
-        isLoggedIn = currentUser != null;
-        addSideMenu();
 
         linearLayout_keywords = findViewById(R.id.linearLayout_keywords);
         String[] arr_keyword = getResources().getStringArray(R.array.keywords);
@@ -559,7 +551,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 //    KeywordView 버튼 카페 Marker 분류 EventListener
-    @Override
     public void showMarkers(final KeywordViewForMain keywordView) {
 
         db.collection("cafes").whereArrayContains("keywords", keywordView.getKeyword().getName())
@@ -604,6 +595,35 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
+    }
+
+//    시작할 때 비회원인 경우 익명 인증하기
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null){
+            mAuth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        Log.d(TAG, "Sign in Anonymously : Success");
+                        isLoggedIn = false;
+                    }else
+                        Log.e(TAG, "sign in Anonymously : Failure", task.getException());
+                }
+            });
+        }
+
+        //지도 보이기
+        mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+        assert mapFragment != null;
+        mapFragment.getMapAsync(this);
+
+        //사이드메뉴 활성화
+        isLoggedIn = currentUser != null && !currentUser.isAnonymous();
+        addSideMenu();
     }
 
 //    종료할 때

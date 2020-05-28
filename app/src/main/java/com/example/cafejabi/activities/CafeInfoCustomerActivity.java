@@ -280,7 +280,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
     }
 
     private void addComment(){
-        if(mAuth.getCurrentUser() != null){
+        if(mAuth.getCurrentUser() != null && !mAuth.getCurrentUser().isAnonymous()){
             db.collection("users").document(mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {

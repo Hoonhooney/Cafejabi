@@ -114,7 +114,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 
         radioGroup_set_gap.setOnCheckedChangeListener(this);
 
-        checkBox_alarm_same_work_time.setOnCheckedChangeListener(this);
+//        checkBox_alarm_same_work_time.setOnCheckedChangeListener(this);
 
         LinearLayout linearLayout_wt = findViewById(R.id.linearLayout_cafe_register_wt);
         String[] days = getResources().getStringArray(R.array.day);

@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         init();
 
         // 초기 페이지 보이기
-//        if(mAuth == null && loginPreferences.getBoolean("firstTime", true))
+        if(mAuth == null && loginPreferences.getBoolean("firstTime", true))
             startActivity(new Intent(this, ViewPagerActivity.class));
     }
 

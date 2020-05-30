@@ -626,7 +626,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onStart();
 
         // 초기 페이지 보이기
-        if(mAuth == null && loginPreferences.getBoolean("firstTime", true))
+        if(loginPreferences.getBoolean("firstTime", true))
             startActivity(new Intent(this, ViewPagerActivity.class));
         else{
             //    시작할 때 비회원인 경우 익명 인증하기

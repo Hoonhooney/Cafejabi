@@ -103,17 +103,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private List<String> cafeList = new ArrayList<>();
     private Map<Marker, Integer> markerMap = new HashMap<>();
+    private int maxKeywords = 1;
+    private List<KeywordViewForMain> keywordViewForMains = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        currentUser = mAuth.getCurrentUser();
+
+        db = FirebaseFirestore.getInstance();
+
         init();
 
-        // 초기 페이지 보이기
-        if(mAuth == null && loginPreferences.getBoolean("firstTime", true))
-            startActivity(new Intent(this, ViewPagerActivity.class));
     }
 
     private void init(){
@@ -132,20 +138,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         loginPreferences = getSharedPreferences("login", MODE_PRIVATE);
 
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        currentUser = mAuth.getCurrentUser();
-
-        db = FirebaseFirestore.getInstance();
-
         linearLayout_keywords = findViewById(R.id.linearLayout_keywords);
         String[] arr_keyword = getResources().getStringArray(R.array.keywords);
         for (String kw : arr_keyword){
             final KeywordViewForMain keywordView = new KeywordViewForMain(this, new Keyword(kw));
             keywordView.setEventListener(this);
+            keywordViewForMains.add(keywordView);
             linearLayout_keywords.addView(keywordView);
         }
+
+        mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+
+        //사이드메뉴 활성화
+        isLoggedIn = currentUser != null && !currentUser.isAnonymous();
+        addSideMenu();
     }
 
 //    사이드메뉴 추가
@@ -272,7 +278,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         naverMap.setSymbolScale(0.7f);
 
         //카페 마킹하기
-        drawCafes(naverMap);
+        if (markerMap.isEmpty())
+            drawCafes(naverMap);
+        else{
+            for (Marker marker : markerMap.keySet())
+                if (markerMap.get(marker) == maxKeywords)
+                    marker.setMap(naverMap);
+        }
 
         // GPS 버튼 활성화
         locationSource = new FusedLocationSource(this, ACCESS_LOCATION_PERMISSION_REQUEST_CODE);
@@ -558,6 +570,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
+                    maxKeywords = keywordView.getKeyword().isChosen() ? maxKeywords+1 : maxKeywords-1;
+
                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
                         Cafe chosenCafe = documentSnapshot.toObject(Cafe.class);
                         for (Marker marker : markerMap.keySet()){
@@ -569,6 +583,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
 
                     int num_markers = 0;
+                    Log.d(TAG, "maxKeywords : "+maxKeywords);
 
                     for (Marker marker : markerMap.keySet()){
 
@@ -578,7 +593,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         marker.setCaptionHaloColor(Color.WHITE);
                         marker.setZIndex(1);
 
-                        if (markerMap.get(marker) > 1){
+                        if (markerMap.get(marker) == maxKeywords){
                             marker.setMap(map);
                             num_markers++;
                         }
@@ -587,8 +602,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
 
                     if (num_markers == 0){
-                        for(Marker marker : markerMap.keySet())
-                            marker.setMap(map);
+                        boolean isKeywordOff = true;
+                        for (KeywordViewForMain keywordView : keywordViewForMains){
+                            if (keywordView.getKeyword().isChosen()){
+                                isKeywordOff = false;
+                                break;
+                            }
+                        }
+                        if (isKeywordOff) {
+                            for(Marker marker : markerMap.keySet())
+                                marker.setMap(map);
+                        }
                     }
 
                     bottomLayout.removeAllViews();
@@ -597,33 +621,30 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-//    시작할 때 비회원인 경우 익명 인증하기
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null){
-            mAuth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        Log.d(TAG, "Sign in Anonymously : Success");
-                        isLoggedIn = false;
-                    }else
-                        Log.e(TAG, "sign in Anonymously : Failure", task.getException());
-                }
-            });
+
+        // 초기 페이지 보이기
+        if(mAuth == null && loginPreferences.getBoolean("firstTime", true))
+            startActivity(new Intent(this, ViewPagerActivity.class));
+        else{
+            //    시작할 때 비회원인 경우 익명 인증하기
+            if (currentUser == null){
+                mAuth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            Log.d(TAG, "Sign in Anonymously : Success");
+                            isLoggedIn = false;
+                            refreshMap();
+                        }else
+                            Log.e(TAG, "sign in Anonymously : Failure", task.getException());
+                    }
+                });
+            }else
+                refreshMap();
         }
-
-        //지도 보이기
-        mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
-
-        //사이드메뉴 활성화
-        isLoggedIn = currentUser != null && !currentUser.isAnonymous();
-        addSideMenu();
     }
 
 //    종료할 때
@@ -639,6 +660,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             editor.putFloat("Longitude", (float)lastLocation.getLongitude());
         }
         editor.apply();
+    }
+
+//    지도 보이기
+    private void refreshMap(){
+        if(mapFragment != null){
+            for (Marker marker : markerMap.keySet())
+                marker.setMap(null);
+            mapFragment.getMapAsync(this);
+        }
     }
 
     private void goActivity(Class c){

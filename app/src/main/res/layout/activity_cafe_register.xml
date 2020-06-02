@@ -132,10 +132,21 @@
                 android:text="영업 시간"
                 android:textSize="20sp" />
 
+            <CheckBox
+                android:id="@+id/checkbox_wt_everyday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="매일"/>
             <LinearLayout
                 android:id="@+id/linearLayout_cafe_register_wt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical" />
+            <LinearLayout
+                android:id="@+id/linearLayout_cafe_register_wt_everyday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="vertical" />
 
             <!--            <CheckBox-->

@@ -12,7 +12,7 @@ public class UserInfo {
     private List<String> style;
     private List<String> visitedCafeList;
     private List<String> likingCafeList;
-    private Cafe managingCafe;
+    private String managingCafe;
 
     public UserInfo(){}
 
@@ -91,11 +91,11 @@ public class UserInfo {
         this.likingCafeList = likingCafeList;
     }
 
-    public Cafe getManagingCafe() {
+    public String getManagingCafe() {
         return managingCafe;
     }
 
-    public void setManagingCafe(Cafe managingCafe) {
+    public void setManagingCafe(String managingCafe) {
         this.managingCafe = managingCafe;
     }
 }

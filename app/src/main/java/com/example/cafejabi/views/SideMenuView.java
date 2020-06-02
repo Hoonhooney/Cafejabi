@@ -1,6 +1,7 @@
 package com.example.cafejabi.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.example.cafejabi.R;
+import com.example.cafejabi.activities.EditCafeInfoActivity;
+import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.objects.UserInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,8 +36,9 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
 
     public EventListener listener;
 
-    private LinearLayout linearLayout_login, linearLayout_logout;
-    private TextView textView_username, textView_userstyle;
+    private LinearLayout linearLayout_login, linearLayout_logout, linearLayout_myCafe;
+    private TextView textView_username, textView_userstyle, textView_myCafe;
+    private Switch switch_myCafe;
     private ListView listView_menu;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -51,7 +56,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
     public interface EventListener{
         void btnCancel();
         void btnGoLogin();
-        void btnGoEdit();
+        void btnGoEdit(String cid);
         void btnLogout();
         void btnGoRegisterCafe();
         void btnGoCafeList(int code);
@@ -74,6 +79,10 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
 
         linearLayout_login = findViewById(R.id.linearLayout_menu_login);
         linearLayout_logout = findViewById(R.id.linearLayout_menu_logout);
+        linearLayout_myCafe = findViewById(R.id.linearLayout_side_my_cafe);
+
+        textView_myCafe = findViewById(R.id.textView_side_my_cafe);
+        switch_myCafe = findViewById(R.id.switch_side_cafe_onoff);
 
         //로그아웃 상태, 로그인 상태 메뉴 다르게 보이기
         final List<String> list_menu = new ArrayList<>();
@@ -111,7 +120,31 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                     textView_userstyle.setText(userInfo.getStyle().toString());
 
                     if(userInfo.getManagingCafe() !=null){
-                        list_menu.add("카페 관리");
+                        linearLayout_myCafe.setVisibility(VISIBLE);
+                        db.collection("cafes").document(userInfo.getManagingCafe()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                final Cafe myCafe = documentSnapshot.toObject(Cafe.class);
+                                if (myCafe != null){
+                                    Log.d(TAG, "get my cafe : success");
+                                    textView_myCafe.setText(myCafe.getCafe_name());
+
+                                    linearLayout_myCafe.setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            listener.btnGoEdit(myCafe.getCid());
+                                        }
+                                    });
+
+                                    //switch 기능 넣기
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG, "get my cafe : failure", e);
+                            }
+                        });
                     }
                     else{
                         list_menu.add("카페 등록하기");
@@ -171,10 +204,6 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
 
             case R.id.button_go_login:
                 listener.btnGoLogin();
-                break;
-
-            case R.id.button_go_edit:
-                listener.btnGoEdit();
                 break;
 
             default:

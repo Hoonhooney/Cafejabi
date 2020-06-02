@@ -185,9 +185,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             //회원 정보 수정
             @Override
-            public void btnGoEdit() {
+            public void btnGoEdit(String cid) {
                 Log.e(TAG, "btnGoEdit");
-                goActivity(EditUserInfoActivity.class);
+                Intent intent = new Intent(mContext, EditCafeInfoActivity.class);
+                intent.putExtra("cid", cid);
+                startActivity(intent);
             }
 
             //로그아웃
@@ -218,6 +220,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(intent);
                 finish();
             }
+
+//            @Override
+//            public void btnGoSettings(){
+//                goActivity(SettingsActivity.class);
+//            }
         });
     }
 
@@ -301,7 +308,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         double lat = (double)locationPreferences.getFloat("Latitude", 37.2788f);
         double lon = (double)locationPreferences.getFloat("Longitude", 127.0437f);
 
-        naverMap.setCameraPosition(new CameraPosition(new LatLng(lat, lon), 17, 0, 0));
+        naverMap.setCameraPosition(new CameraPosition(new LatLng(lat == 0 ? 37.2788f : lat, lon == 0 ? 127.0437f : lon),
+                17, 0, 0));
 
         // 카메라 움직일 때마다 작동
         lastLocation = new Location("Provider");

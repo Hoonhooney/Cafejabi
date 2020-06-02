@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -68,16 +69,18 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
 
     private TextView textView_latest_updated_time;
     private EditText editText_cafe_name, editText_cafe_description;
-    private LinearLayout linearLayout_cafe_wt;
+    private LinearLayout linearLayout_cafe_wt, linearLayout_cafe_wt_everyday;
     private FlowLayout flowLayout_keywords;
     private Switch switch_alarm_on;
     private RadioButton rb_table_0, rb_table_1, rb_table_2, rb_table_3, rb_table_4,
             rb_gap_15min, rb_gap_30min, rb_gap_60min, rb_gap_120min;
+    private CheckBox checkBox_wt_everyday;
 
 
     private List<String> keywords = new ArrayList<>();
     private List<KeywordView> kwvs = new ArrayList<>();
     private List<WorkTime> workTimes = new ArrayList<>();
+    private WorkTime wt_everyday;
 
     private int density, gap;
 
@@ -117,6 +120,20 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
         rb_gap_60min = findViewById(R.id.rb_edit_gap_60min);
         rb_gap_120min = findViewById(R.id.rb_edit_gap_120min);
 
+        checkBox_wt_everyday = findViewById(R.id.checkbox_cafe_edit_wt_everyday);
+        checkBox_wt_everyday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    linearLayout_cafe_wt.setVisibility(View.GONE);
+                    linearLayout_cafe_wt_everyday.setVisibility(View.VISIBLE);
+                }else{
+                    linearLayout_cafe_wt.setVisibility(View.VISIBLE);
+                    linearLayout_cafe_wt_everyday.setVisibility(View.GONE);
+                }
+            }
+        });
+
         editText_cafe_name = findViewById(R.id.editText_edit_cafe_name);
         editText_cafe_description = findViewById(R.id.editText_edit_cafe_description);
 
@@ -128,6 +145,7 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
             flowLayout_keywords.addView(kwv);
         }
         linearLayout_cafe_wt = findViewById(R.id.linearLayout_cafe_edit_wt);
+        linearLayout_cafe_wt_everyday = findViewById(R.id.linearLayout_cafe_edit_wt_everyday);
 
         switch_alarm_on = findViewById(R.id.switch_alarm_setting);
 
@@ -189,22 +207,39 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
                             }
                         }
 
-                        workTimes = cafe.getWorkTimes();
-                        if (workTimes != null && !workTimes.isEmpty()){
+                        workTimes = new ArrayList<>();
+                        String[] days = getResources().getStringArray(R.array.day);
+                        for (String day : days){
+                            workTimes.add(new WorkTime(day));
+                        }
+                        for (int i = 0; i < workTimes.size(); i++) {
+                            linearLayout_cafe_wt.addView(new WorkTimeSettingView(mContext, workTimes.get(i)));
+                        }
+
+                        wt_everyday = new WorkTime("매일");
+                        WorkTimeSettingView wtView = new WorkTimeSettingView(mContext, wt_everyday);
+                        wtView.setLayout(true);
+                        linearLayout_cafe_wt_everyday.addView(wtView);
+
+                        List<WorkTime> wts = cafe.getWorkTimes();
+                        if (wts != null && !wts.isEmpty()){
                             Log.d(TAG, "workTimes : not null and not empty");
-                            for (WorkTime wt : workTimes){
-                                WorkTimeSettingView wtv = new WorkTimeSettingView(mContext, wt);
-                                linearLayout_cafe_wt.addView(wtv);
-                            }
-                        }else{
-                            Log.d(TAG, "workTimes : null or empty");
-                            workTimes = new ArrayList<>();
-                            String[] days = getResources().getStringArray(R.array.day);
-                            for (String day : days){
-                                workTimes.add(new WorkTime(day));
-                            }
-                            for (int i = 0; i < workTimes.size(); i++) {
-                                linearLayout_cafe_wt.addView(new WorkTimeSettingView(mContext, workTimes.get(i)));
+                            if (cafe.getWorkTimes().size() == 1){
+                                checkBox_wt_everyday.setChecked(true);
+                                linearLayout_cafe_wt_everyday.setVisibility(View.VISIBLE);
+                                linearLayout_cafe_wt.setVisibility(View.GONE);
+                                wt_everyday = wts.get(0);
+                                linearLayout_cafe_wt_everyday.removeAllViews();
+                                linearLayout_cafe_wt_everyday.addView(new WorkTimeSettingView(mContext, wt_everyday));
+                            }else{
+                                workTimes = wts;
+                                linearLayout_cafe_wt_everyday.setVisibility(View.GONE);
+                                linearLayout_cafe_wt.setVisibility(View.VISIBLE);
+                                linearLayout_cafe_wt.removeAllViews();
+                                for (WorkTime wt : workTimes){
+                                    WorkTimeSettingView wtv = new WorkTimeSettingView(mContext, wt);
+                                    linearLayout_cafe_wt.addView(wtv);
+                                }
                             }
                         }
 
@@ -274,12 +309,19 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
             updatedCafeMap.put("table_update_time", new Date());
         }
 
-        for (int i = 0; i < workTimes.size(); i++) {
-            if (cafe.getWorkTimes() == null || workTimes.get(i) != cafe.getWorkTimes().get(i)){
-                updatedCafeMap.put("workTimes", workTimes);
-                break;
-            }
+//        for (int i = 0; i < workTimes.size(); i++) {
+//            if (cafe.getWorkTimes() == null || workTimes.get(i) != cafe.getWorkTimes().get(i)){
+//                updatedCafeMap.put("workTimes", workTimes);
+//                break;
+//            }
+//        }
+        if (checkBox_wt_everyday.isChecked()){{
+            List<WorkTime> wtList = new ArrayList<>();
+            wtList.add(wt_everyday);
+            updatedCafeMap.put("workTimes", wtList);
         }
+        }else
+            updatedCafeMap.put("workTimes", workTimes);
 
         if (gap != cafe.getAlarm_gap())
             updatedCafeMap.put("alarm_gap", gap);

@@ -74,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:visibility="gone"
                 android:layout_marginVertical="10dp">
 
                 <TextView
@@ -81,8 +82,7 @@
                     android:layout_height="wrap_content"
                     android:text="운영 시간"
                     android:textSize="20sp"
-                    android:gravity="center"
-                    android:visibility="gone"/>
+                    android:gravity="center"/>
 
             </LinearLayout>
 

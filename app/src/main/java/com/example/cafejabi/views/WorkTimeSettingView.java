@@ -88,10 +88,12 @@ public class WorkTimeSettingView extends LinearLayout implements View.OnClickLis
         if (open){
             linearLayout_wt.setVisibility(VISIBLE);
             textView_day_off.setVisibility(GONE);
+            checkBox_day.setChecked(true);
         }
         else{
             linearLayout_wt.setVisibility(GONE);
             textView_day_off.setVisibility(VISIBLE);
+            checkBox_day.setChecked(false);
         }
     }
 

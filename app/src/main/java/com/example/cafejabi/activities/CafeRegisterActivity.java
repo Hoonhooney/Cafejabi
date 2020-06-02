@@ -59,7 +59,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 
     private EditText editText_cafe_name, editText_business_id, editText_cafe_description;
     private TextView textView_cafe_address;
-    private CheckBox checkBox_is24Working, checkBox_alarm_same_work_time;
+    private CheckBox checkBox_is24Working, checkBox_alarm_same_work_time, checkBox_wt_everyday;
     private boolean isAllowedWithAlarm, is24Working, isSameAlarmWithWorkTime;
     private RadioGroup radioGroup_allow_service, radioGroup_set_gap;
 //    private SimpleRangeView rangeSeekBar_set_working_time, rangeSeekBar_set_alarm_time;
@@ -70,6 +70,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
     private List<String> keywords_selected;
 
     private List<WorkTime> workTimes = new ArrayList<>();
+    private WorkTime wt_everyday;
 
     private String searchApiClientId, searchApiClientSecret;
     private int gap;
@@ -116,7 +117,8 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 
 //        checkBox_alarm_same_work_time.setOnCheckedChangeListener(this);
 
-        LinearLayout linearLayout_wt = findViewById(R.id.linearLayout_cafe_register_wt);
+        final LinearLayout linearLayout_wt = findViewById(R.id.linearLayout_cafe_register_wt);
+
         String[] days = getResources().getStringArray(R.array.day);
         for (String day : days){
             workTimes.add(new WorkTime(day));
@@ -124,6 +126,26 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         for (int i = 0; i < workTimes.size(); i++) {
             linearLayout_wt.addView(new WorkTimeSettingView(this, workTimes.get(i)));
         }
+
+        final LinearLayout linearLayout_wt_everyday = findViewById(R.id.linearLayout_cafe_register_wt_everyday);
+        wt_everyday = new WorkTime("매일");
+        WorkTimeSettingView wtView = new WorkTimeSettingView(this, wt_everyday);
+        wtView.setLayout(true);
+        linearLayout_wt_everyday.addView(wtView);
+
+        checkBox_wt_everyday = findViewById(R.id.checkbox_wt_everyday);
+        checkBox_wt_everyday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    linearLayout_wt.setVisibility(View.GONE);
+                    linearLayout_wt_everyday.setVisibility(View.VISIBLE);
+                }else{
+                    linearLayout_wt.setVisibility(View.VISIBLE);
+                    linearLayout_wt_everyday.setVisibility(View.GONE);
+                }
+            }
+        });
 
         //키워드 등록
         keywords = new ArrayList<>();
@@ -331,7 +353,12 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         }
 
         cafe.setCafe_info(description);
-        cafe.setWorkTimes(workTimes);
+        if (checkBox_wt_everyday.isChecked()){
+            List<WorkTime> workTimesEv = new ArrayList<>();
+            workTimesEv.add(wt_everyday);
+            cafe.setWorkTimes(workTimesEv);
+        }else
+            cafe.setWorkTimes(workTimes);
 
         addCafeInDb(cafe);
     }
@@ -362,7 +389,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         final AlertDialog.Builder builder = new AlertDialog.Builder(CafeRegisterActivity.this);
         builder.setTitle("카페 등록");
 
-        db.collection("users").document(uid).update("managingCafe", cafe)
+        db.collection("users").document(uid).update("managingCafe", cafe.getCid())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

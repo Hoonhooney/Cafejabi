@@ -15,14 +15,12 @@ public class Cafe {
     private int table;                   //남은 테이블 개수 or 카페 수용인원 퍼센트? 단계
     private Date table_update_time;            //좌석업데이트를 한 시간
     private String cafe_info;                  //카페 정보
-//    private boolean is24Working;               //24시간 영업 여부
     private boolean allowAlarm;                //푸쉬알람서비스 여부
-//    private int open_time;                     //카페 여는 시간
-//    private int close_time;                    //카페 닫는 시간
     private int alarm_gap;            //좌석 업데이트 알람 설정 시간
     private List<String> keywords;             //카페 키워드 리스트
     private float grade_cafe;                               //카페 평점
     private List<WorkTime> workTimes;
+    private boolean open;
 
     public Cafe() {
     }
@@ -36,10 +34,10 @@ public class Cafe {
     this.locate_x = locate_x;
     this.locate_y = locate_y;
     this.total_table = total_table;
-//    this.is24Working = is24Working;
     this.allowAlarm = allowAlarm;
     this.keywords = keywords;
     this.workTimes = new ArrayList<>();
+    this.open = false;
     }
 
     public String getCid() {
@@ -110,14 +108,6 @@ public class Cafe {
         return table_update_time;
     }
 
-//    public boolean isIs24Working() {
-//        return is24Working;
-//    }
-//
-//    public void setIs24Working(boolean is24Working) {
-//        this.is24Working = is24Working;
-//    }
-
     public boolean isAllowAlarm() {
         return allowAlarm;
     }
@@ -137,22 +127,6 @@ public class Cafe {
     public void setCafe_info(String cafe_info) {
         this.cafe_info = cafe_info;
     }
-
-//    public int getOpen_time() {
-//        return open_time;
-//    }
-//
-//    public void setOpen_time(int open_time) {
-//        this.open_time = open_time;
-//    }
-//
-//    public int getClose_time() {
-//        return close_time;
-//    }
-//
-//    public void setClose_time(int close_time) {
-//        this.close_time = close_time;
-//    }
 
     public int getAlarm_gap() {
         return alarm_gap;
@@ -184,5 +158,13 @@ public class Cafe {
 
     public void setWorkTimes(List<WorkTime> workTimes) {
         this.workTimes = workTimes;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 }

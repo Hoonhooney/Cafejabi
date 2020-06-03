@@ -13,20 +13,27 @@ import com.example.cafejabi.R;
 import com.example.cafejabi.fragments.SecondFragment;
 import com.example.cafejabi.fragments.ThirdFragment;
 
+import me.relex.circleindicator.CircleIndicator;
+
+
 public class ViewPagerActivity extends AppCompatActivity {
 
     private ViewPager mViewpager;
+    FragmentPagerAdapter adapterViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager);
 
-        mViewpager = (ViewPager) findViewById(R.id.pager);
+        mViewpager = (ViewPager) findViewById(R.id.vpPager);
 //        mViewpager.setAdapter(adapter);
 
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewpager.setAdapter(adapter);
+
+        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
+        indicator.setViewPager(mViewpager);
 
 
 

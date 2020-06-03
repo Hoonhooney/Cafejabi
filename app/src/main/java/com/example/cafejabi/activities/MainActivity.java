@@ -633,6 +633,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onStart() {
         super.onStart();
 
+//        startActivity(new Intent(this, ViewPagerActivity.class));
+        
         // 초기 페이지 보이기
         if(loginPreferences.getBoolean("firstTime", true))
             startActivity(new Intent(this, ViewPagerActivity.class));

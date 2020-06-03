@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -136,7 +137,24 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                                         }
                                     });
 
-                                    //switch 기능 넣기
+                                    switch_myCafe.setChecked(myCafe.isOpen());
+
+                                    switch_myCafe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                        @Override
+                                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                            db.collection("cafes").document(myCafe.getCid()).update("open", isChecked).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d(TAG, "cafe open update : Success");
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e(TAG, "cafe open update : Failure", e);
+                                                }
+                                            });
+                                        }
+                                    });
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {

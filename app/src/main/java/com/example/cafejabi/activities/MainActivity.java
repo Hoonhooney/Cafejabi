@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         //사이드메뉴 활성화
         isLoggedIn = currentUser != null && !currentUser.isAnonymous();
@@ -242,6 +243,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 searchLayout.setVisibility(View.VISIBLE);
             }
         }, 450);
+
+        refreshMap();
     }
 
     public void showMenu(){
@@ -370,6 +373,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void drawCafes(final NaverMap map){
         cafeList.clear();
+        if (!markerMap.isEmpty()){
+            for (Marker marker : markerMap.keySet()){
+                marker.setMap(null);
+            }
+            markerMap.clear();
+        }
         db.collection("cafes").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -382,35 +391,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         final LatLng cafeLocation = new LatLng(cafe.getLocate_x(), cafe.getLocate_y());
                         marker.setPosition(cafeLocation);
 
-                        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-
-//                        if (!cafe.isIs24Working() && (currentHour < cafe.getOpen_time() || currentHour >= cafe.getClose_time())){
-//                            marker.setIcon(OverlayImage.fromResource(R.drawable.pin_closed));
-//                        }else if(!cafe.isAllowAlarm()){
-//                            marker.setIcon(OverlayImage.fromResource(R.drawable.pin_unknown));
-//                        } else{
-//                            switch(cafe.getTable()){
-//                                case 0:
-//                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin1));
-//                                    break;
-//                                case 1:
-//                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin2));
-//                                    break;
-//                                case 2:
-//                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin3));
-//                                    break;
-//                                case 3:
-//                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin4));
-//                                    break;
-//                                case 4:
-//                                    marker.setIcon(OverlayImage.fromResource(R.drawable.pin5));
-//                                    break;
-//                            }
-//                        }
-
-                        if(!cafe.isAllowAlarm()){
+                        if(!cafe.isOpen()){
+                            marker.setIcon(OverlayImage.fromResource(R.drawable.pin_closed));
+                        } else if(!cafe.isAllowAlarm()){
                             marker.setIcon(OverlayImage.fromResource(R.drawable.pin_unknown));
-                        } else{
+                        }else{
                             switch(cafe.getTable()){
                                 case 0:
                                     marker.setIcon(OverlayImage.fromResource(R.drawable.pin1));
@@ -645,14 +630,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         if (task.isSuccessful()){
                             Log.d(TAG, "Sign in Anonymously : Success");
                             isLoggedIn = false;
-                            refreshMap();
                         }else
                             Log.e(TAG, "sign in Anonymously : Failure", task.getException());
                     }
                 });
-            }else
-                refreshMap();
+            }
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        refreshMap();
     }
 
 //    종료할 때
@@ -672,10 +661,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //    지도 보이기
     private void refreshMap(){
-        if(mapFragment != null){
-            for (Marker marker : markerMap.keySet())
-                marker.setMap(null);
-            mapFragment.getMapAsync(this);
+        if(map != null){
+            drawCafes(map);
         }
     }
 

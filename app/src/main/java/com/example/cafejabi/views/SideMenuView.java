@@ -61,6 +61,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         void btnLogout();
         void btnGoRegisterCafe();
         void btnGoCafeList(int code);
+        void btnGoSettings();
     }
 
     public SideMenuView(Context context, boolean isloggedin){
@@ -208,6 +209,8 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                     case "찜 카페":
                         listener.btnGoCafeList(2);
                         break;
+                    case "설정":
+                        listener.btnGoSettings();
                 }
             }
         });

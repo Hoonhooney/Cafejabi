@@ -73,6 +73,7 @@
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".activities.ViewPagerActivity" />
         <activity android:name=".activities.EditUserInfoActivity" />
+        <activity android:name=".activities.SettingsActivity"/>
     </application>
 
 </manifest>

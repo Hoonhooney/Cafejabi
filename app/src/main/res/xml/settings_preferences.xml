@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:title="알람"
+        />
+
+    <Preference
+        android:title="도움말"
+        />
+
+    <Preference
+        android:title="버전"
+        android:summary="1.0.0"/>
+
+</PreferenceScreen>

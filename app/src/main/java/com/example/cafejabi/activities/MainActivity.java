@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -219,13 +220,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Intent intent = new Intent(mContext, CafeListActivity.class);
                 intent.putExtra("CODE", code);
                 startActivity(intent);
-                finish();
             }
 
-//            @Override
-//            public void btnGoSettings(){
-//                goActivity(SettingsActivity.class);
-//            }
+            @Override
+            public void btnGoSettings(){
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            }
         });
     }
 

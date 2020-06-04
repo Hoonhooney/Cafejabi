@@ -183,7 +183,6 @@
                         android:id="@+id/rb_join_student"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:checked="true"
                         android:text="학생"
                         android:textSize="20sp"
                         />
@@ -191,7 +190,6 @@
                         android:id="@+id/rb_join_worker"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:checked="true"
                         android:text="직장인"
                         android:textSize="20sp"
                         />
@@ -199,7 +197,6 @@
                         android:id="@+id/rb_join_none"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:checked="true"
                         android:text="무직"
                         android:textSize="20sp"
                         />
@@ -229,7 +226,6 @@
                     android:id="@+id/checkBox_join_study"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:checked="true"
                     android:text="공부"
                     android:textSize="20sp"
                     />
@@ -237,7 +233,6 @@
                     android:id="@+id/checkBox_join_talk"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:checked="true"
                     android:text="대화"
                     android:textSize="20sp"
                     />
@@ -245,7 +240,6 @@
                     android:id="@+id/checkbox_join_mood"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:checked="true"
                     android:text="사진"
                     android:textSize="20sp"
                     />

@@ -78,6 +78,18 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         editText_password = findViewById(R.id.editText_join_password);
         editText_password2 = findViewById(R.id.editText_join_password2);
 
+        if (mAuth.getCurrentUser() == null){
+                mAuth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        Log.d(TAG, "Sign in Anonymously : Success");
+                    }else
+                        Log.e(TAG, "sign in Anonymously : Failure", task.getException());
+                }
+            });
+        }
+
         //로그인 방법에 따른 layout 제시
         if(method.equals("Email")){
             linearLayout_join_email.setVisibility(View.VISIBLE);
@@ -215,6 +227,9 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void join(){
+        if (mAuth.getCurrentUser().isAnonymous())
+            mAuth.getCurrentUser().delete();
+
         final String email = editText_email.getText().toString();
         String password = editText_password.getText().toString();
         String password2 = editText_password2.getText().toString();

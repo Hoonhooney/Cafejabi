@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+//        mapFragment.getMapAsync(this);
 
         //사이드메뉴 활성화
         isLoggedIn = currentUser != null && !currentUser.isAnonymous();
@@ -637,6 +637,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
             }
+
+            mapFragment.getMapAsync(this);
         }
     }
 

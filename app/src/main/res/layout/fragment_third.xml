@@ -8,10 +8,12 @@
 
     <Button
         android:id="@+id/button_end_viewpageractivity"
+        style="@android:style/Widget.Holo.Light.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이제 시작해볼까여?"
+        android:textColor="@color/colorPrimary"
         android:layout_gravity="bottom"
         android:layout_marginBottom="120dp"
-        />
+        android:textStyle="bold"
+        android:text="우리 함께해요!" />
 </LinearLayout>

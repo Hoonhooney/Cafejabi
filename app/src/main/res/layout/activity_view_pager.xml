@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,9 +8,19 @@
     android:id="@+id/activity_view_pager">
 
     <androidx.viewpager.widget.ViewPager
-        android:id = "@+id/pager"
+        android:id = "@+id/vpPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
-</LinearLayout>
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/indicator"
+        android:layout_marginTop="600dp"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        app:ci_drawable="@drawable/black_radius"
+        app:ci_height="7dp"
+        app:ci_margin="4dp"
+        app:ci_width="7dp" />
+
+</FrameLayout>

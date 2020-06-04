@@ -4,21 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@null"
-        android:src="@drawable/ic_launcher_foreground"
-        ></ImageView>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="설정"
-        android:textSize="30dp"
+        android:textSize="50dp"
         android:layout_gravity="center"
         android:gravity="center"
+        android:layout_marginTop="20dp"
         ></TextView>
 
 
@@ -28,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="언어"
         android:textSize="20dp"
+        android:layout_marginTop="20dp"
         ></Button>
 
     <Button

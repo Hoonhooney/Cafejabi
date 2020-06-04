@@ -187,6 +187,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             //회원 정보 수정
             @Override
+            public void btnGoEditUser() {
+                Log.e(TAG, "btnGoEditUser");
+                Intent intent = new Intent(mContext, EditUserInfoActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
             public void btnGoEdit(String cid) {
                 Log.e(TAG, "btnGoEdit");
                 Intent intent = new Intent(mContext, EditCafeInfoActivity.class);

@@ -58,6 +58,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
         void btnCancel();
         void btnGoLogin();
         void btnGoEdit(String cid);
+        void btnGoEditUser();
         void btnLogout();
         void btnGoRegisterCafe();
         void btnGoCafeList(int code);
@@ -176,7 +177,7 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
                 }
             });
 
-            findViewById(R.id.button_go_edit).setOnClickListener(this);
+            findViewById(R.id.button_go_edit_user).setOnClickListener(this);
 
 
         }
@@ -226,6 +227,9 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
             case R.id.button_go_login:
                 listener.btnGoLogin();
                 break;
+
+            case R.id.button_go_edit_user:
+                listener.btnGoEditUser();
 
             default:
                 break;

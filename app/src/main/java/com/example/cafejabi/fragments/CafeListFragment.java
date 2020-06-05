@@ -44,13 +44,6 @@ public class CafeListFragment extends Fragment {
         this.code = code;
     }
 
-//    public static CafeListFragment newInstance(String param1, String param2) {
-//        CafeListFragment fragment = new CafeListFragment();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

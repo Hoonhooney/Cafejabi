@@ -14,7 +14,6 @@ import com.example.cafejabi.activities.CafeInfoCustomerActivity;
 import com.example.cafejabi.objects.Cafe;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class CafeAdapter extends BaseAdapter {
@@ -67,10 +66,7 @@ public class CafeAdapter extends BaseAdapter {
 
             textView_cafe_status.setText(cafe.getTable()+"");
 
-            int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-
-//            if (!cafe.isIs24Working() && (currentHour < 12 || currentHour >= 22)){  //임시방편
-            if (currentHour < 12 || currentHour >= 22){  //임시방편
+            if (!cafe.isOpen()){
                 textView_cafe_status.setText("닫힘");
             }else if(!cafe.isAllowAlarm()) {
                 textView_cafe_status.setVisibility(View.INVISIBLE);

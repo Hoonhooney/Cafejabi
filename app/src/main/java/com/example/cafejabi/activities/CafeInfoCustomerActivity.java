@@ -57,7 +57,7 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
     private LinearLayout linearLayout_work_time;
 
     private TextView textView_cafeName, textView_cafeAddress, textView_cafeStatus, textView_cafeInfo,
-    textView_workingTime, textView_grade, textView_comment_rating;
+            textView_grade, textView_comment_rating;
 
     private RatingBar ratingBar_cafe, ratingBar_comment;
     private float grade = 1.0f;
@@ -87,7 +87,6 @@ public class CafeInfoCustomerActivity extends AppCompatActivity implements View.
         textView_cafeAddress = findViewById(R.id.textView_info_customer_cafeaddress);
         textView_cafeStatus = findViewById(R.id.textView_info_customer_cafestatus);
         textView_cafeInfo = findViewById(R.id.textView_info_customer_cafeinfo);
-//        textView_workingTime = findViewById(R.id.textView_info_customer_workingtime);
         textView_grade = findViewById(R.id.textView_info_customer_grade);
         textView_comment_rating = findViewById(R.id.textView_info_customer_comment_rating);
 

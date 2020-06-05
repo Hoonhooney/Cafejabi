@@ -7,11 +7,35 @@
         />
 
     <Preference
+        android:title="언어"
+        />
+
+    <Preference
+        android:title="카페 등록하기"
+        />
+
+    <Preference
+        android:title="공지사항"
+        />
+
+    <Preference
+        android:title="고객센터"
+        />
+
+    <Preference
         android:title="도움말"
+        />
+
+    <Preference
+        android:title="약관 및 정책"
         />
 
     <Preference
         android:title="버전"
         android:summary="1.0.0"/>
+
+    <Preference
+        android:title="로그아웃"
+        />
 
 </PreferenceScreen>

@@ -28,14 +28,11 @@ import com.example.cafejabi.views.WorkTimeSettingView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.geometry.Tm128;
 
 import org.apmem.tools.layouts.FlowLayout;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,19 +47,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.bendik.simplerangeview.SimpleRangeView;
-
 public class CafeRegisterActivity extends AppCompatActivity implements View.OnClickListener,
-        CompoundButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener {
+        RadioGroup.OnCheckedChangeListener {
     private static final String TAG = "CafeRegisterActivity";
     public static StringBuilder sb;
 
     private EditText editText_cafe_name, editText_business_id, editText_cafe_description;
     private TextView textView_cafe_address;
-    private CheckBox checkBox_is24Working, checkBox_alarm_same_work_time, checkBox_wt_everyday;
-    private boolean isAllowedWithAlarm, is24Working, isSameAlarmWithWorkTime;
+    private CheckBox checkBox_wt_everyday;
+    private boolean isAllowedWithAlarm;
     private RadioGroup radioGroup_allow_service, radioGroup_set_gap;
-//    private SimpleRangeView rangeSeekBar_set_working_time, rangeSeekBar_set_alarm_time;
     private LinearLayout linearLayout_allow_service;
     private FlowLayout flowLayout_keywords;
 
@@ -99,23 +93,14 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
 
         textView_cafe_address = findViewById(R.id.textView_search_cafe_address);
 
-//        checkBox_is24Working = findViewById(R.id.checkbox_24working);
-//        checkBox_alarm_same_work_time = findViewById(R.id.checkBox_alarm_same_working_time);
-
         radioGroup_allow_service = findViewById(R.id.radioGroup_allow_seat_info);
         radioGroup_set_gap = findViewById(R.id.radioGroup_set_alarm_gap);
 
-//        rangeSeekBar_set_alarm_time = findViewById(R.id.rangeSeekBar_set_alarm_time);
-
         linearLayout_allow_service = findViewById(R.id.linearLayout_allow_seat_info);
-
-//        checkBox_is24Working.setOnCheckedChangeListener(this);
 
         radioGroup_allow_service.setOnCheckedChangeListener(this);
 
         radioGroup_set_gap.setOnCheckedChangeListener(this);
-
-//        checkBox_alarm_same_work_time.setOnCheckedChangeListener(this);
 
         final LinearLayout linearLayout_wt = findViewById(R.id.linearLayout_cafe_register_wt);
 
@@ -195,31 +180,6 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-//    CheckBox onCheckedChangeListener
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        switch(compoundButton.getId()){
-
-//            case R.id.checkbox_24working:
-//                is24Working = b;
-//                if(b){
-//                    rangeSeekBar_set_working_time.setVisibility(View.GONE);
-//                }else{
-//                    rangeSeekBar_set_working_time.setVisibility(View.VISIBLE);
-//                }
-//                break;
-
-//            case R.id.checkBox_alarm_same_working_time:
-//                isAllowedWithAlarm = b;
-//                if(b){
-//                    rangeSeekBar_set_alarm_time.setVisibility(View.GONE);
-//                }else{
-//                    rangeSeekBar_set_alarm_time.setVisibility(View.VISIBLE);
-//                }
-//                break;
-        }
-    }
-
 //    RadioGroup onCheckedChangeListener
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -257,7 +217,6 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
     private void searchLocation(){
         Log.e(TAG, "searchLocation()");
         String text = null;
-//        int display = 2;
 
         try {
             text = URLEncoder.encode(editText_cafe_name.getText().toString(), "utf-8");
@@ -346,8 +305,6 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         Cafe cafe = new Cafe(cid, uid, cafeName, cafeAddress,
                 locate_x, locate_y, 0, isAllowedWithAlarm, keywords_selected);
 
-//        if(!is24Working){
-//        }
         if(isAllowedWithAlarm){
             cafe.setAlarm_gap(gap);
         }
@@ -398,7 +355,6 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
                 builder.setMessage("카페 등록을 완료했습니다!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        startActivity(new Intent(CafeRegisterActivity.this, MainActivity.class));
                         finish();
                     }
                 });
@@ -437,10 +393,4 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
             }
         }
     }
-
-//    @Override
-//    public void onBackPressed(){
-//        startActivity(new Intent(this, MainActivity.class));
-//        finish();
-//    }
 }

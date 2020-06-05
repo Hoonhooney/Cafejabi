@@ -26,7 +26,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -221,22 +220,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             user.delete();
         }
     }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-//        //익명 계정으로 접속중(비회원)이었다면 Firebase Auth에 있던 기존 익명 계정을 삭제
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        if (user != null && user.isAnonymous()){
-//            user.delete();
-//        }
-    }
-
-//    @Override
-//    public void onBackPressed(){
-//        Intent intent = new Intent(this, MainActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        startActivity(intent);
-//        finish();
-//    }
 }

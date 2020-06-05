@@ -1,7 +1,6 @@
 package com.example.cafejabi.views;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.cafejabi.R;
-import com.example.cafejabi.activities.EditCafeInfoActivity;
 import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.objects.UserInfo;
 import com.google.android.gms.tasks.OnFailureListener;

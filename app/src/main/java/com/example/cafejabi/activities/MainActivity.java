@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void init(){
         findViewById(R.id.button_menu).setOnClickListener(this);
-//        findViewById(R.id.button_search_cafe).setOnClickListener(this);
 
         searchLayout = findViewById(R.id.linearLayout_search);
         viewLayout = findViewById(R.id.fl_silde);
@@ -149,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
 
         //사이드메뉴 활성화
         isLoggedIn = currentUser != null && !currentUser.isAnonymous();
@@ -275,9 +273,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 showMenu();
                 break;
 
-//            case R.id.button_search_cafe:
-//                searchCafe();
-//                break;
+            case R.id.button_search_cafe:
+                searchCafe(map);
+                hideKeyboard(view);
+                break;
         }
     }
 
@@ -366,13 +365,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        findViewById(R.id.button_search_cafe).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchCafe(naverMap);
-                hideKeyboard(v);
-            }
-        });
+        findViewById(R.id.button_search_cafe).setOnClickListener(this);
 
         map = naverMap;
     }
@@ -521,11 +514,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         final BottomCafeInformationView bottomInfoView = new BottomCafeInformationView(mContext, cafe);
         bottomInfoView.setEventListener(new BottomCafeInformationView.EventListener() {
             @Override
-            public void btnCancel() {
-
-            }
-
-            @Override
             public void btnGoCafeInfo() {
                 Log.e(TAG, "goCafeInfo()");
                 Intent intent = new Intent(MainActivity.this, CafeInfoCustomerActivity.class);
@@ -624,8 +612,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onStart() {
         super.onStart();
 
-//        startActivity(new Intent(this, ViewPagerActivity.class));
-        
         // 초기 페이지 보이기
         if(loginPreferences.getBoolean("firstTime", true))
             startActivity(new Intent(this, ViewPagerActivity.class));

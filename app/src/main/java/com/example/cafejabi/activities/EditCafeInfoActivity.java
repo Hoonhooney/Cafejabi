@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -31,14 +29,11 @@ import com.example.cafejabi.objects.Keyword;
 import com.example.cafejabi.objects.WorkTime;
 import com.example.cafejabi.views.KeywordView;
 import com.example.cafejabi.views.WorkTimeSettingView;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.apmem.tools.layouts.FlowLayout;
 
@@ -84,15 +79,7 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
 
     private int density, gap;
 
-
-    private CheckBox checkbox_full_time, checkbox_alarm_same_work_time;
-
-
-    private List<CheckBox> cbList;
-
     private ProgressDialog progressDialog;
-
-    private SharedPreferences loginPreferences;
 
 
     @Override
@@ -192,7 +179,6 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
                         }else{
                             textView_latest_updated_time.setText("없음");
                         }
-//                            textView_latest_updated_time.setText(cafe.getTable_update_time().toString());
 
                         editText_cafe_name.setText(cafe.getCafe_name());
                         editText_cafe_description.setText(cafe.getCafe_info());
@@ -309,12 +295,6 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
             updatedCafeMap.put("table_update_time", new Date());
         }
 
-//        for (int i = 0; i < workTimes.size(); i++) {
-//            if (cafe.getWorkTimes() == null || workTimes.get(i) != cafe.getWorkTimes().get(i)){
-//                updatedCafeMap.put("workTimes", workTimes);
-//                break;
-//            }
-//        }
         if (checkBox_wt_everyday.isChecked()){{
             List<WorkTime> wtList = new ArrayList<>();
             wtList.add(wt_everyday);
@@ -337,9 +317,6 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
                 builder.setMessage("카페 정보 업데이트 성공!").setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        Intent intent = new Intent(mContext, CafeInfoCustomerActivity.class);
-//                        intent.putExtra("CafeId", cid);
-//                        startActivity(intent);
                         finish();
                     }
                 });

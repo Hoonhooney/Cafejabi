@@ -23,13 +23,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <!--<ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:src="@drawable/ic_launcher_foreground"/>-->
-
             <TextView
                 android:id="@+id/textView_info_customer_cafename"
                 android:layout_width="350dp"

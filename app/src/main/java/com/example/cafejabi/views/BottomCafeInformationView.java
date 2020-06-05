@@ -61,8 +61,6 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
 
 
     public interface EventListener {
-        void btnCancel();
-
         void btnGoCafeInfo();
     }
 
@@ -110,7 +108,6 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
 
         if(mAuth != null && !mAuth.getCurrentUser().isAnonymous()){
             liking_cafe_list_checkbox.setVisibility(VISIBLE);
-//            liking_cafe_list_checkbox.
 
             db.collection("users").document(mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -183,9 +180,6 @@ public class BottomCafeInformationView extends RelativeLayout implements View.On
     @Override
     public void onClick(View view){
         switch(view.getId()){
-//            case R.id.button_menu_back:
-//                listener.btnCancel();
-//                break;
 
             case R.id.linearLayout_bottom_info:
                 Log.e(TAG, "goCafeInfo()");

@@ -47,6 +47,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
+//    비밀번호 변경 요청 계정 이메일로 보내기
     private void send(){
         if(email.isEmpty()){
             Toast.makeText(ResetPasswordActivity.this, "이메일을 입력해주세요!",

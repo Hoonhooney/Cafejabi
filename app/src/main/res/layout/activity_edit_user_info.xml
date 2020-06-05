@@ -4,13 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <!--<ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@null"
-        android:src="@drawable/ic_launcher_foreground"
-        ></ImageView>-->
 
     <TextView
         android:layout_width="match_parent"
@@ -26,6 +19,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         ><TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,8 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginVertical="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -101,15 +94,11 @@
         </RadioGroup>
     </LinearLayout>
 
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginVertical="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -148,22 +137,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전화번호  : "
-            android:textSize="20sp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            ></TextView>
-
-
-        <EditText
-            android:id="@+id/phone_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            ></EditText>
     </LinearLayout>
 
     <Button
@@ -174,91 +147,6 @@
         android:gravity="center"
         android:text="확인"
         android:textSize="20sp" />
-
-
-        <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="비밀번호 수정"
-        android:textSize="20sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        ></TextView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="원래 비밀번호  : "
-            android:layout_marginLeft="15dp"
-            ></TextView>
-
-
-        <EditText
-            android:id="@+id/find_pw_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            ></EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="새 비밀번호 : "
-            android:layout_marginLeft="15dp"
-            ></TextView>
-
-
-        <EditText
-            android:id="@+id/new_pw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            ></EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="새 비밀번호 입력 : "
-            android:layout_marginLeft="15dp"
-            ></TextView>
-
-
-        <EditText
-            android:id="@+id/new_pw_re"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            ></EditText>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/new_pw_ok_button"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="비밀번호 수정"
-        android:textSize="20sp"
-        android:layout_marginTop="20dp"></Button>
-
 
 
 </LinearLayout>

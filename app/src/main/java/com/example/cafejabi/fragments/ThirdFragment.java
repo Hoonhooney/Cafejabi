@@ -13,25 +13,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class ThirdFragment extends Fragment {
-    // Store instance variables
-    private String title;
-    private int page;
-
-    // newInstance constructor for creating fragment with arguments
-    public static FirstFragment newInstance(int page, String title) {
-        FirstFragment fragment = new FirstFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     // Store instance variables based on arguments passed
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
     }
 

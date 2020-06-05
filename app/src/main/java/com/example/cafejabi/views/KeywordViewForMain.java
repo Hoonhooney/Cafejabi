@@ -10,8 +10,7 @@ import android.widget.TextView;
 import com.example.cafejabi.R;
 import com.example.cafejabi.objects.Keyword;
 
-import java.util.EventListener;
-
+//MainActivity에서 보이는 KeywordView
 public class KeywordViewForMain extends LinearLayout implements View.OnClickListener {
     private Keyword keyword;
     private LinearLayout linearLayout_keyword;

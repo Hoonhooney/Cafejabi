@@ -4,11 +4,4 @@
     android:background="@drawable/mainpage"
     android:layout_height="match_parent">
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:text="This is Splash Image"-->
-<!--        android:textSize="30sp"-->
-<!--        android:gravity="center"/>-->
-
 </LinearLayout>

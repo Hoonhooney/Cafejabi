@@ -13,9 +13,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.cafejabi.R;
-import com.example.cafejabi.activities.MainActivity;
 import com.example.cafejabi.objects.WorkTime;
 
+//카페 정보 생성, 수정 Activity에 쓰일 영업시간 설정 View
 public class WorkTimeSettingView extends LinearLayout implements View.OnClickListener{
     private static final String TAG = "WorkTimeSettingView";
     private Context mContext = getContext();

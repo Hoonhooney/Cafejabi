@@ -71,6 +71,7 @@ public class SelectLocationPopupActivity extends Activity {
         }
     }
 
+//    JSON Data를 ListView로 보여주기
     private void setDataToList(){
         Log.e(TAG, "setDataToList()");
 
@@ -93,9 +94,9 @@ public class SelectLocationPopupActivity extends Activity {
         }
     }
 
-    public class CafeListAdapter extends BaseAdapter{
+    public static class CafeListAdapter extends BaseAdapter{
         private ArrayList<SimpleCafeInfo> cafeList = new ArrayList<>();
-        public CafeListAdapter(){}
+        CafeListAdapter(){}
 
         @Override
         public int getCount() {
@@ -132,7 +133,7 @@ public class SelectLocationPopupActivity extends Activity {
             return view;
         }
 
-        public void addItem(SimpleCafeInfo cafe){
+        void addItem(SimpleCafeInfo cafe){
             cafeList.add(cafe);
         }
     }
@@ -142,26 +143,26 @@ public class SelectLocationPopupActivity extends Activity {
         private String cafeAddress;
         private int mapx, mapy;
 
-        public SimpleCafeInfo(String cafeName, String cafeAddress, int mapx, int mapy) {
+        SimpleCafeInfo(String cafeName, String cafeAddress, int mapx, int mapy) {
             this.cafeName = cafeName;
             this.cafeAddress = cafeAddress;
             this.mapx = mapx;
             this.mapy = mapy;
         }
 
-        public String getCafeName() {
+        String getCafeName() {
             return cafeName;
         }
 
-        public String getCafeAddress() {
+        String getCafeAddress() {
             return cafeAddress;
         }
 
-        public int getMapx() {
+        int getMapx() {
             return mapx;
         }
 
-        public int getMapy() {
+        int getMapy() {
             return mapy;
         }
     }

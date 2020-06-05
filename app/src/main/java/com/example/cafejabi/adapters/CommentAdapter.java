@@ -11,10 +11,6 @@ import android.widget.TextView;
 
 import com.example.cafejabi.R;
 import com.example.cafejabi.objects.Comment;
-import com.example.cafejabi.objects.UserInfo;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -27,7 +27,6 @@ public class ViewPagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_pager);
 
         mViewpager = (ViewPager) findViewById(R.id.vpPager);
-//        mViewpager.setAdapter(adapter);
 
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewpager.setAdapter(adapter);
@@ -35,14 +34,12 @@ public class ViewPagerActivity extends AppCompatActivity {
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mViewpager);
 
-
-
     }
 
-    public class MyPagerAdapter extends FragmentPagerAdapter {
-        private int NUM_ITEMS = 3;
+    public static class MyPagerAdapter extends FragmentPagerAdapter {
+        private static final int NUM_ITEMS = 3;
 
-        public MyPagerAdapter(FragmentManager fragmentManager) {
+        MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
@@ -66,8 +63,6 @@ public class ViewPagerActivity extends AppCompatActivity {
                     return null;
             }
         }
-
-
 
     }
 }

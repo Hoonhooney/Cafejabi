@@ -62,11 +62,11 @@ public class CafeListActivity extends AppCompatActivity {
         viewPager_cafeList.setCurrentItem(getIntent().getIntExtra("CODE", 1)-1);
     }
 
-    @Override
-    public void onBackPressed(){
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
-    }
+//    @Override
+//    public void onBackPressed(){
+//        startActivity(new Intent(this, MainActivity.class));
+//        finish();
+//    }
 
     public class PagerAdapter extends FragmentStatePagerAdapter {
         int _numOfTabs;

@@ -398,7 +398,7 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
                 builder.setMessage("카페 등록을 완료했습니다!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(CafeRegisterActivity.this, MainActivity.class));
+//                        startActivity(new Intent(CafeRegisterActivity.this, MainActivity.class));
                         finish();
                     }
                 });
@@ -438,9 +438,9 @@ public class CafeRegisterActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    @Override
-    public void onBackPressed(){
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
-    }
+//    @Override
+//    public void onBackPressed(){
+//        startActivity(new Intent(this, MainActivity.class));
+//        finish();
+//    }
 }

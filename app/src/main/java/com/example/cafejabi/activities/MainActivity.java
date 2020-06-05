@@ -189,8 +189,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void btnGoEditUser() {
                 Log.e(TAG, "btnGoEditUser");
-                Intent intent = new Intent(mContext, EditUserInfoActivity.class);
-                startActivity(intent);
+                goActivity(EditUserInfoActivity.class);
             }
 
             @Override
@@ -231,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             @Override
             public void btnGoSettings(){
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                goActivity(SettingsActivity.class);
             }
         });
     }
@@ -679,8 +678,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void goActivity(Class c){
         Intent intent = new Intent(mContext, c);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        finish();
     }
 
 //    back 버튼 두 번 누르면 종료
@@ -716,5 +715,4 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
-
 }

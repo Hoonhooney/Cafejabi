@@ -139,6 +139,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.LENGTH_SHORT).show();
         }else{
             progressDialog.show();
+
+            deleteAnonymousUser();
+
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -165,6 +168,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //   Facebook login
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
+
+        deleteAnonymousUser();
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
@@ -205,13 +210,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences.Editor editor = loginPreferences.edit();
         editor.putString("method", method);
         editor.apply();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        finish();
     }
 
-    @Override
-    public void onStart(){
-        super.onStart();
+    private void deleteAnonymousUser(){
         //익명 계정으로 접속중(비회원)이었다면 Firebase Auth에 있던 기존 익명 계정을 삭제
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null && user.isAnonymous()){
@@ -220,8 +223,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onBackPressed(){
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+    public void onStart(){
+        super.onStart();
+//        //익명 계정으로 접속중(비회원)이었다면 Firebase Auth에 있던 기존 익명 계정을 삭제
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        if (user != null && user.isAnonymous()){
+//            user.delete();
+//        }
     }
+
+//    @Override
+//    public void onBackPressed(){
+//        Intent intent = new Intent(this, MainActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+//        finish();
+//    }
 }

@@ -337,9 +337,9 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
                 builder.setMessage("카페 정보 업데이트 성공!").setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(mContext, CafeInfoCustomerActivity.class);
-                        intent.putExtra("CafeId", cid);
-                        startActivity(intent);
+//                        Intent intent = new Intent(mContext, CafeInfoCustomerActivity.class);
+//                        intent.putExtra("CafeId", cid);
+//                        startActivity(intent);
                         finish();
                     }
                 });

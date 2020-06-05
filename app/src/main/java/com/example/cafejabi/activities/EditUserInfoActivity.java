@@ -334,12 +334,7 @@ public class EditUserInfoActivity extends AppCompatActivity implements View.OnCl
 
     private void goActivity(Class c){
         Intent intent = new Intent(mContext, c);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public void onBackPressed(){
-        goActivity(MainActivity.class);
     }
 }

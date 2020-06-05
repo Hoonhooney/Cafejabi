@@ -344,12 +344,13 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
 
     private void goActivity(Class c){
         Intent intent = new Intent(JoinActivity.this, c);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
 
-    @Override
-    public void onBackPressed(){
-        goActivity(LoginActivity.class);
-    }
+//    @Override
+//    public void onBackPressed(){
+//        goActivity(LoginActivity.class);
+//    }
 }

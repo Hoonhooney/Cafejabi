@@ -43,10 +43,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
-
-
 
 public class EditCafeInfoActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
 
@@ -58,10 +54,8 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
 
     private Cafe cafe;
 
-    private String cid, description;
-
-    private int table;
-
+    private String cid;
+    
     private TextView textView_latest_updated_time;
     private EditText editText_cafe_name, editText_cafe_description;
     private LinearLayout linearLayout_cafe_wt, linearLayout_cafe_wt_everyday;
@@ -134,7 +128,7 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
         linearLayout_cafe_wt = findViewById(R.id.linearLayout_cafe_edit_wt);
         linearLayout_cafe_wt_everyday = findViewById(R.id.linearLayout_cafe_edit_wt_everyday);
 
-        switch_alarm_on = findViewById(R.id.switch_alarm_setting);
+        switch_alarm_on = findViewById(R.id.switch_alarm);
 
         //프로그래스바
         progressDialog = new ProgressDialog(this);

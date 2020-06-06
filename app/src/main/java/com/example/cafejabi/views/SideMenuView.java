@@ -47,7 +47,6 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private UserInfo userInfo;
 
-
     public boolean isloggedin;
 
     public void setEventListener(EventListener l){

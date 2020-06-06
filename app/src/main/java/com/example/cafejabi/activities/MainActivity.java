@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //    사이드메뉴 추가
     private void addSideMenu(){
+        sideLayout.removeAllViews();
 
         SideMenuView sideMenu = new SideMenuView(mContext, isLoggedIn);
 
@@ -642,6 +643,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onResume(){
         super.onResume();
         refreshMap();
+
+        //사이드메뉴 활성화
+        addSideMenu();
     }
 
 //    종료할 때

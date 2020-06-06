@@ -617,24 +617,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onStart() {
         super.onStart();
 
+        //    시작할 때 비회원인 경우 익명 인증하기
+        if (currentUser == null){
+            mAuth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        Log.d(TAG, "Sign in Anonymously : Success");
+                        isLoggedIn = false;
+                    }else
+                        Log.e(TAG, "sign in Anonymously : Failure", task.getException());
+                }
+            });
+        }
+
         // 초기 페이지 보이기
         if(loginPreferences.getBoolean("firstTime", true))
             startActivity(new Intent(this, ViewPagerActivity.class));
         else{
-            //    시작할 때 비회원인 경우 익명 인증하기
-            if (currentUser == null){
-                mAuth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            Log.d(TAG, "Sign in Anonymously : Success");
-                            isLoggedIn = false;
-                        }else
-                            Log.e(TAG, "sign in Anonymously : Failure", task.getException());
-                    }
-                });
-            }
-
             mapFragment.getMapAsync(this);
         }
     }

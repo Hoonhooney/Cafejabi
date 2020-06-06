@@ -1,6 +1,7 @@
 package com.example.cafejabi.views;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.cafejabi.R;
+import com.example.cafejabi.alarm.Alarm;
 import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.objects.UserInfo;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -141,11 +143,26 @@ public class SideMenuView extends RelativeLayout implements View.OnClickListener
 
                                     switch_myCafe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                         @Override
-                                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                        public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
                                             db.collection("cafes").document(myCafe.getCid()).update("open", isChecked).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Log.d(TAG, "cafe open update : Success");
+
+                                                    if (myCafe.isAllowAlarm()){
+                                                        Alarm alarm = new Alarm(getContext());
+                                                        if (isChecked){
+                                                            alarm.set();
+                                                            SharedPreferences alarmPreferences = getContext().getSharedPreferences("alarm", Context.MODE_PRIVATE);
+                                                            SharedPreferences.Editor editor = alarmPreferences.edit();
+                                                            editor.putLong("updatedAt", System.currentTimeMillis());
+                                                            editor.putInt("gap", myCafe.getAlarm_gap());
+                                                            editor.putBoolean("on", true);
+                                                            editor.apply();
+                                                        }else{
+                                                            alarm.off();
+                                                        }
+                                                    }
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override

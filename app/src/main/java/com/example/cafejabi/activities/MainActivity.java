@@ -12,7 +12,6 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,12 +31,10 @@ import com.example.cafejabi.objects.Keyword;
 import com.example.cafejabi.views.BottomCafeInformationView;
 import com.example.cafejabi.objects.Cafe;
 import com.example.cafejabi.R;
-import com.example.cafejabi.views.KeywordView;
 import com.example.cafejabi.views.KeywordViewForMain;
 import com.example.cafejabi.views.SideMenuView;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +51,6 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Align;
-import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
 import com.naver.maps.map.overlay.OverlayImage;
@@ -62,7 +58,6 @@ import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.CompassView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,6 +106,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //알람을 통해 들어오면 바로 카페 정보 수정 페이지로 이동
+        Intent intent = getIntent();
+        String cid = intent.getStringExtra("cid");
+        if (cid != null){
+            Intent newIntent = new Intent(this, EditCafeInfoActivity.class);
+            newIntent.putExtra("cid", cid);
+            startActivity(newIntent);
+        }
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cafejabi.R;
+import com.example.cafejabi.alarm.Alarm;
 import com.example.cafejabi.objects.Cafe;
 
 
@@ -55,7 +57,7 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
     private Cafe cafe;
 
     private String cid;
-    
+
     private TextView textView_latest_updated_time;
     private EditText editText_cafe_name, editText_cafe_description;
     private LinearLayout linearLayout_cafe_wt, linearLayout_cafe_wt_everyday;
@@ -75,6 +77,8 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
 
     private ProgressDialog progressDialog;
 
+    private SharedPreferences alarmPreferences;
+    private boolean alarm_on;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +133,16 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
         linearLayout_cafe_wt_everyday = findViewById(R.id.linearLayout_cafe_edit_wt_everyday);
 
         switch_alarm_on = findViewById(R.id.switch_alarm);
+        alarmPreferences = getSharedPreferences("alarm", MODE_PRIVATE);
+        alarm_on = alarmPreferences.getBoolean("on", false);
+
+        switch_alarm_on.setChecked(alarm_on);
+        switch_alarm_on.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                alarm_on = b;
+            }
+        });
 
         //프로그래스바
         progressDialog = new ProgressDialog(this);
@@ -286,8 +300,8 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
 
         if (density != cafe.getTable()){
             updatedCafeMap.put("table", density);
-            updatedCafeMap.put("table_update_time", new Date());
         }
+        updatedCafeMap.put("table_update_time", new Date());
 
         if (checkBox_wt_everyday.isChecked()){{
             List<WorkTime> wtList = new ArrayList<>();
@@ -299,6 +313,9 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
 
         if (gap != cafe.getAlarm_gap())
             updatedCafeMap.put("alarm_gap", gap);
+
+        if(!cafe.isAllowAlarm() && alarm_on)
+            updatedCafeMap.put("allowAlarm", true);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("카페 정보 업데이트");
@@ -325,6 +342,20 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
                 builder.create().show();
             }
         });
+
+        //AlarmService
+        Alarm alarm = new Alarm(this);
+        if (alarm_on){
+            SharedPreferences.Editor editor = alarmPreferences.edit();
+            editor.putBoolean("on", alarm_on);
+            editor.putInt("gap", gap);
+            editor.putLong("updatedAt", System.currentTimeMillis());
+            editor.apply();
+
+            alarm.set();
+        } else{
+            alarm.off();
+        }
     }
 
     @Override
@@ -350,7 +381,7 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
                 }
                 break;
 
-            case R.id.radioGroup_set_alarm_gap:
+            case R.id.radioGroup_edit_alarm_gap:
                 switch (checkedId){
                     case R.id.rb_edit_gap_15min:
                         gap = 15;

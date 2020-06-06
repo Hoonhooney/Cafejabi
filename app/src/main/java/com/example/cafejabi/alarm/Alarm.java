@@ -9,7 +9,7 @@ import android.os.Build;
 import android.util.Log;
 
 public class Alarm {
-    private static final int MINUTE = 1000;     //1000*60
+    private static final int MINUTE = 1000*60;
     private Context mContext;
     private PendingIntent sender;
     private SharedPreferences alarmPreferences;

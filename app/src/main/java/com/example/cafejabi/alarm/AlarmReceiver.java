@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -41,7 +42,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         boolean alarm_on = alarmPreferences.getBoolean("on", false);
 
         FirebaseUser user = mAuth.getCurrentUser();
-        if (alarm_on && user != null && !user.isAnonymous()){
+        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        if (alarm_on && user != null && !user.isAnonymous() && 7 < currentHour && currentHour < 23){
             db.collection("cafes").whereEqualTo("uid", user.getUid()).get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override

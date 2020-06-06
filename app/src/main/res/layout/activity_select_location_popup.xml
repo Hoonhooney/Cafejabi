@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:background="#ffffff"
+    android:layout_height="wrap_content">
+
+    <!-- 타이틀바 -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="운영하는 카페를 선택하세요"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="53dp" />
+    </LinearLayout>
+    <!-- //end 타이틀바 -->
+
+    <ListView
+        android:id="@+id/listView_select_cafe_locations"
+        android:background="#ffffff"
+        android:divider="#ffffff00"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <!--  검색결과가 없을 때 보이는 Layout  -->
+    <LinearLayout
+        android:id="@+id/linearLayout_alert_empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:text="해당 검색 결과가 없습니다!"/>
+
+        <Button
+            android:id="@+id/button_alert_empty_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="확인"/>
+    </LinearLayout>
+</LinearLayout>

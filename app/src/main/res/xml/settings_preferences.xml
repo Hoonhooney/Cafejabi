@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:title="알람"
+        android:summary="앱에 있는 알람을 켜고 끌 수 있습니다."
+        />
+
+    <Preference
+        android:title="언어"
+        />
+
+    <Preference
+        android:title="카페 등록하기"
+        />
+
+    <Preference
+        android:title="공지사항"
+        />
+
+    <Preference
+        android:title="고객센터"
+        />
+
+    <Preference
+        android:title="도움말"
+        />
+
+    <Preference
+        android:title="약관 및 정책"
+        />
+
+    <Preference
+        android:title="버전"
+        android:summary="1.0.0"/>
+
+    <Preference
+        android:title="로그아웃"
+        />
+
+</PreferenceScreen>

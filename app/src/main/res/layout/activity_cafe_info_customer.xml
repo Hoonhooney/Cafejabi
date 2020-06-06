@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="10dp"
+    >
+
+    <Button
+        android:id="@+id/button_go_cafe_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="카페 정보 수정하기"
+        android:visibility="gone"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView_info_customer_cafename"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="카페 이름"
+                android:textSize="30sp"
+                android:layout_marginTop="40dp"/>
+
+            <TextView
+                android:id="@+id/textView_info_customer_cafeaddress"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="카페 주소"
+                android:layout_marginTop="3dp"/>
+
+            <TextView
+                android:id="@+id/textView_info_customer_cafestatus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="카페 혼잡도"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/textView_info_customer_cafeinfo"
+                android:layout_width="match_parent"
+                android:layout_height="150sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="관리자가 쓴 카페 소개 데이터"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_work_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginVertical="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="운영 시간"
+                    android:textSize="20sp"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <org.apmem.tools.layouts.FlowLayout
+                android:id="@+id/flowLayout_info_customer_keywords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/ratingBar_info_customer_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:max="5"
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:numStars="5"
+                    android:stepSize="0.01"
+                    android:isIndicator="true"/>
+
+                <TextView
+                    android:id="@+id/textView_info_customer_grade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:text="평점 : "
+                    android:textSize="20sp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/button_info_customer_showcomment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="댓글 "
+                android:layout_marginTop="10dp"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout_info_customer_addcomment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RatingBar
+                        android:id="@+id/ratingBar_set_grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.RatingBar.Indicator"
+                        android:numStars="5"
+                        android:max="5"
+                        android:isIndicator="false"
+                        android:stepSize="0.5"/>
+
+                    <TextView
+                        android:id="@+id/textView_info_customer_comment_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.0"
+                        android:textSize="15sp"
+                        android:layout_marginStart="3dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editText_info_customer_comment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"/>
+                    <Button
+                        android:id="@+id/button_info_customer_addcomment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/listView_info_customer_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

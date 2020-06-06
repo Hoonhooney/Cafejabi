@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1056904956575",
+    "firebase_url": "https://cafejabi.firebaseio.com",
+    "project_id": "cafejabi",
+    "storage_bucket": "cafejabi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056904956575:android:1f5b14015298821cf570aa",
+        "android_client_info": {
+          "package_name": "com.example.cafejabi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1056904956575-uvnrp4vg61umiugk229o3k907212isk2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cafejabi",
+            "certificate_hash": "3a1beac0c5ca5a023da453d91b72a9baf9499d4e"
+          }
+        },
+        {
+          "client_id": "1056904956575-8tu2cqclbeuuns3l50sg75j4lij46iku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuB46DVFgIghnyQ75X3Dg021hkqSsqhB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1056904956575-8tu2cqclbeuuns3l50sg75j4lij46iku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

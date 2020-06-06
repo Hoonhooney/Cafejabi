@@ -1,10 +1,12 @@
-package com.example.cafejabi;
+package com.example.cafejabi.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cafejabi.R;
 
 // Splash screen activity
 public class SplashActivity extends AppCompatActivity {

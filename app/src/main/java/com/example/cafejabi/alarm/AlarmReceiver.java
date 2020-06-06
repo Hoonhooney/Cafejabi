@@ -12,7 +12,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.cafejabi.R;
-import com.example.cafejabi.activities.EditCafeInfoActivity;
 import com.example.cafejabi.activities.MainActivity;
 import com.example.cafejabi.objects.Cafe;
 import com.google.android.gms.tasks.OnCompleteListener;

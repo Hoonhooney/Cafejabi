@@ -31,8 +31,10 @@ import com.example.cafejabi.objects.Keyword;
 import com.example.cafejabi.objects.WorkTime;
 import com.example.cafejabi.views.KeywordView;
 import com.example.cafejabi.views.WorkTimeSettingView;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -158,6 +160,21 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
             @Override
             public void onClick(View v) {
                 editCafeInfo();
+            }
+        });
+        findViewById(R.id.button_delete_cafe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditCafeInfoActivity.this);
+                builder.setTitle("관리 카페 삭제").setMessage("카페 정보를 삭제하시겠습니까?")
+                        .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteCafe();
+                            }
+                        }).setNegativeButton("아니오", null);
+
+                builder.show();
             }
         });
     }
@@ -356,6 +373,42 @@ public class EditCafeInfoActivity extends AppCompatActivity implements RadioGrou
         } else{
             alarm.off();
         }
+    }
+
+//    카페 삭제
+    private void deleteCafe(){
+        db.collection("cafes").document(cid).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    db.collection("users").document(mAuth.getCurrentUser().getUid())
+                            .update("managingCafe", null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Log.d(TAG, "delete cafe : success");
+
+                                SharedPreferences.Editor editor = alarmPreferences.edit();
+                                editor.clear();
+                                editor.apply();
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(EditCafeInfoActivity.this);
+                                builder.setTitle("카페 삭제").setMessage("카페 삭제가 완료되었습니다.")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                finish();
+                                            }
+                                        });
+                                builder.show();
+                            }else{
+                                Log.e(TAG, "delete cafe : Failure", task.getException());
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override
